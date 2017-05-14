@@ -1,0 +1,21 @@
+#! /usr/bin/env php
+
+<?php
+
+use Vine\Node;
+
+require_once __DIR__.'/vendor/autoload.php';
+
+$records = [
+        ['id' => 1,'name' => 'blabla', 'parent_id' => 0],
+        ['id' => 2,'name' => 'blabla2', 'parent_id' => 1],
+        ['id' => 3,'name' => 'blabla3', 'parent_id' => 1],
+        ['id' => 4,'name' => 'blabla4', 'parent_id' => 0],
+        ['id' => 5,'name' => 'blabla5', 'parent_id' => 3],
+];
+
+$builder = new \Vine\TreeFactory();
+$tree = $builder->create(new \Vine\Translators\ArrayTranslator($records));
+
+var_dump($tree->find(3)->children());
+echo "\n";

@@ -1,0 +1,27 @@
+{
+    "name": "bencavens/vine",
+    "description": "Render a datatree structure",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ben Cavens",
+            "email": "cavensben@gmail.com"
+        }
+    ],
+    "autoload":{
+        "psr-4":{
+            "Vine\\":"src/"
+        }
+    },
+    "autoload-dev":{
+        "psr-4":{
+            "Tests\\":"tests/"
+        }
+    },
+    "minimum-stability": "stable",
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^6.1"
+    }
+}
