@@ -6,6 +6,12 @@ use Vine\Node;
 
 class Pluck
 {
+    /**
+     * @param Node $node
+     * @param $key
+     * @param null $value
+     * @return array
+     */
     public function __invoke(Node $node, $key, $value = null): array
     {
         $values = $value

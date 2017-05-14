@@ -2,16 +2,23 @@
 
 <?php
 
-use Vine\Node;
-
 require_once __DIR__.'/vendor/autoload.php';
 
+/**
+ * ---------------------------------------------------
+ * Sandbox
+ * ---------------------------------------------------
+ *
+ * Sandbox environment to quickly experiment with features of the Vine package.
+ * This is used for development purposes and showcases.
+ */
+
 $records = [
-        ['id' => 1,'name' => 'blabla', 'parent_id' => 0],
-        ['id' => 2,'name' => 'blabla2', 'parent_id' => 1],
-        ['id' => 3,'name' => 'blabla3', 'parent_id' => 1],
-        ['id' => 4,'name' => 'blabla4', 'parent_id' => 0],
-        ['id' => 5,'name' => 'blabla5', 'parent_id' => 3],
+        ['id' => 1,'name' => 'foobar-1', 'parent_id' => 0],
+        ['id' => 2,'name' => 'foobar-2', 'parent_id' => 1],
+        ['id' => 3,'name' => 'foobar-3', 'parent_id' => 1],
+        ['id' => 4,'name' => 'foobar-4', 'parent_id' => 0],
+        ['id' => 5,'name' => 'foobar-5', 'parent_id' => 3],
 ];
 
 $builder = new \Vine\TreeFactory();

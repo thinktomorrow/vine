@@ -7,6 +7,11 @@ use Vine\NodeCollection;
 
 class Ancestors
 {
+    /**
+     * @param Node $node
+     * @param null $depth
+     * @return NodeCollection
+     */
     public function __invoke(Node $node, $depth = null): NodeCollection
     {
         $ancestors = new NodeCollection;

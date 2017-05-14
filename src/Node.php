@@ -3,6 +3,7 @@
 namespace Vine;
 
 use Vine\Queries\Ancestors;
+use Vine\Queries\Depth;
 use Vine\Queries\Pluck;
 
 class Node
@@ -48,7 +49,7 @@ class Node
     /**
      * @return NodeCollection
      */
-    public function children()
+    public function children(): NodeCollection
     {
         return $this->children;
     }
@@ -86,34 +87,24 @@ class Node
         return $this;
     }
 
-    public function depth()
+    public function depth(): int
     {
         if($this->isRoot()) return 0;
 
         return $this->parent()->depth() + 1;
     }
 
-    public function isLeaf()
+    public function isLeaf(): bool
     {
         return $this->children->isEmpty();
     }
 
-    public function isRoot()
+    public function isRoot(): bool
     {
         return !$this->parent;
     }
 
-    /**
-     * Get subset of the node structure up until a certain depth
-     *
-     * @param $depth
-     */
-    public function get($depth)
-    {
-        //
-    }
-
-    public function ancestors($depth = null)
+    public function ancestors($depth = null): NodeCollection
     {
         return (new Ancestors)($this, $depth);
     }
@@ -133,11 +124,14 @@ class Node
     /**
      * Get a Node clone without adjacent relationships
      *
-     * @return self
+     * @param int $depth
+     * @return Node
      */
-    public function isolatedCopy()
+    public function isolatedCopy($depth = 0): self
     {
-        return new self($this->entry());
+        return !$depth
+                ? new self($this->entry())
+                : (new Depth())($this,$depth);
     }
 
     /**
