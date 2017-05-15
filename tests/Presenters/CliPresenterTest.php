@@ -3,7 +3,6 @@
 use PHPUnit\Framework\TestCase;
 use Tests\Fixtures\FixtureTranslator;
 use Tests\Implementations\Presenters\CliPresenter;
-use Vine\Node;
 use Vine\Translators\Translator;
 
 class CliPresenterTest extends TestCase
