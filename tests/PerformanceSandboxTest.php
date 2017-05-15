@@ -2,7 +2,6 @@
 
 use PHPUnit\Framework\TestCase;
 use Tests\Fixtures\FixtureTranslator;
-use Tests\Fixtures\LargeFixtureTranslator;
 use Vine\Translators\Translator;
 
 class PerformanceSandboxTest extends TestCase
