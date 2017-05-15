@@ -29,27 +29,9 @@ $output = (new CliPresenter)->tree($tree)->render();
 
 This will output something similar to:
 ```bash 
-|-root-1
+|-foobar
 |-Array
-| |-child-1
+| |-baz
 | \-Array
-|   |-child-1-1
-|   |-Array
-|   | |-child-2-1
-|   | |-child-2-2
-|   | \-child-2-3
-|   |-child-1-2
-|   |-child-1-3
-|   |-Array
-|   | |-child-2-4
-|   | |-child-2-5
-|   | \-Array
-|   |   |-child-3-1
-|   |   |-Array
-|   |   | \-child-4-1
-|   |   \-child-3-2
-|   \-child-1-4
-|-root-2
-\-Array
-  \-child-1-5
+|   \-bazbaz
 ```
