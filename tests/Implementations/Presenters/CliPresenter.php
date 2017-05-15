@@ -1,9 +1,10 @@
 <?php
 
-namespace Vine\Presenters;
+namespace Tests\Implementations\Presenters;
 
 use RecursiveArrayIterator;
 use RecursiveTreeIterator;
+use Vine\Presenters\Presenter;
 
 class CliPresenter extends ArrayPresenter implements Presenter
 {

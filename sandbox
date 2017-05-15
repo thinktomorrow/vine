@@ -22,7 +22,7 @@ $records = [
 ];
 
 $builder = new \Vine\TreeFactory();
-$tree = $builder->create(new \Vine\Translators\ArrayTranslator($records));
+$tree = $builder->create(new \Tests\Implementations\Translators\ArrayTranslator($records));
 
 var_dump($tree->find(3)->children());
 echo "\n";

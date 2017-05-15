@@ -1,8 +1,8 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
+use Tests\Implementations\Presenters\ArrayPresenter;
 use Tests\Fixtures\FixtureTranslator;
-use Vine\Node;
 use Vine\Translators\Translator;
 
 class ArrayPresenterTest extends TestCase
@@ -12,7 +12,7 @@ class ArrayPresenterTest extends TestCase
     {
         $tree = (new \Vine\TreeFactory)->create($this->getTranslation());
 
-        $result = (new \Vine\Presenters\ArrayPresenter)->tree($tree)->render();
+        $result = (new ArrayPresenter)->tree($tree)->render();
 
         $this->assertInternalType('array',$result);
     }

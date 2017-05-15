@@ -1,9 +1,11 @@
 <?php
 
-namespace Vine\Presenters;
+namespace Tests\Implementations\Presenters;
 
 use Vine\Node;
 use Vine\NodeCollection;
+use Vine\Presenters\BasePresenter;
+use Vine\Presenters\Presenter;
 
 class ArrayPresenter extends BasePresenter implements Presenter
 {

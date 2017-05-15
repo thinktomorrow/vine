@@ -1,6 +1,8 @@
 <?php
 
-namespace Vine\Translators;
+namespace Tests\Implementations\Translators;
+
+use Vine\Translators\Translator;
 
 /**
  * expected input:

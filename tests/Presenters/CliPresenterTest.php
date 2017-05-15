@@ -2,6 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 use Tests\Fixtures\FixtureTranslator;
+use Tests\Implementations\Presenters\CliPresenter;
 use Vine\Node;
 use Vine\Translators\Translator;
 
@@ -12,7 +13,7 @@ class CliPresenterTest extends TestCase
     {
         $tree = (new \Vine\TreeFactory)->create($this->getTranslation());
 
-        $output = (new \Vine\Presenters\CliPresenter)->tree($tree)->render();
+        $output = (new CliPresenter)->tree($tree)->render();
 
         $this->assertInternalType('string',$output);
         $this->assertStringStartsWith('|-root-1',trim($output,PHP_EOL));

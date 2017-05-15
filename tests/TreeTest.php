@@ -2,7 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 use Vine\NodeCollection;
-use Vine\Translators\ArrayTranslator;
+use Tests\Implementations\Translators\ArrayTranslator;
 
 class TreeTest extends TestCase
 {
