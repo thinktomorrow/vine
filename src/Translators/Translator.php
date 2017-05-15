@@ -4,9 +4,9 @@ namespace Vine\Translators;
 
 interface Translator
 {
-    function all(): array;
+    public function all(): array;
 
-    function key(): string;
+    public function key(): string;
 
-    function parentKey(): string;
+    public function parentKey(): string;
 }

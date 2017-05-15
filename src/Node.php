@@ -31,15 +31,15 @@ class Node
 
     /**
      * @param array|NodeCollection $children
-     * @return $this
+     * @return Node
      */
-    public function addChildren($children)
+    public function addChildren($children): self
     {
         $children = $this->assertChildrenParameter($children);
 
         $this->children->merge($children);
 
-        array_map(function($child){
+        array_map(function(Node $child){
             $child->parent($this);
         },$children->all());
 
@@ -80,7 +80,7 @@ class Node
         return $this;
     }
 
-    public function removeParent()
+    public function removeParent(): self
     {
         $this->parent = null;
 
