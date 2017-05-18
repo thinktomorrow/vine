@@ -37,10 +37,25 @@ class TreeFactory
             if(!isset($this->index[$parentId]))
             {
                 // Strict check which means there is a node assigned to an non-existing parent
-                throw new \LogicException('Parent reference to a non-existing node via identifier ['.$parentId.']');
+                if($this->strict)
+                {
+                    throw new \LogicException('Parent reference to a non-existing node via identifier ['.$parentId.']');
+                }
+
+                continue;
             }
 
             $this->index[$parentId]->addChildren($orphans->all());
+        }
+
+        // At this point we allow to alter each entry.
+        // Useful to add values depending on the node structure
+        if(method_exists($translator,'entry'))
+        {
+            foreach($this->index as $node)
+            {
+                $node->replaceEntry($translator->entry($node));
+            }
         }
 
         // Collect all root nodes because they contain the entire tree

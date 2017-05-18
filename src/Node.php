@@ -68,6 +68,16 @@ class Node
     }
 
     /**
+     * Replace entire entry value
+     *
+     * @param $entry
+     */
+    public function replaceEntry($entry)
+    {
+        $this->entry = $entry;
+    }
+
+    /**
      * @param Node $parent
      * @return $this
      */
