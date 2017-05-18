@@ -3,6 +3,7 @@
 namespace Vine;
 
 use Vine\Queries\Ancestors;
+use Vine\Queries\Count;
 use Vine\Queries\Depth;
 use Vine\Queries\Pluck;
 
@@ -92,6 +93,13 @@ class Node
         if($this->isRoot()) return 0;
 
         return $this->parent()->depth() + 1;
+    }
+
+    public function count(): int
+    {
+        if($this->isLeaf()) return 0;
+
+        return  (new Count)($this);
     }
 
     public function isLeaf(): bool

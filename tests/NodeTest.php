@@ -80,4 +80,16 @@ class NodeTest extends TestCase
         $this->assertEquals(1,$child->depth());
         $this->assertEquals(0,$node->depth());
     }
+
+    /** @test */
+    function it_can_get_count_of_all_children()
+    {
+        $node = new Node(null);
+        $node->addChildren([$child = new Node(null)]);
+        $child->addChildren([$child2 = new Node(null)]);
+
+        $this->assertEquals(0,$child2->count());
+        $this->assertEquals(1,$child->count());
+        $this->assertEquals(2,$node->count());
+    }
 }
