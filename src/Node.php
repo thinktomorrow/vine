@@ -5,6 +5,7 @@ namespace Vine;
 use Vine\Queries\Ancestors;
 use Vine\Queries\Count;
 use Vine\Queries\Depth;
+use Vine\Queries\Find;
 use Vine\Queries\Pluck;
 
 class Node
@@ -120,6 +121,16 @@ class Node
     public function isRoot(): bool
     {
         return !$this->parent;
+    }
+
+    public function findMany($key, array $values): NodeCollection
+    {
+        return (new Find)($this,$key,$values);
+    }
+
+    public function find($key, $value): Node
+    {
+        return (new Find)($this,$key,[$value])->first();
     }
 
     public function ancestors($depth = null): NodeCollection
