@@ -181,4 +181,11 @@ class Node
 
         return $children;
     }
+
+    public function __get($name)
+    {
+        if($name == 'children') return $this->children();
+
+        return $this->entry($name);
+    }
 }
