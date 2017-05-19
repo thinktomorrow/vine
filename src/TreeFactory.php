@@ -6,6 +6,15 @@ use Vine\Translators\Translator;
 
 class TreeFactory
 {
+    /**
+     * Create tree in strict mode.
+     * This will throw exception if index contains invalid references.
+     * e.g. parent reference to non-existing node
+     *
+     * @var bool
+     */
+    private $strict = false;
+
     private $index;
     private $orphans;
     private $roots;
@@ -17,12 +26,23 @@ class TreeFactory
         $this->orphans = [];
     }
 
+    /**
+     * @param bool $strict
+     * @return $this
+     */
+    public function strict($strict = true)
+    {
+        $this->strict = !!$strict;
+
+        return $this;
+    }
+
     public function create(Translator $translator)
     {
         foreach($translator->all() as $i => $entry)
         {
-            $id = $entry[$translator->key()];
-            $parentId = $entry[$translator->parentKey()];
+            $id = is_object($entry) ? $entry->{$translator->key()}: $entry[$translator->key()];
+            $parentId = is_object($entry) ? $entry->{$translator->parentKey()}: $entry[$translator->parentKey()];
 
             $entryNode = new Node($entry);
 

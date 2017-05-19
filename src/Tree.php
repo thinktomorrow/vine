@@ -31,7 +31,11 @@ class Tree
         return $this->roots;
     }
 
-    public function find($id): Node
+    /**
+     * @param $id
+     * @return null|Node
+     */
+    public function find($id)
     {
         return $this->findMany((array)$id)->first();
     }
