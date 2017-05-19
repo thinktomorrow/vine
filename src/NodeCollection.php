@@ -35,6 +35,8 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
 
     public function first()
     {
+        if($this->isEmpty()) return null;
+
         return reset($this->nodes);
     }
 
