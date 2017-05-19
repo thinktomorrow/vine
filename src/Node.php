@@ -92,11 +92,53 @@ class Node
         return $this;
     }
 
-    public function removeParent(): self
+    /**
+     * Remove parent from this node
+     *
+     * @return Node
+     */
+    public function detachParent(): self
     {
-        $this->parent = null;
+        if(!$this->isRoot())
+        {
+            $this->parent()->detachChild($this);
+            $this->parent = null;
+        }
 
         return $this;
+    }
+
+    /**
+     * Remove child from this node
+     *
+     * @param Node $child
+     * @return Node
+     */
+    public function detachChild(Node $child): self
+    {
+        $this->children()->remove($child);
+
+        return $this;
+    }
+
+    /**
+     * Remove this node. This deletes the node from the graph
+     * Also removes all children!
+     */
+    public function remove()
+    {
+        foreach($this->children() as $child)
+        {
+            $child->remove();
+        }
+
+        if($this->isRoot())
+        {
+            // Cannot remove the node when it is a root
+            return false;
+        }
+
+        $this->parent()->children()->remove($this);
     }
 
     public function depth(): int

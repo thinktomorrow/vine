@@ -28,6 +28,19 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
         return $this;
     }
 
+    public function remove(Node $child)
+    {
+        foreach($this->nodes as $k => $node)
+        {
+            if($child === $node)
+            {
+                unset($this->nodes[$k]);
+            }
+        }
+
+        return $this;
+    }
+
     public function all()
     {
         return $this->nodes;
