@@ -132,11 +132,24 @@ class Node
      *
      * @param $key
      * @param null $value
+     * @param bool $down
      * @return array
      */
-    public function pluck($key, $value = null): array
+    public function pluck($key, $value = null, $down = true): array
     {
-        return (new Pluck)($this, $key, $value);
+        return (new Pluck)($this, $key, $value, $down);
+    }
+
+    /**
+     * Get flat array of plucked values from child nodes
+     *
+     * @param $key
+     * @param null $value
+     * @return array
+     */
+    public function pluckAncestors($key, $value = null): array
+    {
+        return $this->pluck($key, $value, false);
     }
 
     /**
