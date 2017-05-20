@@ -31,6 +31,11 @@ class Node
         $this->children = new NodeCollection;
     }
 
+    public function equals(self $other)
+    {
+        return $this === $other;
+    }
+
     /**
      * @param array|NodeCollection $children
      * @return Node

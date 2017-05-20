@@ -51,6 +51,15 @@ class NodeTest extends TestCase
     }
 
     /** @test */
+    function it_can_verify_a_node_is_equal()
+    {
+        $first = new Node('foobar');
+        $second = $first;
+
+        $this->assertTrue($first->equals($second));
+    }
+
+        /** @test */
     function a_node_is_a_leaf_if_it_has_no_children()
     {
         $node = new Node('foobar');
