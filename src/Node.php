@@ -216,7 +216,7 @@ class Node
     {
         if (is_array($children)) {
             $children = new NodeCollection(...$children);
-        } elseif (is_string($children)) {
+        } elseif ($children instanceof Node) {
             $children = new NodeCollection($children);
         } elseif (!$children instanceof NodeCollection) {
             throw new \InvalidArgumentException('Invalid children parameter. Accepted types are array or NodeCollection.');
