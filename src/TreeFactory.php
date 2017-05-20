@@ -2,7 +2,7 @@
 
 namespace Vine;
 
-use Vine\DataTransposer;
+use Vine\Transposable;
 
 class TreeFactory
 {
@@ -37,12 +37,12 @@ class TreeFactory
         return $this;
     }
 
-    public function create(DataTransposer $translator)
+    public function create(Transposable $transposable)
     {
-        foreach($translator->all() as $i => $entry)
+        foreach($transposable->all() as $i => $entry)
         {
-            $id = is_object($entry) ? $entry->{$translator->key()}: $entry[$translator->key()];
-            $parentId = is_object($entry) ? $entry->{$translator->parentKey()}: $entry[$translator->parentKey()];
+            $id = is_object($entry) ? $entry->{$transposable->key()}: $entry[$transposable->key()];
+            $parentId = is_object($entry) ? $entry->{$transposable->parentKey()}: $entry[$transposable->parentKey()];
 
             $entryNode = new Node($entry);
 
@@ -70,11 +70,11 @@ class TreeFactory
 
         // At this point we allow to alter each entry.
         // Useful to add values depending on the node structure
-        if(method_exists($translator,'entry'))
+        if(method_exists($transposable,'entry'))
         {
             foreach($this->index as $node)
             {
-                $node->replaceEntry($translator->entry($node));
+                $node->replaceEntry($transposable->entry($node));
             }
         }
 

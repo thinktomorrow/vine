@@ -1,14 +1,14 @@
 <?php
 
-namespace Tests\Implementations\Translators;
+namespace Tests\Implementations\Transposers;
 
-use Vine\DataTransposer;
+use Vine\Transposable;
 
 /**
  * expected input:
  * { id: 1, parent_id: 0, label: 'foobar', ... }
  */
-class ArrayDataTransposer implements DataTransposer
+class ArrayTransposer implements Transposable
 {
     /**
      * @var array

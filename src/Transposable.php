@@ -8,7 +8,7 @@ namespace Vine;
  *
  * @package Vine
  */
-interface DataTransposer
+interface Transposable
 {
     /**
      * Full array of original data rows

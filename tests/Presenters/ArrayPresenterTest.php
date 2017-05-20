@@ -2,8 +2,8 @@
 
 use PHPUnit\Framework\TestCase;
 use Tests\Implementations\Presenters\ArrayPresenter;
-use Tests\Fixtures\FixtureDataTransposer;
-use Vine\DataTransposer;
+use Tests\Fixtures\FixtureTransposer;
+use Vine\Transposable;
 
 class ArrayPresenterTest extends TestCase
 {
@@ -18,10 +18,10 @@ class ArrayPresenterTest extends TestCase
     }
 
     /**
-     * @return DataTransposer
+     * @return Transposable
      */
-    private function getTranslation(): DataTransposer
+    private function getTranslation(): Transposable
     {
-        return new FixtureDataTransposer('default');
+        return new FixtureTransposer('default');
     }
 }

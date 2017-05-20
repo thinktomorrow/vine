@@ -1,9 +1,9 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Tests\Fixtures\FixtureDataTransposer;
+use Tests\Fixtures\FixtureTransposer;
 use Vine\Node;
-use Vine\DataTransposer;
+use Vine\Transposable;
 
 class DepthTest extends TestCase
 {
@@ -52,10 +52,10 @@ class DepthTest extends TestCase
     }
 
     /**
-     * @return DataTransposer
+     * @return Transposable
      */
-    private function getTranslation(): DataTransposer
+    private function getTranslation(): Transposable
     {
-        return new FixtureDataTransposer('default');
+        return new FixtureTransposer('default');
     }
 }
