@@ -95,38 +95,6 @@ class NodeTest extends TestCase
     }
 
     /** @test */
-    function it_can_find_many_nodes_by_their_primary_identifiers()
-    {
-        $node = new Node(['id' => 1]);
-        $node->addChildren([$child = new Node(['id' => 2])]);
-        $child->addChildren([$child2 = new Node(['id' => 3])]);
-
-        // Not part of the result set
-        $child->addChildren([$child3 = new Node(['id' => 4])]);
-        $node->addChildren([$child4 = new Node(['id' => 5])]);
-
-        $nodes = $node->findMany('id',[2,3]);
-
-        $this->assertInstanceOf(NodeCollection::class, $nodes);
-        $this->assertCount(2,$nodes);
-        $this->assertSame($child, $nodes[0]);
-        $this->assertSame($child2, $nodes[1]);
-    }
-
-    /** @test */
-    function it_can_find_a_node_by_its_primary_identifier()
-    {
-        $node = new Node(['id' => 1]);
-        $node->addChildren([$child = new Node(['id' => 2])]);
-        $child->addChildren([$child2 = new Node(['id' => 3])]);
-
-        $result = $node->find('id',2);
-
-        $this->assertInstanceOf(Node::class, $result);
-        $this->assertSame($child, $result);
-    }
-
-    /** @test */
     function it_can_detach_parent()
     {
         $node = new Node(null);

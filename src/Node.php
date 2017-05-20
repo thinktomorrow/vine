@@ -167,12 +167,12 @@ class Node
 
     public function findMany($key, array $values): NodeCollection
     {
-        return (new Find)($this,$key,$values);
+        return $this->children()->findMany($key, $values);
     }
 
     public function find($key, $value): Node
     {
-        return (new Find)($this,$key,[$value])->first();
+        return $this->children()->find($key, $value);
     }
 
     public function ancestors($depth = null): NodeCollection

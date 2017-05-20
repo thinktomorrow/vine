@@ -8,23 +8,26 @@ use Vine\NodeCollection;
 class Find
 {
     /**
-     * @param Node $node
+     * @param NodeCollection $nodeCollection
      * @param $key
-     * @param null $value
+     * @param array $values
      * @return NodeCollection
      */
-    public function __invoke(Node $node, $key, array $values): NodeCollection
+    public function __invoke(NodeCollection $nodeCollection, $key, array $values): NodeCollection
     {
         $nodes = new NodeCollection;
 
-        foreach($node->children() as $node)
+        foreach($nodeCollection as $node)
         {
             if(in_array($node->entry($key), $values))
             {
                 $nodes->add($node);
             }
 
-            $nodes->merge($this->__invoke($node, $key, $values));
+            if(!$node->children()->isEmpty())
+            {
+                $nodes->merge($this->__invoke($node->children(), $key, $values));
+            }
         }
 
         return $nodes;

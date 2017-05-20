@@ -2,6 +2,8 @@
 
 namespace Vine;
 
+use Vine\Queries\Find;
+
 class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
 {
     /**
@@ -56,6 +58,16 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
     public function isEmpty()
     {
         return empty($this->nodes);
+    }
+
+    public function findMany($key, array $values): NodeCollection
+    {
+        return (new Find)($this,$key,$values);
+    }
+
+    public function find($key, $value): Node
+    {
+        return (new Find)($this,$key,[$value])->first();
     }
 
     public function offsetExists($offset)
