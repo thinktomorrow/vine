@@ -37,7 +37,7 @@ class Node
      */
     public function addChildren($children): self
     {
-        $children = $this->assertChildrenParameter($children);
+        $children = $this->transformToNodeCollection($children);
 
         $this->children->merge($children);
 
@@ -222,7 +222,7 @@ class Node
      * @param $children
      * @return NodeCollection
      */
-    private function assertChildrenParameter($children): NodeCollection
+    private function transformToNodeCollection($children): NodeCollection
     {
         if (is_array($children)) {
             $children = new NodeCollection(...$children);

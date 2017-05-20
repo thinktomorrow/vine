@@ -21,7 +21,7 @@ class TreeTest extends TestCase
         $tree = $this->getTree();
         $node = $tree->findByIndex(5);
 
-        $this->assertSame($node, $tree->all()[0]->children()[1]->children()[0]);
+        $this->assertSame($node, $tree[0]->children()[1]->children()[0]);
     }
 
     /** @test */

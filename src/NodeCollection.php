@@ -7,7 +7,7 @@ use Vine\Queries\Find;
 class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
 {
     /**
-     * @var Node[]
+     * @var Node[] | NodeCollection
      */
     protected $nodes;
 
@@ -28,11 +28,17 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
         return reset($this->nodes);
     }
 
-    public function isEmpty()
+    public function isEmpty(): bool
     {
         return empty($this->nodes);
     }
 
+    /**
+     * Add one / many nodes to this collection
+     *
+     * @param Node[] ...$nodes
+     * @return $this
+     */
     public function add(Node ...$nodes)
     {
         $this->nodes = array_merge($this->nodes, $nodes);
@@ -40,6 +46,12 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
         return $this;
     }
 
+    /**
+     * Merge a collection into current one.
+     *
+     * @param NodeCollection $nodeCollection
+     * @return $this
+     */
     public function merge(self $nodeCollection)
     {
         $this->nodes = array_merge($this->nodes, $nodeCollection->all());
@@ -47,6 +59,15 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
         return $this;
     }
 
+    /**
+     * Remove the child node
+     *
+     * Please note that all descendants of this
+     * child node will be removed as well.
+     *
+     * @param Node $child
+     * @return $this
+     */
     public function remove(Node $child)
     {
         foreach($this->nodes as $k => $node)
@@ -60,11 +81,25 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
         return $this;
     }
 
+    /**
+     * Find many nodes by attribute value
+     *
+     * @param $key
+     * @param array $values
+     * @return NodeCollection
+     */
     public function findMany($key, array $values): NodeCollection
     {
         return (new Find)($this,$key,$values);
     }
 
+    /**
+     * Find specific node by attribute value
+     *
+     * @param $key
+     * @param $value
+     * @return Node
+     */
     public function find($key, $value): Node
     {
         return (new Find)($this,$key,[$value])->first();

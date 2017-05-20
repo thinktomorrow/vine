@@ -5,6 +5,8 @@ namespace Vine;
 class Tree extends NodeCollection
 {
     /**
+     * Flat listing of nodes with primary id as collection key.
+     *
      * @var NodeCollection
      */
     private $index;

@@ -3,7 +3,6 @@
 namespace Vine\Queries;
 
 use Vine\Node;
-use Vine\NodeCollection;
 
 class Count
 {
