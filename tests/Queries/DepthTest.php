@@ -12,7 +12,7 @@ class DepthTest extends TestCase
     {
         $tree = (new \Vine\TreeFactory)->create($this->getTranslation());
 
-        $root = $tree->roots()->first()->children()->first();
+        $root = $tree->all()->first()->children()->first();
         $result = (new \Vine\Queries\Depth())->__invoke($root,1);
 
         $this->assertNotSame($root,$result);

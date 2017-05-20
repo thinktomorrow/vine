@@ -9,7 +9,7 @@ class TreeTest extends TestCase
     /** @test */
     function it_can_find_many_nodes_by_their_primary_identifiers()
     {
-        $nodes = $this->getTree()->findMany([5,2]);
+        $nodes = $this->getTree()->findManyByIndex([5,2]);
 
         $this->assertInstanceOf(NodeCollection::class, $nodes);
         //$this->assertSame($node, $tree->roots()[0]->children()[1]->children()[0]);
@@ -19,9 +19,9 @@ class TreeTest extends TestCase
     function it_can_find_a_node_by_its_primary_identifier()
     {
         $tree = $this->getTree();
-        $node = $tree->find(5);
+        $node = $tree->findByIndex(5);
 
-        $this->assertSame($node, $tree->roots()[0]->children()[1]->children()[0]);
+        $this->assertSame($node, $tree->all()[0]->children()[1]->children()[0]);
     }
 
     /** @test */

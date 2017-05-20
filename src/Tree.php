@@ -2,45 +2,39 @@
 
 namespace Vine;
 
-class Tree
+class Tree extends NodeCollection
 {
-    /**
-     * NodeCollection
-     * @var Node
-     */
-    private $roots;
-
     /**
      * @var NodeCollection
      */
     private $index;
 
-    public function __construct(NodeCollection $roots, NodeCollection $index)
+    public function __construct(NodeCollection $nodes, NodeCollection $index)
     {
-        $this->roots = $roots;
+        $this->nodes = $nodes;
         $this->index = $index;
     }
 
+    /**
+     * Count of all nodes
+     *
+     * @return int
+     */
     public function count()
     {
         return $this->index->count();
-    }
-
-    public function roots(): NodeCollection
-    {
-        return $this->roots;
     }
 
     /**
      * @param $id
      * @return null|Node
      */
-    public function find($id)
+    public function findByIndex($id)
     {
-        return $this->findMany((array)$id)->first();
+        return $this->findManyByIndex((array)$id)->first();
     }
 
-    public function findMany(array $ids): NodeCollection
+    public function findManyByIndex(array $ids): NodeCollection
     {
         $nodes = new NodeCollection;
 

@@ -9,11 +9,28 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * @var Node[]
      */
-    private $nodes;
+    protected $nodes;
 
     public function __construct(Node ...$nodes)
     {
         $this->nodes = $nodes;
+    }
+
+    public function all()
+    {
+        return $this->nodes;
+    }
+
+    public function first()
+    {
+        if($this->isEmpty()) return null;
+
+        return reset($this->nodes);
+    }
+
+    public function isEmpty()
+    {
+        return empty($this->nodes);
     }
 
     public function add(Node ...$nodes)
@@ -41,23 +58,6 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
         }
 
         return $this;
-    }
-
-    public function all()
-    {
-        return $this->nodes;
-    }
-
-    public function first()
-    {
-        if($this->isEmpty()) return null;
-
-        return reset($this->nodes);
-    }
-
-    public function isEmpty()
-    {
-        return empty($this->nodes);
     }
 
     public function findMany($key, array $values): NodeCollection
