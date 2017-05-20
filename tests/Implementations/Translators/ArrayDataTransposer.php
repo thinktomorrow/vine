@@ -2,13 +2,13 @@
 
 namespace Tests\Implementations\Translators;
 
-use Vine\Translators\Translator;
+use Vine\DataTransposer;
 
 /**
  * expected input:
  * { id: 1, parent_id: 0, label: 'foobar', ... }
  */
-class ArrayTranslator implements Translator
+class ArrayDataTransposer implements DataTransposer
 {
     /**
      * @var array

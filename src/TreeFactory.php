@@ -2,7 +2,7 @@
 
 namespace Vine;
 
-use Vine\Translators\Translator;
+use Vine\DataTransposer;
 
 class TreeFactory
 {
@@ -37,7 +37,7 @@ class TreeFactory
         return $this;
     }
 
-    public function create(Translator $translator)
+    public function create(DataTransposer $translator)
     {
         foreach($translator->all() as $i => $entry)
         {

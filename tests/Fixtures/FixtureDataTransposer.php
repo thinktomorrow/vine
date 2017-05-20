@@ -2,12 +2,12 @@
 
 namespace Tests\Fixtures;
 
-use Vine\Translators\Translator;
+use Vine\DataTransposer;
 
 /**
  * User: bencavens
  */
-class FixtureTranslator implements Translator
+class FixtureDataTransposer implements DataTransposer
 {
     private $flatten;
 

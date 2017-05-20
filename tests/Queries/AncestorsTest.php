@@ -1,10 +1,10 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Tests\Fixtures\FixtureTranslator;
+use Tests\Fixtures\FixtureDataTransposer;
 use Vine\Node;
 use Vine\NodeCollection;
-use Vine\Translators\Translator;
+use Vine\DataTransposer;
 
 class AncestorsTest extends TestCase
 {
@@ -36,10 +36,10 @@ class AncestorsTest extends TestCase
     }
 
     /**
-     * @return Translator
+     * @return DataTransposer
      */
-    private function getTranslation(): Translator
+    private function getTranslation(): DataTransposer
     {
-        return new FixtureTranslator('default');
+        return new FixtureDataTransposer('default');
     }
 }

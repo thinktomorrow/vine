@@ -2,7 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 use Vine\NodeCollection;
-use Tests\Implementations\Translators\ArrayTranslator;
+use Tests\Implementations\Translators\ArrayDataTransposer;
 
 class TreeTest extends TestCase
 {
@@ -43,7 +43,7 @@ class TreeTest extends TestCase
             ['id' => 4, 'name' => 'foobar4', 'parent_id' => 0],
         ];
 
-        $translator = new ArrayTranslator($records);
+        $translator = new ArrayDataTransposer($records);
         return (new \Vine\TreeFactory())->create($translator);
     }
 }

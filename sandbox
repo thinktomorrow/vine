@@ -2,7 +2,7 @@
 
 <?php
 
-use Tests\Fixtures\FixtureTranslator;
+use Tests\Fixtures\FixtureDataTransposer;
 
 require_once __DIR__.'/vendor/autoload.php';
 
@@ -24,12 +24,12 @@ $records = [
 ];
 
 $builder = new \Vine\TreeFactory();
-$tree = $builder->create(new \Tests\Implementations\Translators\ArrayTranslator($records));
+$tree = $builder->create(new \Tests\Implementations\Translators\ArrayDataTransposer($records));
 
 var_dump($tree->find(3)->children());
 
 $tree = (new \Vine\TreeFactory())->create(
-    new FixtureTranslator('large')
+    new FixtureDataTransposer('large')
 );
 
 echo "\n";

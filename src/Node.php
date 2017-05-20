@@ -5,7 +5,6 @@ namespace Vine;
 use Vine\Queries\Ancestors;
 use Vine\Queries\Count;
 use Vine\Queries\Depth;
-use Vine\Queries\Find;
 use Vine\Queries\Pluck;
 
 class Node
