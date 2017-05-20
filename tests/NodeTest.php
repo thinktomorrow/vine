@@ -104,13 +104,13 @@ class NodeTest extends TestCase
     }
 
     /** @test */
-    function it_can_detach_parent()
+    function it_can_remove_self_from_parent()
     {
         $node = new Node(null);
         $node->addChildren([$child = new Node(null)]);
         $child->addChildren([$child2 = new Node(null)]);
 
-        $child->detachParent();
+        $child->removeSelf();
 
         $this->assertCount(0,$node->children());
         $this->assertCount(1,$child->children());

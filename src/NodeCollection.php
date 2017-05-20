@@ -2,6 +2,7 @@
 
 namespace Vine;
 
+use Vine\Commands\Remove;
 use Vine\Queries\Find;
 
 class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
@@ -70,15 +71,7 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function remove(Node $child)
     {
-        foreach($this->nodes as $k => $node)
-        {
-            if($child === $node)
-            {
-                unset($this->nodes[$k]);
-            }
-        }
-
-        return $this;
+        return (new Remove())($this,$child);
     }
 
     /**
