@@ -33,14 +33,7 @@ class Depth
     {
         if($depth <= $currentDepth) return false;
 
-        // Isolate the child nodes before adding them
-        $isolatedChildren = new NodeCollection();
-        foreach($children as $child)
-        {
-            $isolatedChildren->add($child->isolatedCopy());
-        }
-
-        $node->addChildren($isolatedChildren);
+        $node->addChildren($this->isolateChildren($children));
         $currentDepth++;
 
         // Add next depth of children
@@ -50,5 +43,22 @@ class Depth
         }
 
         return $node;
+    }
+
+    /**
+     * Isolate the child nodes before adding them
+     *
+     * @param NodeCollection $children
+     * @return NodeCollection
+     */
+    private function isolateChildren(NodeCollection $children): NodeCollection
+    {
+        $isolatedChildren = new NodeCollection();
+
+        foreach ($children as $child) {
+            $isolatedChildren->add($child->isolatedCopy());
+        }
+
+        return $isolatedChildren;
     }
 }
