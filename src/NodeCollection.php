@@ -91,9 +91,9 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
      *
      * @param $key
      * @param $value
-     * @return Node
+     * @return Node|null
      */
-    public function find($key, $value): Node
+    public function find($key, $value)
     {
         return (new Find)($this,$key,[$value])->first();
     }

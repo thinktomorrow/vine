@@ -138,6 +138,11 @@ class Node
         return $this->parent()->depth() + 1;
     }
 
+    /**
+     * Total of all child nodes
+     *
+     * @return int
+     */
     public function count(): int
     {
         if($this->isLeaf()) return 0;
@@ -145,26 +150,46 @@ class Node
         return  (new Count)($this);
     }
 
+    /**
+     * @return bool
+     */
     public function isLeaf(): bool
     {
         return $this->children->isEmpty();
     }
 
+    /**
+     * @return bool
+     */
     public function isRoot(): bool
     {
         return !$this->parent;
     }
 
+    /**
+     * @param $key
+     * @param array $values
+     * @return NodeCollection
+     */
     public function findMany($key, array $values): NodeCollection
     {
         return $this->children()->findMany($key, $values);
     }
 
+    /**
+     * @param $key
+     * @param $value
+     * @return Node
+     */
     public function find($key, $value): Node
     {
         return $this->children()->find($key, $value);
     }
 
+    /**
+     * @param null $depth
+     * @return NodeCollection
+     */
     public function ancestors($depth = null): NodeCollection
     {
         return (new Ancestors)($this, $depth);
@@ -225,6 +250,13 @@ class Node
         return $children;
     }
 
+    /**
+     * Fetch entry data via a direct call to Node.
+     * E.g. $node->name resolves to $node->entry('name')
+     *
+     * @param $name
+     * @return mixed|null|NodeCollection
+     */
     public function __get($name)
     {
         if($name == 'children') return $this->children();
