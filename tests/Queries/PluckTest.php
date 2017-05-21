@@ -44,4 +44,16 @@ class PluckTest extends TestCase
             3 => 'second-child',
         ],$node->pluck('id','name'));
     }
+
+    /** @test */
+    function it_can_pluck_from_ancestors()
+    {
+        $node = new Node(['id' => 1, 'name' => 'foobar']);
+        $node->addChildren([$child = new Node(['id' => 2, 'name' => 'first-child'])]);
+        $child->addChildren([$child2 = new Node(['id' => 3, 'name' => 'second-child'])]);
+
+        $this->assertEquals([
+            3,2,1
+        ],$child2->pluckAncestors('id'));
+    }
 }

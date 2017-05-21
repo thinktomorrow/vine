@@ -23,6 +23,20 @@ class AncestorsTest extends TestCase
     }
 
     /** @test */
+    function it_can_get_ancestors_at_certain_depth()
+    {
+        $root = new Node('foobar');
+        $root->addChildren([$firstChild = new Node('first-child')]);
+        $firstChild->addChildren([$secondChild = new Node('second-child')]);
+
+        $ancestors = (new \Vine\Queries\Ancestors())->__invoke($secondChild,1);
+
+        $this->assertCount(1,$ancestors);
+        $this->assertEquals(new NodeCollection(...[ $firstChild ]),$ancestors);
+
+    }
+
+    /** @test */
     function node_can_get_the_ancestor_tree()
     {
         $root = new Node('foobar');

@@ -7,7 +7,7 @@ use Vine\NodeCollection;
 class NodeTest extends TestCase
 {
     /** @test */
-    function it_can_assign_an_entry_value_to_a_node()
+    function it_can_add_an_entry_value_to_a_node()
     {
         $node = new Node('foobar');
         $this->assertEquals('foobar',$node->entry());
@@ -17,7 +17,7 @@ class NodeTest extends TestCase
     }
 
     /** @test */
-    function it_can_assign_children_to_a_node()
+    function it_can_add_children_to_a_node()
     {
         $node = new Node('foobar');
         $this->assertEmpty($node->children());
@@ -26,6 +26,15 @@ class NodeTest extends TestCase
             new Node('first-child'),
             new Node('second-child')
         ])->children());
+    }
+
+    /** @test */
+    function an_added_child_must_be_node_or_collection()
+    {
+        $this->expectException(InvalidArgumentException::class);
+
+        $node = new Node('foobar');
+        $node->addChildren('string is not allowed');
     }
 
     /** @test */
@@ -118,6 +127,34 @@ class NodeTest extends TestCase
 
         // Assert parent still exists
         $this->assertInstanceOf(Node::class,$node);
+    }
+
+    /** @test */
+    function it_can_replace_entry()
+    {
+        $node = new Node('foobar');
+        $node->replaceEntry('berry');
+
+        $this->assertEquals('berry',$node->entry());
+    }
+
+    /** @test */
+    function it_can_fetch_entry_values_via_node()
+    {
+        $node = new Node(['id' => 1,'label' => 'foobar']);
+
+        $this->assertEquals(1,$node->id);
+        $this->assertEquals('foobar',$node->label);
+    }
+
+    /** @test */
+    function it_can_fetch_children_as_property_call()
+    {
+        $node = new Node(null);
+        $node->addChildren([$child = new Node(null)]);
+
+        $this->assertInstanceOf(NodeCollection::class, $node->children);
+        $this->assertSame($child,$node->children->first());
     }
 
 }
