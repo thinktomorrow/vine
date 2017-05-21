@@ -1,13 +1,31 @@
-# Vine
-
-Render an adjacent datamodel to the desired html output.
 
 [![Build Status](https://travis-ci.org/thinktomorrow/vine.svg?branch=master)](https://travis-ci.org/thinktomorrow/vine)
 [![Coverage Status](https://coveralls.io/repos/github/thinktomorrow/vine/badge.svg?branch=master)](https://coveralls.io/github/thinktomorrow/vine?branch=master)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/thinktomorrow/vine/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/thinktomorrow/vine/?branch=master)
 [![SensioLabsInsight](https://insight.sensiolabs.com/projects/573b8ce5-0c73-432c-9ddb-57a1c16bff8d/mini.png)](https://insight.sensiolabs.com/projects/573b8ce5-0c73-432c-9ddb-57a1c16bff8d)
 
-## Example
+# Vine
+
+Render an adjacent datamodel to the desired html output.
+
+## Quick start example
+```php
+// Create a node
+$node = new Node('foobar');
+
+// Attach a child node
+$node->addChildren(new Node('fooberry'));
+```
+
+```php
+// Check if node has no children
+$node->isLeaf(); // returns false or true
+
+// Check depth of node in tree, starts from zero.
+$child->depth(); // returns 1
+```
+
+## Transposer example
 
 ```php
 // Load flat dataset from storage
@@ -35,3 +53,8 @@ This will output something similar to:
 | \-Array
 |   \-bazbaz
 ```
+
+
+## TODO
+- allow for primitive value to be passed as entry; making sure that find methods work as expected
+- allow for regex patterns to be passed to our find methods

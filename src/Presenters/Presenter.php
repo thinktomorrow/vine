@@ -2,11 +2,11 @@
 
 namespace Vine\Presenters;
 
-use Vine\Tree;
+use Vine\NodeCollection;
 
 interface Presenter
 {
-    public function tree(Tree $tree);
+    public function collection(NodeCollection $collection);
 
     public function render();
 }

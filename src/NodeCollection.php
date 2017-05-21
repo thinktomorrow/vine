@@ -8,13 +8,13 @@ use Vine\Queries\Find;
 class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
 {
     /**
-     * @var Node[] | NodeCollection
+     * @var Node[]
      */
     protected $nodes;
 
-    public function __construct(Node ...$nodes)
+    public function __construct(Node ...$nodeCollection)
     {
-        $this->nodes = $nodes;
+        $this->nodes = $nodeCollection;
     }
 
     public function all()

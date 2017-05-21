@@ -12,7 +12,7 @@ class CliPresenterTest extends TestCase
     {
         $tree = (new \Vine\TreeFactory)->create($this->getTranslation());
 
-        $output = (new CliPresenter)->tree($tree)->render();
+        $output = (new CliPresenter)->collection($tree)->render();
 
         $this->assertInternalType('string',$output);
         $this->assertStringStartsWith('|-root-1',trim($output,PHP_EOL));

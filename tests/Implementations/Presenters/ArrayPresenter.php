@@ -16,7 +16,7 @@ class ArrayPresenter extends BasePresenter implements Presenter
      */
     public function render()
     {
-        return $this->renderRecursiveToArray($this->tree->all());
+        return $this->renderRecursiveToArray($this->collection);
     }
 
     /**

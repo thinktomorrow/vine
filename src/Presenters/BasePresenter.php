@@ -8,23 +8,22 @@ use Vine\Tree;
 
 abstract class BasePresenter
 {
-    protected $tree;
+    protected $collection;
 
     public function __construct()
     {
-        // Empty tree
-        $this->tree = new Tree(new NodeCollection(), new NodeCollection());
+        $this->collection = new NodeCollection();
     }
 
-    public function tree(Tree $tree)
+    public function collection(NodeCollection $collection)
     {
-        $this->tree = $tree;
+        $this->collection = $collection;
 
         return $this;
     }
 
     /**
-     * Render tree
+     * Render collection
      *
      * @return string
      */

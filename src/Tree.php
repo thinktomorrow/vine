@@ -2,6 +2,14 @@
 
 namespace Vine;
 
+/**
+ * Class Tree
+ * Tree collection is exactly the same as a node collection with the difference
+ * that a tree contains a flat index reference to each node, based on the primary key.
+ * This allows for fast retrieval of nodes by searching on their primary key.
+ *
+ * @package Vine
+ */
 class Tree extends NodeCollection
 {
     /**
@@ -11,9 +19,9 @@ class Tree extends NodeCollection
      */
     private $index;
 
-    public function __construct(NodeCollection $nodes, NodeCollection $index)
+    public function __construct(NodeCollection $nodeCollection, NodeCollection $index)
     {
-        $this->nodes = $nodes;
+        $this->nodes = $nodeCollection->all();
         $this->index = $index;
     }
 
