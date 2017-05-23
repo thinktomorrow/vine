@@ -2,7 +2,11 @@
 
 namespace Vine;
 
+use Vine\Commands\Filter;
+use Vine\Commands\Flatten;
+use Vine\Commands\Inflate;
 use Vine\Commands\Remove;
+use Vine\Commands\Slice;
 use Vine\Queries\Find;
 
 class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
@@ -72,6 +76,41 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
     public function remove(Node $child)
     {
         return (new Remove())($this,$child);
+    }
+
+    /**
+     * Return flattened list of all nodes in this collection
+     *
+     * @return NodeCollection
+     */
+    public function flatten()
+    {
+        return (new Flatten())($this);
+    }
+
+    /**
+     * Inflate a flattened collection back to its original structure
+     *
+     * @return NodeCollection
+     */
+    public function inflate()
+    {
+        return (new Inflate())($this);
+    }
+
+    public function slice(Node ...$nodes)
+    {
+        return (new Slice())($this, $nodes);
+    }
+
+    /**
+     * Whitelisting of nodes that pass the closure
+     *
+     * @param callable $callable
+     */
+    public function filter(Callable $callable)
+    {
+        return (new Filter())($this, $callable);
     }
 
     /**
