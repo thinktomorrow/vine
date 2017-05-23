@@ -17,43 +17,20 @@ class Slice
      */
     public function __invoke(NodeCollection $nodeCollection, Node ...$sliceNodes): NodeCollection
     {
-        $slicedCollection = new NodeCollection();
-
-        foreach($nodeCollection as $k => $node)
+        // Check if current node is one of the passed nodes to be sliced out
+        foreach($sliceNodes as $node)
         {
-            if(!$node->children()->isEmpty())
+            // Add children to parent of this node
+            foreach($node->children() as $child)
             {
-                $slicedCollection->merge(
-                    $this->__invoke($node->children(), $sliceNodes)
-                );
+                ($node->isRoot())
+                    ? $child->moveToRoot()
+                    : $child->move($node->parent());
             }
 
-            // Check if current node is one of the passed nodes to be sliced out
-            foreach($sliceNodes as $sliceNode)
-            {
-                if(assertSame($sliceNode, $node))
-                {
-                    // Add children to parent of this node
-                    if($node->isRoot())
-                    {
-                        foreach($node->children() as $child)
-                        {
-                            $child->root();
-                        }
-                    }
-                    else{
-                        $children = clone $node->children();
-
-                        $node->removeSelf();
-
-                        $node->parent()->addChildren($children);
-                    }
-
-
-                }
-            }
+            $node->removeSelf();
         }
 
-        return $roots;
+        return $nodeCollection;
     }
 }

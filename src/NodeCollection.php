@@ -98,9 +98,15 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
         return (new Inflate())($this);
     }
 
+    /**
+     * Slice one or more nodes out of the collection
+     *
+     * @param Node[] ...$nodes
+     * @return mixed
+     */
     public function slice(Node ...$nodes)
     {
-        return (new Slice())($this, $nodes);
+        return (new Slice())($this, ...$nodes);
     }
 
     /**

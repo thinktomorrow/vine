@@ -17,8 +17,8 @@ class SliceTest extends \PHPUnit\Framework\TestCase
         $newChild2 = $collection->first()->children()->first();
 
         $this->assertEquals(1, $collection->count());
-        $this->assertNotSame($node, $collection->first());
-        $this->assertNotSame($child2, $newChild2);
+        $this->assertSame($node, $collection->first());
+        $this->assertSame($child2, $newChild2);
         $this->assertSame($node, $newChild2->parent());
 
         $this->assertCount(1,$node->children());

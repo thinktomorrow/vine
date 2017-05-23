@@ -2,6 +2,7 @@
 
 namespace Vine;
 
+use Vine\Commands\Move;
 use Vine\Queries\Ancestors;
 use Vine\Queries\Count;
 use Vine\Queries\Depth;
@@ -114,7 +115,7 @@ class Node
     }
 
     /**
-     * Remove a child node. This deletes the node from any depth in the graph
+     * Remove (detaches) a child node. This deletes the node from any depth in the graph
      * Also removes the entire children tree from that node!
      *
      * @param Node $node
@@ -123,6 +124,22 @@ class Node
     public function remove(self $node)
     {
         return $this->children()->remove($node);
+    }
+
+    /**
+     * Move a child node to a different parent
+     *
+     * @param Node $parent
+     * @return mixed
+     */
+    public function move(self $parent)
+    {
+        return (new Move())($this,$parent);
+    }
+
+    public function moveToRoot()
+    {
+        return $this->removeSelf();
     }
 
     /**
