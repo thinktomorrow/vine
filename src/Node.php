@@ -3,9 +3,10 @@
 namespace Vine;
 
 use Vine\Commands\Move;
+use Vine\Commands\Shake;
 use Vine\Queries\Ancestors;
 use Vine\Queries\Count;
-use Vine\Queries\Depth;
+use Vine\Commands\Copy;
 use Vine\Queries\Pluck;
 
 class Node
@@ -155,7 +156,7 @@ class Node
     }
 
     /**
-     * Total of all child nodes
+     * count of all direct child nodes
      *
      * @return int
      */
@@ -163,7 +164,19 @@ class Node
     {
         if($this->isLeaf()) return 0;
 
-        return  (new Count)($this);
+        return $this->children()->count();
+    }
+
+    /**
+     * Total of all child nodes
+     *
+     * @return int
+     */
+    public function total(): int
+    {
+        if($this->isLeaf()) return 0;
+
+        return (new Count)($this);
     }
 
     /**
@@ -237,16 +250,38 @@ class Node
     }
 
     /**
-     * Get a Node clone without adjacent relationships
+     * Get a copy of this node
      *
-     * @param int $depth
+     * @param null|int $depth
      * @return Node
      */
-    public function isolatedCopy($depth = 0): self
+    public function copy($depth = null): self
     {
-        return !$depth
+        return $depth === 0
                 ? new self($this->entry())
-                : (new Depth())($this,$depth);
+                : (new Copy())($this,$depth);
+    }
+
+    /**
+     * Copy of this node without its parent / children relationships
+     *
+     * @return Node
+     */
+    public function isolatedCopy(): self
+    {
+        return $this->copy(0);
+    }
+
+    /**
+     * Reduce collection to the nodes that pass the callback
+     * Shaking a collection will keep the ancestor structure
+     *
+     * @param callable $callback
+     * @return NodeCollection
+     */
+    public function shake(Callable $callback): self
+    {
+        return (new Shake())($this, $callback);
     }
 
     /**

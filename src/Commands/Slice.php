@@ -10,7 +10,7 @@ class Slice
     /**
      * Slice a node from the tree and return a new tree structure where
      * the children from this node get the parent of the extracted Node
-     * as their new direct parent
+     * as their parent
      *
      * @param NodeCollection $nodeCollection
      * @return NodeCollection

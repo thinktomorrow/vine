@@ -2,7 +2,7 @@
 
 namespace Vine;
 
-use Vine\Commands\Filter;
+use Vine\Commands\Shake;
 use Vine\Commands\Flatten;
 use Vine\Commands\Inflate;
 use Vine\Commands\Remove;
@@ -110,23 +110,13 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * Whitelisting of nodes that pass the closure
-     *
-     * @param callable $callable
-     */
-    public function filter(Callable $callable)
-    {
-        return (new Filter())($this, $callable);
-    }
-
-    /**
      * Find many nodes by attribute value
      *
      * @param $key
      * @param array $values
      * @return NodeCollection
      */
-    public function findMany($key, array $values): NodeCollection
+    public function findMany($key, array $values): self
     {
         return (new Find)($this,$key,$values);
     }
