@@ -100,31 +100,25 @@ class Node
     }
 
     /**
-     * Remove this node from the tree / parent
-     * If this node is root, nothing is done
-     *
-     * @return Node
-     */
-    public function removeSelf(): self
-    {
-        if(!$this->isRoot())
-        {
-            $this->parent()->remove($this);
-            $this->parent = null;
-        }
-
-        return $this;
-    }
-
-    /**
-     * Remove (detaches) a child node. This deletes the node from any depth in the graph
+     * Remove this node or (detaches) a child node.
+     * This detaches self from parent or when node is passed, it deletes that child node from any depth in the graph
      * Also removes the entire children tree from that node!
      *
      * @param Node $node
      * @return $this
      */
-    public function remove(self $node)
+    public function remove(self $node = null)
     {
+        // Remove self from the parent node
+        if(is_null($node) && !$this->isRoot())
+        {
+            $this->parent()->remove($this);
+            $this->parent = null;
+
+            return $this;
+        }
+
+        // remove node from node tree
         return $this->children()->remove($node);
     }
 
@@ -141,7 +135,7 @@ class Node
 
     public function moveToRoot()
     {
-        return $this->removeSelf();
+        return $this->remove();
     }
 
     /**

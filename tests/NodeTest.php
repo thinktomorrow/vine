@@ -119,7 +119,7 @@ class NodeTest extends TestCase
         $node->addChildren([$child = new Node(null)]);
         $child->addChildren([$child2 = new Node(null)]);
 
-        $child->removeSelf();
+        $child->remove();
 
         $this->assertCount(0,$node->children());
         $this->assertCount(1,$child->children());

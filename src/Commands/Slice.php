@@ -29,7 +29,7 @@ class Slice
                     : $child->move($node->parent());
             }
 
-            $node->removeSelf();
+            $node->remove();
         }
 
         return $nodeCollection;
