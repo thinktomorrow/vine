@@ -38,21 +38,6 @@ class ShakeTest extends TestCase
     }
 
     /** @test */
-    function it_can_shake_by_specific_closure()
-    {
-        $node = $this->getNode();
-
-        $shakedNode = $node->shake(function(Node $node){
-            return $node->id == 3;
-        });
-
-        $this->assertEquals(
-            (new Node(['id' => 1, 'name' => 'foobar']))->addChildren(new Node(['id' => 3, 'name' => 'second-child'])),
-            $shakedNode
-        );
-    }
-
-    /** @test */
     function shake_maintains_the_ancestors_for_each_kept_node()
     {
         $node = $this->getNode();
@@ -62,7 +47,11 @@ class ShakeTest extends TestCase
         });
 
         $this->assertEquals(
-            (new Node(['id' => 1, 'name' => 'foobar']))->addChildren(new Node(['id' => 3, 'name' => 'second-child'])),
+            (new Node(['id' => 1, 'name' => 'foobar']))
+                ->addChildren(
+                    (new Node(['id' => 2, 'name' => 'first-child']))
+                        ->addChildren(new Node(['id' => 3, 'name' => 'second-child']))
+                ),
             $shakedNode
         );
     }

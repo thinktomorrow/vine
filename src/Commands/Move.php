@@ -3,7 +3,6 @@
 namespace Vine\Commands;
 
 use Vine\Node;
-use Vine\NodeCollection;
 
 class Move
 {

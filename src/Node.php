@@ -3,6 +3,7 @@
 namespace Vine;
 
 use Vine\Commands\Move;
+use Vine\Commands\Prune;
 use Vine\Commands\Shake;
 use Vine\Queries\Ancestors;
 use Vine\Queries\Count;
@@ -277,11 +278,22 @@ class Node
      * Shaking a collection will keep the ancestor structure
      *
      * @param callable $callback
-     * @return NodeCollection
+     * @return self
      */
     public function shake(Callable $callback): self
     {
         return (new Shake())($this, $callback);
+    }
+
+    /**
+     * Same as shaking except that it will not keep the ancestor structure
+     *
+     * @param callable $callback
+     * @return self
+     */
+    public function prune(Callable $callback): self
+    {
+        return (new Prune())($this, $callback);
     }
 
     /**

@@ -13,6 +13,7 @@ class Slice
      * as their parent
      *
      * @param NodeCollection $nodeCollection
+     * @param Node[] $sliceNodes
      * @return NodeCollection
      */
     public function __invoke(NodeCollection $nodeCollection, Node ...$sliceNodes): NodeCollection

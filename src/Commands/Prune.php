@@ -8,27 +8,29 @@ class Prune
 {
     /**
      * Prune a node collection by a callback so only the filtered nodes are left as children.
-     * Shaking a collection retains the ancestors for each filtered node
      * Pruning a collection only keeps the filtered nodes and collapses the ancestor tree.
+     * Shaking a collection retains the ancestors for each filtered node
      *
      * @param Node $node
      * @param callable $callback
-     * @param bool $prune -
      * @return Node
      * @internal param Node[] $nodes
      */
-    public function __invoke(Node $node, Callable $callback, $prune = false): Node
+    public function __invoke(Node $node, Callable $callback): Node
     {
-        $shakedNode = $node->isolatedCopy();
+        $prunedNode = $node->isolatedCopy();
         $copiedNode = $node->copy();
 
-        $shakedChildren = (new Slice())($copiedNode->children(), ...$this->getBlacklistedNodes($copiedNode, $callback));
+        $prunedChildren = (new Slice())($copiedNode->children(), ...$this->getBlacklistedNodes($copiedNode, $callback));
 
-        return $shakedNode->addChildren($shakedChildren);
+        return $prunedNode->addChildren($prunedChildren);
     }
 
     /**
-     * Blacklist of allowed nodes - we reverse the callback so we get the nodes that we do not want included
+     * Blacklist of disallowed nodes
+     * Note: the passed callback determines the nodes which should be kept but here
+     * we reverse the callback so we get the nodes that need to be excluded
+     *
      * @param $copiedNode
      * @param callable $callback
      * @return array

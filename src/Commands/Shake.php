@@ -50,10 +50,8 @@ class Shake
             // Todo we should make this check optimized for performance
             foreach($whitelistedNodes as $whitelistedNode)
             {
-                if($node === $whitelistedNode)
+                if($node->equals($whitelistedNode))
                 {
-                    var_dump($node, $whitelistedNode);
-                    die();
                     return false;
                 }
             }

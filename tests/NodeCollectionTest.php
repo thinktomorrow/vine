@@ -125,7 +125,7 @@ class NodeCollectionTest extends TestCase
 
         $root->remove($child3);
 
-        $this->assertEquals(2, $root->count());
+        $this->assertEquals(2, $root->total());
         $this->assertSame($child2,$root->children()->find('id',2));
         $this->assertSame($child4,$root->children()->find('id',4));
         $this->assertNull($root->children()->find('id',3));

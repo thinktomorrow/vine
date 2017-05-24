@@ -107,9 +107,9 @@ class NodeTest extends TestCase
         $node->addChildren([$child = new Node(null)]);
         $child->addChildren([$child2 = new Node(null)]);
 
-        $this->assertEquals(0,$child2->count());
-        $this->assertEquals(1,$child->count());
-        $this->assertEquals(2,$node->count());
+        $this->assertEquals(0,$child2->total());
+        $this->assertEquals(1,$child->total());
+        $this->assertEquals(2,$node->total());
     }
 
     /** @test */
