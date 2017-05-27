@@ -25,6 +25,5 @@
         "phpunit/phpunit": "^6.1"
     },
     "require": {
-        "myclabs/deep-copy": "^1.6"
     }
 }
