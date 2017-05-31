@@ -3,6 +3,7 @@
 namespace Vine\Commands;
 
 use Vine\Node;
+use Vine\NodeCollection;
 
 class Prune
 {
@@ -11,19 +12,18 @@ class Prune
      * Pruning a collection only keeps the filtered nodes and collapses the ancestor tree.
      * Shaking a collection retains the ancestors for each filtered node
      *
-     * @param Node $node
+     * @param NodeCollection $nodeCollection
      * @param callable $callback
-     * @return Node
+     * @return NodeCollection
      * @internal param Node[] $nodes
      */
-    public function __invoke(Node $node, Callable $callback): Node
+    public function __invoke(NodeCollection $nodeCollection, Callable $callback): NodeCollection
     {
-        $prunedNode = $node->isolatedCopy();
-        $copiedNode = $node->copy();
+        $copiedNodeCollection = $nodeCollection->copy();
 
-        $prunedChildren = (new Slice())($copiedNode->children(), ...$this->getBlacklistedNodes($copiedNode, $callback));
+        $prunedChildren = (new Slice())($copiedNodeCollection, ...$this->getBlacklistedNodes($copiedNodeCollection, $callback));
 
-        return $prunedNode->addChildren($prunedChildren);
+        return $prunedChildren;
     }
 
     /**
@@ -31,13 +31,13 @@ class Prune
      * Note: the passed callback determines the nodes which should be kept but here
      * we reverse the callback so we get the nodes that need to be excluded
      *
-     * @param $copiedNode
+     * @param $copiedNodeCollection
      * @param callable $callback
      * @return array
      */
-    private function getBlacklistedNodes(Node $copiedNode, Callable $callback): array
+    private function getBlacklistedNodes(NodeCollection $copiedNodeCollection, Callable $callback): array
     {
-        $flatten = (new Flatten())($copiedNode->children());
+        $flatten = (new Flatten())($copiedNodeCollection);
 
         return array_filter($flatten->all(), function (Node $node) use ($callback)
         {

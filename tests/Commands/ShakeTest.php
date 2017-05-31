@@ -56,6 +56,23 @@ class ShakeTest extends TestCase
         );
     }
 
+    /** @test */
+    function it_can_shake_a_node_collection()
+    {
+        $nodeCollection = $this->getNode()->children();
+
+        $shakedNodeCollection = $nodeCollection->shake(function(Node $node){
+            return $node->id == 3;
+        });
+
+        $this->assertEquals(
+            new \Vine\NodeCollection((new Node(['id' => 2, 'name' => 'first-child']))
+                ->addChildren(new Node(['id' => 3, 'name' => 'second-child']))
+            ),
+            $shakedNodeCollection
+        );
+    }
+
     /**
      * @return Node
      */

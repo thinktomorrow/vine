@@ -12,31 +12,30 @@ class Shake
      * Shaking a collection retains the ancestors for each filtered node
      * Pruning a collection only keeps the filtered nodes and collapses the ancestor tree.
      *
-     * @param Node $node
+     * @param NodeCollection $nodeCollection
      * @param callable $callback
      * @param bool $prune -
      * @return Node
      * @internal param Node[] $nodes
      */
-    public function __invoke(Node $node, Callable $callback, $prune = false): Node
+    public function __invoke(NodeCollection $nodeCollection, Callable $callback, $prune = false): NodeCollection
     {
-        $shakedNode = $node->isolatedCopy();
-        $copiedNode = $node->copy();
+        $copiedNodeCollection = $nodeCollection->copy();
 
-        $shakedChildren = (new Slice())($copiedNode->children(), ...$this->getBlacklistedNodes($copiedNode, $callback));
+        $shakedChildren = (new Slice())($copiedNodeCollection, ...$this->getBlacklistedNodes($copiedNodeCollection, $callback));
 
-        return $shakedNode->addChildren($shakedChildren);
+        return $shakedChildren;
     }
 
     /**
      * Blacklist of allowed nodes - we reverse the callback so we get the nodes that we do not want included
-     * @param $copiedNode
+     * @param $copiedNodeCollection
      * @param callable $callback
      * @return array
      */
-    private function getBlacklistedNodes(Node $copiedNode, Callable $callback): array
+    private function getBlacklistedNodes(NodeCollection $copiedNodeCollection, Callable $callback): array
     {
-        $flatten = (new Flatten())($copiedNode->children());
+        $flatten = (new Flatten())($copiedNodeCollection);
 
         $whitelistedNodes = new NodeCollection(...array_filter($flatten->all(),$callback));
 

@@ -2,11 +2,13 @@
 
 namespace Vine;
 
+use Vine\Commands\Prune;
 use Vine\Commands\Shake;
 use Vine\Commands\Flatten;
 use Vine\Commands\Inflate;
 use Vine\Commands\Remove;
 use Vine\Commands\Slice;
+use Vine\Queries\Count;
 use Vine\Queries\Find;
 
 class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
@@ -65,17 +67,36 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
+     * Get a copy of this node collection
+     *
+     * @param null|int $depth
+     * @return Node
+     */
+    public function copy($depth = null): self
+    {
+        $collection = new self;
+
+        foreach($this->all() as $child)
+        {
+            $collection->add($child->copy($depth));
+        }
+
+        return $collection;
+    }
+
+    /**
      * Remove the child node
      *
-     * Please note that all descendants of this
-     * child node will be removed as well.
+     * Children of the removed child node will be removed as well. This does not
+     * remove the parent / child relations of the removed node. For this
+     * the node->remove() should be called instead.
      *
      * @param Node $child
      * @return $this
      */
     public function remove(Node $child)
     {
-        return (new Remove())($this,$child);
+        return (new Remove)($this,$child);
     }
 
     /**
@@ -110,6 +131,29 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
+     * Reduce collection to the nodes that pass the callback
+     * Shaking a collection will keep the ancestor structure
+     *
+     * @param callable $callback
+     * @return self
+     */
+    public function shake(Callable $callback): self
+    {
+        return (new Shake())($this, $callback);
+    }
+
+    /**
+     * Same as shaking except that it will not keep the ancestor structure
+     *
+     * @param callable $callback
+     * @return self
+     */
+    public function prune(Callable $callback): self
+    {
+        return (new Prune())($this, $callback);
+    }
+
+    /**
      * Find many nodes by attribute value
      *
      * @param $key
@@ -131,6 +175,18 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
     public function find($key, $value)
     {
         return (new Find)($this,$key,[$value])->first();
+    }
+
+    /**
+     * Total of all nodes and their children
+     *
+     * @return int
+     */
+    public function total(): int
+    {
+        return array_reduce($this->all(),function($carry, Node $node){
+            return $carry + (new Count)($node);
+        },$this->count());
     }
 
     public function offsetExists($offset)

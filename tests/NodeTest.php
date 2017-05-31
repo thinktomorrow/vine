@@ -101,7 +101,7 @@ class NodeTest extends TestCase
     }
 
     /** @test */
-    function it_can_get_count_of_all_children()
+    function it_can_get_total_count_of_all_children()
     {
         $node = new Node(null);
         $node->addChildren([$child = new Node(null)]);

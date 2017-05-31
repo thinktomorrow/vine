@@ -110,10 +110,13 @@ class Node
     public function remove(self $node = null)
     {
         // Remove self from the parent node
-        if(is_null($node) && !$this->isRoot())
+        if(is_null($node))
         {
-            $this->parent()->remove($this);
-            $this->parent = null;
+            if(!$this->isRoot())
+            {
+                $this->parent()->remove($this);
+                $this->parent = null;
+            }
 
             return $this;
         }
@@ -276,7 +279,9 @@ class Node
      */
     public function shake(Callable $callback): self
     {
-        return (new Shake())($this, $callback);
+        $node = $this->isolatedCopy();
+
+        return $this->isLeaf() ? $node : $node->addChildren($this->children()->shake($callback));
     }
 
     /**
@@ -287,7 +292,9 @@ class Node
      */
     public function prune(Callable $callback): self
     {
-        return (new Prune())($this, $callback);
+        $node = $this->isolatedCopy();
+
+        return $this->isLeaf() ? $node : $node->addChildren($this->children()->prune($callback));
     }
 
     /**

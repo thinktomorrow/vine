@@ -54,6 +54,22 @@ class CopyTest extends TestCase
     }
 
     /** @test */
+    function collection_can_be_copied()
+    {
+        $root = new Node('foobar');
+        $root2 = new Node('first-child');
+        $root2->addChildren([new Node('second-child')]);
+
+        $collection = new \Vine\NodeCollection($root, $root2);
+
+        $copy = $collection->copy();
+
+        $this->assertEquals($collection,$copy);
+        $this->assertNotSame($collection, $copy);
+
+    }
+
+    /** @test */
     function node_can_be_isolated_at_specified_depth()
     {
         $root = new Node('foobar');

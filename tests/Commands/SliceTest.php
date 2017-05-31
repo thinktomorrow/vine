@@ -16,12 +16,12 @@ class SliceTest extends \PHPUnit\Framework\TestCase
         // Child2 is now direct child of node
         $newChild2 = $collection->first()->children()->first();
 
-        $this->assertEquals(1, $collection->count());
+        $this->assertEquals(2, $collection->total());
         $this->assertSame($node, $collection->first());
         $this->assertSame($child2, $newChild2);
         $this->assertSame($node, $newChild2->parent());
 
-        $this->assertCount(1,$node->children());
+        $this->assertEquals(1,$node->total());
         $this->assertEmpty($newChild2->children());
     }
 }

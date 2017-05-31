@@ -16,22 +16,49 @@ class Slice
      * @param Node[] $sliceNodes
      * @return NodeCollection
      */
-    public function __invoke(NodeCollection $nodeCollection, Node ...$sliceNodes): NodeCollection
+    public function __invoke(NodeCollection $nodeCollection,Node ...$sliceNodes): NodeCollection
     {
         // Check if current node is one of the passed nodes to be sliced out
-        foreach($sliceNodes as $node)
-        {
+        foreach ($sliceNodes as $node) {
+
             // Add children to parent of this node
-            foreach($node->children() as $child)
-            {
-                ($node->isRoot())
-                    ? $child->moveToRoot()
-                    : $child->move($node->parent());
+            foreach ($node->children() as $child) {
+                if(($node->isRoot()))
+                {
+                    $child->moveToRoot();
+                    $nodeCollection->add($child);
+                }
+                else
+                {
+                    $child->move($node->parent());
+                }
             }
 
             $node->remove();
         }
 
-        return $nodeCollection;
+        $this->removeCollectionChildren($nodeCollection, $sliceNodes);
+
+        // reset keys
+        $collection = new NodeCollection();
+        $collection->add(...$nodeCollection->all());
+
+        return $collection;
+    }
+
+    /**
+     * @param NodeCollection $nodeCollection
+     * @param Node[] $sliceNodes
+     */
+    private function removeCollectionChildren(NodeCollection $nodeCollection, array $sliceNodes)
+    {
+        // Remove nodes that reside on the root after all the slicing occurred
+        foreach ($nodeCollection->all() as $k => $rootChild) {
+            foreach ($sliceNodes as $node) {
+                if ($rootChild->equals($node)) {
+                    unset($nodeCollection[$k]);
+                }
+            }
+        }
     }
 }

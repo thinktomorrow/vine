@@ -67,6 +67,21 @@ class PruneTest extends TestCase
         );
     }
 
+    /** @test */
+    function it_can_prune_a_node_collection()
+    {
+        $nodeCollection = $this->getNode()->children();
+
+        $prunedNodeCollection = $nodeCollection->prune(function(Node $node){
+            return $node->id == 3;
+        });
+
+        $this->assertEquals(
+            new \Vine\NodeCollection(new Node(['id' => 3, 'name' => 'second-child'])),
+            $prunedNodeCollection
+        );
+    }
+
     /**
      * @return Node
      */
