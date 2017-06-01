@@ -63,6 +63,14 @@ class Node
         return $this->children;
     }
 
+    /**
+     * @return bool
+     */
+    public function hasChildren(): bool
+    {
+        return !empty($this->children);
+    }
+
     public function entry($key = null)
     {
         if(!is_null($key))
