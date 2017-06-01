@@ -78,6 +78,15 @@ class TreeFactory
             }
         }
 
+        // At this point we will sort all children should the transposer has set a key to sort on
+        if(property_exists($transposable, 'sortChildrenBy'))
+        {
+            foreach($this->index as $node)
+            {
+                $node->sort($transposable->sortChildrenBy);
+            }
+        }
+
         // Collect all root nodes because they contain the entire tree
         return new Tree($this->roots, $this->index);
     }

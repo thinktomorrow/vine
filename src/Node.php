@@ -71,6 +71,15 @@ class Node
         return !empty($this->children);
     }
 
+    public function sort($key)
+    {
+        if(!$this->hasChildren()) return $this;
+
+        $this->children = $this->children->sort($key);
+
+        return $this;
+    }
+
     public function entry($key = null)
     {
         if(!is_null($key))
