@@ -67,6 +67,22 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
         return $this;
     }
 
+    public function sort($key)
+    {
+        $nodes = $this->nodes;
+
+        uasort($nodes, function (Node $a,Node $b) use ($key) {
+
+            if ($a->entry($key) == $b->entry($key)) {
+                return 0;
+            }
+
+            return ($a->entry($key) < $b->entry($key)) ? -1 : 1;
+        });
+
+        return new self(...$nodes);
+    }
+
     /**
      * Get a copy of this node collection
      *

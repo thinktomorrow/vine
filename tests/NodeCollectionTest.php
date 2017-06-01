@@ -55,4 +55,20 @@ class NodeCollectionTest extends TestCase
         $this->assertEquals(4,$collection->total());
         $this->assertEquals(2,$collection->first()->children()->total());
     }
+
+    /** @test */
+    function it_can_sort_collection()
+    {
+        $collection = new NodeCollection(
+            new Node(['id' => 2]),
+            new Node(['id' => 4]),
+            new Node(['id' => 1])
+        );
+
+        $this->assertEquals(new NodeCollection(
+            new Node(['id' => 1]),
+            new Node(['id' => 2]),
+            new Node(['id' => 4])
+        ), $collection->sort('id'));
+    }
 }
