@@ -10,6 +10,7 @@ use Vine\Commands\Remove;
 use Vine\Commands\Slice;
 use Vine\Queries\Count;
 use Vine\Queries\Find;
+use Vine\Queries\Pluck;
 
 class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
 {
@@ -107,6 +108,27 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
     public function flatten()
     {
         return (new Flatten())($this);
+    }
+
+    /**
+     * Get flat array of plucked values from child nodes
+     *
+     * @param $key
+     * @param null $value
+     * @param bool $down
+     * @return array
+     */
+    public function pluck($key, $value = null, $down = true): array
+    {
+        $plucks = [];
+
+        foreach($this->all() as $child)
+        {
+            $plucks = array_merge($plucks,(new Pluck)($child, $key, $value, $down));
+        }
+
+        return $plucks;
+
     }
 
     /**

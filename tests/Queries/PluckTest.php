@@ -2,6 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 use Vine\Node;
+use Vine\NodeCollection;
 
 class PluckTest extends TestCase
 {
@@ -55,5 +56,19 @@ class PluckTest extends TestCase
         $this->assertEquals([
             3,2,1
         ],$child2->pluckAncestors('id'));
+    }
+
+    /** @test */
+    function it_can_pluck_specific_values_of_collection()
+    {
+        $collection = new NodeCollection(
+            new Node(['id' => 1]),
+            new Node(['id' => 2]),
+            new Node(['id' => 3])
+        );
+
+        $this->assertEquals([
+            1,2,3
+        ],$collection->pluck('id'));
     }
 }
