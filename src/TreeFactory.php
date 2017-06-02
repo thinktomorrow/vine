@@ -2,8 +2,6 @@
 
 namespace Vine;
 
-use Vine\Transposable;
-
 class TreeFactory
 {
     /**
@@ -48,7 +46,6 @@ class TreeFactory
 
             $this->index[$id] = $entryNode;
             $this->addAsChild($parentId, $entryNode);
-            $this->addAsRoot($parentId, $entryNode);
         }
 
         // All orphans need to be assigned to their respective parents
@@ -66,6 +63,14 @@ class TreeFactory
             }
 
             $this->index[$parentId]->addChildren($orphans->all());
+        }
+
+        foreach($this->index as $node)
+        {
+            if($node->isRoot())
+            {
+                $this->roots[] = $node;
+            }
         }
 
         // At this point we allow to alter each entry.
@@ -106,18 +111,6 @@ class TreeFactory
         }
 
         $this->addOrphan($parentId, $entryNode);
-    }
-
-    /**
-     * @param $parentId
-     * @param $entryNode
-     * @return mixed
-     */
-    private function addAsRoot($parentId, $entryNode)
-    {
-        if ($parentId) return;
-
-        $this->roots[] = $entryNode;
     }
 
     /**

@@ -3,8 +3,6 @@
 namespace Vine;
 
 use Vine\Commands\Move;
-use Vine\Commands\Prune;
-use Vine\Commands\Shake;
 use Vine\Queries\Ancestors;
 use Vine\Queries\Count;
 use Vine\Commands\Copy;
