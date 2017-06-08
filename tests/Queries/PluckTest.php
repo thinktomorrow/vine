@@ -71,4 +71,20 @@ class PluckTest extends TestCase
             1,2,3
         ],$collection->pluck('id'));
     }
+
+    /** @test */
+    function it_can_pluck_key_value_pairs_of_collection()
+    {
+        $collection = new NodeCollection(
+            new Node(['id' => 1, 'label' => 'foobar-1']),
+            new Node(['id' => 3, 'label' => 'foobar-3']),
+            new Node(['id' => 2, 'label' => 'foobar-2'])
+        );
+
+        $this->assertEquals([
+            1 => 'foobar-1',
+            3 => 'foobar-3',
+            2 => 'foobar-2'
+        ],$collection->pluck('id', 'label'));
+    }
 }

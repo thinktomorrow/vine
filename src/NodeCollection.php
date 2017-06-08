@@ -140,7 +140,10 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
 
         foreach($this->all() as $child)
         {
-            $plucks = $plucks + (new Pluck)($child, $key, $value, $down);
+            // Keep key identifier in case this is explicitly given
+            $plucks = (!is_null($value))
+                        ? $plucks + (new Pluck)($child, $key, $value, $down)
+                        : array_merge($plucks,(new Pluck)($child, $key, $value, $down));
         }
 
         return $plucks;
