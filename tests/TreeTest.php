@@ -9,17 +9,16 @@ class TreeTest extends TestCase
     /** @test */
     function it_can_find_many_nodes_by_their_primary_identifiers()
     {
-        $nodes = $this->getTree()->findManyByIndex([5,2]);
+        $nodes = $this->getTree()->findMany('id',[5,2]);
 
         $this->assertInstanceOf(NodeCollection::class, $nodes);
-        //$this->assertSame($node, $tree->roots()[0]->children()[1]->children()[0]);
     }
 
     /** @test */
     function it_can_find_a_node_by_its_primary_identifier()
     {
         $tree = $this->getTree();
-        $node = $tree->findByIndex(5);
+        $node = $tree->find('id', 5);
 
         $this->assertSame($node, $tree[0]->children()[1]->children()[0]);
     }
@@ -27,13 +26,10 @@ class TreeTest extends TestCase
     /** @test */
     function it_can_get_total_of_nodes()
     {
-        $this->assertEquals(5, $this->getTree()->count());
+        $this->assertEquals(5, $this->getTree()->total());
     }
 
-    /**
-     * @return \Vine\Tree
-     */
-    private function getTree(): \Vine\Tree
+    private function getTree(): NodeCollection
     {
         $records = [
             ['id' => 1, 'name' => 'foobar', 'parent_id' => 0],
@@ -44,6 +40,6 @@ class TreeTest extends TestCase
         ];
 
         $translator = new ArrayTransposer($records);
-        return (new \Vine\TreeFactory())->create($translator);
+        return (new \Vine\NodeCollectionFactory())->create($translator);
     }
 }

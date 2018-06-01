@@ -20,7 +20,7 @@ class ArrayPresenterTest extends TestCase
     /** @test */
     function it_can_use_tree_as_source()
     {
-        $tree = (new \Vine\TreeFactory)->create($this->getTranslation());
+        $tree = (new \Vine\NodeCollectionFactory)->create($this->getTranslation());
 
         $result = (new ArrayPresenter)->collection($tree)->render();
 

@@ -27,7 +27,7 @@ class CopyTest extends TestCase
     /** @test */
     function it_can_get_new_node_with_specific_depth_of_childnodes()
     {
-        $tree = (new \Vine\TreeFactory)->create($this->getTranslation());
+        $tree = (new \Vine\NodeCollectionFactory)->create($this->getTranslation());
 
         $root = $tree->first()->children()->first();
         $result = (new \Vine\Commands\Copy())->__invoke($root,1);

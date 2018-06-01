@@ -19,9 +19,14 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     protected $nodes;
 
-    public function __construct(Node ...$nodeCollection)
+    public function __construct(Node ...$nodes)
     {
-        $this->nodes = $nodeCollection;
+        $this->nodes = $nodes;
+    }
+
+    public static function fromArray(array $nodes)
+    {
+        return new self(...$nodes);
     }
 
     public function all()
@@ -87,7 +92,7 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
      * Get a copy of this node collection
      *
      * @param null|int $depth
-     * @return Node
+     * @return NodeCollection
      */
     public function copy($depth = null): self
     {

@@ -2,10 +2,10 @@
 
 namespace Vine;
 
-class TreeFactory
+class NodeCollectionFactory
 {
     /**
-     * Create tree in strict mode.
+     * Create a node collection in strict mode.
      * This will throw exception if index contains invalid references.
      * e.g. parent reference to non-existing node
      *
@@ -45,8 +45,7 @@ class TreeFactory
 
         $this->structureCollection($transposable);
 
-        // Collect all root nodes because they contain the entire tree
-        return new Tree($this->roots, $this->index);
+        return $this->roots;
     }
 
     private function hydrate(Transposable $transposable)
