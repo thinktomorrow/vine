@@ -4,7 +4,7 @@ use PHPUnit\Framework\TestCase;
 use Vine\NodeCollection;
 use Tests\Implementations\Transposers\ArrayTransposer;
 
-class TreeTest extends TestCase
+class NodeCollectionFactoryTest extends TestCase
 {
     /** @test */
     function it_can_find_many_nodes_by_their_primary_identifiers()
