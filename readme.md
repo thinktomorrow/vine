@@ -70,7 +70,7 @@ $dataset = [
 
 // Convert this dataset to a node collection
 $collection = NodeCollection::fromTransposer(
-    new ArrayTransposer($dataset)
+    new ArraySource($dataset)
 );
 ```
 

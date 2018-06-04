@@ -1,9 +1,9 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Tests\Fixtures\FixtureTransposer;
+use Tests\Fixtures\FixtureSource;
 use Tests\Implementations\Presenters\CliPresenter;
-use Vine\Transposers\Transposable;
+use Vine\Source;
 
 class CliPresenterTest extends TestCase
 {
@@ -19,10 +19,10 @@ class CliPresenterTest extends TestCase
     }
 
     /**
-     * @return Transposable
+     * @return Source
      */
-    private function getTranslation(): Transposable
+    private function getTranslation(): Source
     {
-        return new FixtureTransposer('default');
+        return new FixtureSource('default');
     }
 }

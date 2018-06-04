@@ -1,10 +1,10 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Tests\Fixtures\FixtureTransposer;
+use Tests\Fixtures\FixtureSource;
 use Vine\Node;
 use Vine\NodeCollection;
-use Vine\Transposers\Transposable;
+use Vine\Source;
 
 class AncestorsTest extends TestCase
 {
@@ -50,10 +50,10 @@ class AncestorsTest extends TestCase
     }
 
     /**
-     * @return \Vine\Transposers\Transposable
+     * @return \Vine\Source
      */
-    private function getTranslation(): Transposable
+    private function getTranslation(): Source
     {
-        return new FixtureTransposer('default');
+        return new FixtureSource('default');
     }
 }

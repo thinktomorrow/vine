@@ -2,7 +2,7 @@
 
 <?php
 
-use Tests\Fixtures\FixtureTransposer;
+use Tests\Fixtures\FixtureSource;
 
 require_once __DIR__.'/vendor/autoload.php';
 

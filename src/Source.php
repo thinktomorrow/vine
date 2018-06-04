@@ -1,6 +1,6 @@
 <?php
 
-namespace Vine\Transposers;
+namespace Vine;
 
 /**
  * Contract for converting a flat adjacent data set to
@@ -8,7 +8,7 @@ namespace Vine\Transposers;
  *
  * @package Vine
  */
-interface Transposable
+interface Source
 {
     /**
      * Full array of original data rows
@@ -16,19 +16,19 @@ interface Transposable
      *
      * @return array
      */
-    public function all(): array;
+    public function nodeEntries(): array;
 
     /**
      * Attribute key of the primary identifier of each row. e.g. 'id'
      *
      * @return string
      */
-    public function key(): string;
+    public function nodeKeyIdentifier(): string;
 
     /**
      * Attribute key of the parent foreign identifier of each row. e.g. 'parent_id'
      *
      * @return string
      */
-    public function parentKey(): string;
+    public function nodeParentKeyIdentifier(): string;
 }

@@ -2,12 +2,12 @@
 
 namespace Tests\Fixtures;
 
-use Vine\Transposers\Transposable;
+use Vine\Source;
 
 /**
  * User: bencavens
  */
-class FixtureTransposer implements Transposable
+class FixtureSource implements Source
 {
     private $flatten;
 
@@ -23,17 +23,17 @@ class FixtureTransposer implements Transposable
         $this->flatten = require __DIR__.'/'.$filename;
     }
 
-    function all(): array
+    function nodeEntries(): array
     {
         return $this->flatten;
     }
 
-    function key(): string
+    function nodeKeyIdentifier(): string
     {
         return 0;
     }
 
-    function parentKey(): string
+    function nodeParentKeyIdentifier(): string
     {
         return 1;
     }

@@ -2,7 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 use Vine\NodeCollection;
-use Tests\Implementations\Transposers\ArrayTransposer;
+use Vine\Sources\ArraySource;
 
 class NodeCollectionFactoryTest extends TestCase
 {
@@ -39,7 +39,7 @@ class NodeCollectionFactoryTest extends TestCase
             ['id' => 4, 'name' => 'foobar4', 'parent_id' => 0],
         ];
 
-        $translator = new ArrayTransposer($records);
+        $translator = new ArraySource($records);
         return (new \Vine\NodeCollectionFactory())->create($translator);
     }
 }

@@ -1,9 +1,9 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Tests\Implementations\Transposers\ArrayTransposer;
 use Vine\Node;
 use Vine\NodeCollection;
+use Vine\Sources\ArraySource;
 
 class NodeCollectionTest extends TestCase
 {
@@ -41,7 +41,7 @@ class NodeCollectionTest extends TestCase
     /** @test */
     function it_accepts_a_transposer()
     {
-        $collection = NodeCollection::fromTransposable(new ArrayTransposer([
+        $collection = NodeCollection::fromSource(new ArraySource([
             new Node('foobar'),
             new Node('foobar-2')
         ]));
@@ -70,8 +70,8 @@ class NodeCollectionTest extends TestCase
         $collection = new NodeCollection(
             (new Node(['id' => 1]))
                 ->addChildren((new Node(['id' => 2]))
-                    ->addChildren(new Node(['id' => 3]))
-                ),
+                ->addChildren(new Node(['id' => 3]))
+            ),
             new Node(['id' => 4])
         );
 

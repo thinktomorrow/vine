@@ -1,9 +1,9 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Tests\Fixtures\FixtureTransposer;
+use Tests\Fixtures\FixtureSource;
 use Vine\Node;
-use Vine\Transposers\Transposable;
+use Vine\Source;
 
 class CopyTest extends TestCase
 {
@@ -84,10 +84,10 @@ class CopyTest extends TestCase
     }
 
     /**
-     * @return Transposable
+     * @return Source
      */
-    private function getTranslation(): Transposable
+    private function getTranslation(): Source
     {
-        return new FixtureTransposer('default');
+        return new FixtureSource('default');
     }
 }

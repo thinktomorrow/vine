@@ -1,8 +1,10 @@
 <?php
 
-namespace Vine\Transposers;
+namespace Vine\Sources;
 
-class ArrayTransposer implements Transposable
+use Vine\Source;
+
+class ArraySource implements Source
 {
     /** @var array */
     private $flatten;
@@ -12,17 +14,17 @@ class ArrayTransposer implements Transposable
         $this->flatten = $flatten;
     }
 
-    public function all(): array
+    public function nodeEntries(): array
     {
         return $this->flatten;
     }
 
-    public function key(): string
+    public function nodeKeyIdentifier(): string
     {
         return 'id';
     }
 
-    public function parentKey(): string
+    public function nodeParentKeyIdentifier(): string
     {
         return 'parent_id';
     }

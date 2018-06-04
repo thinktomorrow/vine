@@ -2,7 +2,7 @@
 
 namespace Vine;
 
-use Vine\Transposers\Transposable;
+use Vine\Source;
 
 class NodeCollectionFactory
 {
@@ -37,7 +37,7 @@ class NodeCollectionFactory
         return $this;
     }
 
-    public function create(Transposable $transposable)
+    public function create(Source $transposable)
     {
         $this->hydrate($transposable);
 
@@ -50,12 +50,12 @@ class NodeCollectionFactory
         return $this->roots;
     }
 
-    private function hydrate(Transposable $transposable)
+    private function hydrate(Source $transposable)
     {
-        $id_key = $transposable->key();
-        $parent_key = $transposable->ParentKey();
+        $id_key = $transposable->nodeKeyIdentifier();
+        $parent_key = $transposable->nodeParentKeyIdentifier();
 
-        foreach ($transposable->all() as $i => $entry) {
+        foreach ($transposable->nodeEntries() as $i => $entry) {
 
             $id = is_object($entry) ? $entry->{$id_key} : $entry[$id_key];
             $parentId = is_object($entry) ? $entry->{$parent_key} : $entry[$parent_key];
@@ -129,9 +129,9 @@ class NodeCollectionFactory
     }
 
     /**
-     * @param Transposable $transposable
+     * @param Source $transposable
      */
-    private function structureCollection(Transposable $transposable)
+    private function structureCollection(Source $transposable)
     {
         // At this point we allow to alter each entry.
         // Useful to add values depending on the node structure
