@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Implementations\Presenters;
+namespace Vine\Presenters;
 
 use Vine\Node;
 use Vine\NodeCollection;

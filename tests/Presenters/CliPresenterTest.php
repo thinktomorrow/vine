@@ -2,7 +2,7 @@
 
 use PHPUnit\Framework\TestCase;
 use Tests\Fixtures\FixtureSource;
-use Tests\Implementations\Presenters\CliPresenter;
+use Vine\Presenters\CliPresenter;
 use Vine\Source;
 
 class CliPresenterTest extends TestCase

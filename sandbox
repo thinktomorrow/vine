@@ -2,8 +2,6 @@
 
 <?php
 
-use Tests\Fixtures\FixtureSource;
-
 require_once __DIR__.'/vendor/autoload.php';
 
 ini_set('xdebug.var_display_max_depth', 12);
@@ -27,13 +25,5 @@ $records = [
         ['id' => 4,'name' => 'foobar-4', 'parent_id' => 0],
         ['id' => 5,'name' => 'foobar-5', 'parent_id' => 3],
 ];
-
-$builder = new \Vine\TreeFactory();
-$tree = $builder->create(new \Tests\Implementations\Transposers\ArrayTransposer($records));
-
-$shaken = $tree->findByIndex(1)->prune(function($node){
-    return false !== strpos($node->entry('name'),'foobar');
-});
-var_dump((new \Tests\Implementations\Presenters\CliPresenter())->collection($shaken->children())->render());
 
 echo "\n";

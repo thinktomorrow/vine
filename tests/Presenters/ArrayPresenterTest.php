@@ -1,7 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
-use Tests\Implementations\Presenters\ArrayPresenter;
+use Vine\Presenters\ArrayPresenter;
 use Tests\Fixtures\FixtureSource;
 use Vine\Node;
 use Vine\Source;
