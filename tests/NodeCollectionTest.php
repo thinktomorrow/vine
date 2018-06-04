@@ -1,6 +1,7 @@
 <?php
 
 use PHPUnit\Framework\TestCase;
+use Tests\Implementations\Transposers\ArrayTransposer;
 use Vine\Node;
 use Vine\NodeCollection;
 
@@ -22,6 +23,28 @@ class NodeCollectionTest extends TestCase
             new Node('foobar'),
             new Node('foobar-2')
         );
+
+        $this->assertCount(2, $collection->all());
+    }
+
+    /** @test */
+    function it_accepts_an_array_of_nodes()
+    {
+        $collection = NodeCollection::fromArray([
+            new Node('foobar'),
+            new Node('foobar-2')
+        ]);
+
+        $this->assertCount(2, $collection->all());
+    }
+
+    /** @test */
+    function it_accepts_a_transposer()
+    {
+        $collection = NodeCollection::fromTransposable(new ArrayTransposer([
+            new Node('foobar'),
+            new Node('foobar-2')
+        ]));
 
         $this->assertCount(2, $collection->all());
     }

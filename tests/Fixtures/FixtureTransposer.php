@@ -2,7 +2,7 @@
 
 namespace Tests\Fixtures;
 
-use Vine\Transposable;
+use Vine\Transposers\Transposable;
 
 /**
  * User: bencavens

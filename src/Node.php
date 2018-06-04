@@ -2,11 +2,11 @@
 
 namespace Vine;
 
-use Vine\Commands\Move;
-use Vine\Queries\Ancestors;
 use Vine\Queries\Count;
-use Vine\Commands\Copy;
 use Vine\Queries\Pluck;
+use Vine\Queries\Ancestors;
+use Vine\Commands\Move;
+use Vine\Commands\Copy;
 
 class Node
 {
@@ -71,20 +71,20 @@ class Node
 
     public function sort($key)
     {
-        if(!$this->hasChildren()) return $this;
-
-        $this->children = $this->children->sort($key);
+        if($this->hasChildren()) {
+            $this->children = $this->children->sort($key);
+        }
 
         return $this;
     }
 
-    public function entry($key = null)
+    public function entry($key = null, $default = null)
     {
         if(!is_null($key))
         {
             return (is_array($this->entry) && isset($this->entry[$key]))
                     ? $this->entry[$key]
-                    : (is_object($this->entry) ? $this->entry->{$key} : null);
+                    : (is_object($this->entry) ? $this->entry->{$key} : $default);
         }
 
         return $this->entry;

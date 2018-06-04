@@ -2,6 +2,8 @@
 
 namespace Vine;
 
+use Vine\Transposers\Transposable;
+
 class NodeCollectionFactory
 {
     /**
@@ -54,10 +56,11 @@ class NodeCollectionFactory
         $parent_key = $transposable->ParentKey();
 
         foreach ($transposable->all() as $i => $entry) {
+
             $id = is_object($entry) ? $entry->{$id_key} : $entry[$id_key];
             $parentId = is_object($entry) ? $entry->{$parent_key} : $entry[$parent_key];
 
-            $entryNode = new Node($entry);
+            $entryNode = ($entry instanceof Node) ? $entry : new Node($entry);
 
             // Keep track of flattened list of all nodes
             $this->index[$id] = $entryNode;
@@ -130,7 +133,7 @@ class NodeCollectionFactory
      */
     private function structureCollection(Transposable $transposable)
     {
-// At this point we allow to alter each entry.
+        // At this point we allow to alter each entry.
         // Useful to add values depending on the node structure
         if (method_exists($transposable, 'entry')) {
             foreach ($this->index as $node) {

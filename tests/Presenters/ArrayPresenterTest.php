@@ -4,7 +4,7 @@ use PHPUnit\Framework\TestCase;
 use Tests\Implementations\Presenters\ArrayPresenter;
 use Tests\Fixtures\FixtureTransposer;
 use Vine\Node;
-use Vine\Transposable;
+use Vine\Transposers\Transposable;
 
 class ArrayPresenterTest extends TestCase
 {

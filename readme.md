@@ -25,22 +25,63 @@ $node->isLeaf(); // returns false or true
 $child->depth(); // returns 1
 ```
 
-## Transposer example
+## Loading a dataset
+Usually you'll want to use a collection with values coming from a database. This data is fetched as a flat list of records.
+ With the transposer pattern you are able to convert this structure to a nested node collection.
 
 ```php
-// Load flat dataset from storage
+// flat dataset as pulled from database
 $dataset = [
     ['id' => 1, 'parent_id' => 0, 'label' => 'foobar'],
     ['id' => 2, 'parent_id' => 1, 'label' => 'baz'],
     ['id' => 3, 'parent_id' => 2, 'label' => 'bazbaz'],
-    ...
 ];
 
-// Translate this dataset to a Vine tree object
-$tree = (new \Vine\TreeFactory)->create(
-    new ExampleTranslator($dataset)
-);
+// Convert this dataset to a node collection
+$collection = NodeCollection::fromArray($dataset);
+```
 
+## Loading a dataset from a model
+
+## Load an advanced dataset
+
+ What can you do with transposers?
+ This will transpose your flat adjacent datamodel.
+ 
+ key method
+ set the unique identifier of each entry
+ 
+ parentKey method
+ set the attribute key that identifies the parent. 
+ 
+ optional entry method
+ allows to enrich the entry data with custom data. Handy if you rely on the node info to
+ enrich the entry data
+ 
+ optional sortChildrenBy method
+ 
+```php
+// flat dataset as pulled from database
+$dataset = [
+    ['id' => 1, 'parent_id' => 0, 'label' => 'foobar'],
+    ['id' => 2, 'parent_id' => 1, 'label' => 'baz'],
+    ['id' => 3, 'parent_id' => 2, 'label' => 'bazbaz'],
+];
+
+// Convert this dataset to a node collection
+$collection = NodeCollection::fromTransposer(
+    new ArrayTransposer($dataset)
+);
+```
+
+## Render a collection
+You can loop over the nodes as if it was an array, since it implements the Iteratable interface.
+```php
+
+$output = (new CliPresenter)->tree($tree)->render();
+```
+
+```php
 // Render the tree
 $output = (new CliPresenter)->tree($tree)->render();
 ```

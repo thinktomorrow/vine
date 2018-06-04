@@ -3,7 +3,7 @@
 use PHPUnit\Framework\TestCase;
 use Tests\Fixtures\FixtureTransposer;
 use Vine\Node;
-use Vine\Transposable;
+use Vine\Transposers\Transposable;
 
 class CopyTest extends TestCase
 {

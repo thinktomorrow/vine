@@ -4,7 +4,7 @@ use PHPUnit\Framework\TestCase;
 use Tests\Fixtures\FixtureTransposer;
 use Vine\Node;
 use Vine\NodeCollection;
-use Vine\Transposable;
+use Vine\Transposers\Transposable;
 
 class AncestorsTest extends TestCase
 {
@@ -50,7 +50,7 @@ class AncestorsTest extends TestCase
     }
 
     /**
-     * @return Transposable
+     * @return \Vine\Transposers\Transposable
      */
     private function getTranslation(): Transposable
     {

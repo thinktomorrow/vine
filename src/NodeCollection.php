@@ -11,6 +11,8 @@ use Vine\Commands\Slice;
 use Vine\Queries\Count;
 use Vine\Queries\Find;
 use Vine\Queries\Pluck;
+use Vine\Transposers\ArrayTransposer;
+use Vine\Transposers\Transposable;
 
 class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
 {
@@ -24,9 +26,14 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
         $this->nodes = $nodes;
     }
 
-    public static function fromArray(array $nodes)
+    public static function fromArray(array $entries)
     {
-        return new self(...$nodes);
+        return static::fromTransposable(new ArrayTransposer($entries));
+    }
+
+    public static function fromTransposable(Transposable $transposable)
+    {
+        return (new NodeCollectionFactory())->create($transposable);
     }
 
     public function all()

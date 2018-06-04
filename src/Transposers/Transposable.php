@@ -1,6 +1,6 @@
 <?php
 
-namespace Vine;
+namespace Vine\Transposers;
 
 /**
  * Contract for converting a flat adjacent data set to

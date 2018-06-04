@@ -1,18 +1,10 @@
 <?php
 
-namespace Tests\Implementations\Transposers;
+namespace Vine\Transposers;
 
-use Vine\Transposers\Transposable;
-
-/**
- * expected input:
- * { id: 1, parent_id: 0, label: 'foobar', ... }
- */
 class ArrayTransposer implements Transposable
 {
-    /**
-     * @var array
-     */
+    /** @var array */
     private $flatten;
 
     public function __construct(array $flatten)

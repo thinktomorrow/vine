@@ -8,7 +8,7 @@ use Vine\NodeCollection;
 class Flatten
 {
     /**
-     * Return collection of removed nodes?
+     * Return flattened collection
      *
      * @param NodeCollection $nodeCollection
      * @return NodeCollection
