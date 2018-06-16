@@ -12,7 +12,6 @@ use Vine\Queries\Count;
 use Vine\Queries\Find;
 use Vine\Queries\Pluck;
 use Vine\Sources\ArraySource;
-use Vine\Source;
 
 class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
 {
@@ -31,9 +30,9 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
         return static::fromSource(new ArraySource($entries));
     }
 
-    public static function fromSource(Source $transposable)
+    public static function fromSource(Source $source)
     {
-        return (new NodeCollectionFactory())->create($transposable);
+        return (new NodeCollectionFactory())->fromSource($source);
     }
 
     public function all()

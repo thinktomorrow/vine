@@ -2,27 +2,30 @@
 
 namespace Vine;
 
-use Vine\Source;
-
 class NodeCollectionFactory
 {
     /**
      * Create a node collection in strict mode.
-     * This will throw exception if index contains invalid references.
-     * e.g. parent reference to non-existing node
+     * This will throw an exception if the index build contains invalid
+     * references, like referencing to a parent node that doesn't exist.
      *
      * @var bool
      */
     private $strict = false;
 
+    /**
+     * The resulting node collection build up from the source data
+     * @var NodeCollection
+     */
+    private $nodeCollection;
+
     private $index;
     private $orphans;
-    private $roots;
 
     public function __construct()
     {
+        $this->nodeCollection = new NodeCollection();
         $this->index = new NodeCollection();
-        $this->roots = new NodeCollection();
         $this->orphans = [];
     }
 
@@ -37,25 +40,25 @@ class NodeCollectionFactory
         return $this;
     }
 
-    public function create(Source $transposable)
+    public function fromSource(Source $source)
     {
-        $this->hydrate($transposable);
+        $this->hydrate($source);
 
         $this->addOrphans();
 
         $this->identifyRootNodes();
 
-        $this->structureCollection($transposable);
+        $this->structureCollection($source);
 
-        return $this->roots;
+        return $this->nodeCollection;
     }
 
-    private function hydrate(Source $transposable)
+    private function hydrate(Source $source)
     {
-        $id_key = $transposable->nodeKeyIdentifier();
-        $parent_key = $transposable->nodeParentKeyIdentifier();
+        $id_key = $source->nodeKeyIdentifier();
+        $parent_key = $source->nodeParentKeyIdentifier();
 
-        foreach ($transposable->nodeEntries() as $i => $entry) {
+        foreach ($source->nodeEntries() as $i => $entry) {
 
             $id = is_object($entry) ? $entry->{$id_key} : $entry[$id_key];
             $parentId = is_object($entry) ? $entry->{$parent_key} : $entry[$parent_key];
@@ -117,13 +120,15 @@ class NodeCollectionFactory
 
             $this->index[$parentId]->addChildren($orphans->all());
         }
+
+        unset($this->orphans);
     }
 
     private function identifyRootNodes()
     {
         foreach ($this->index as $node) {
             if ($node->isRoot()) {
-                $this->roots[] = $node;
+                $this->nodeCollection[] = $node;
             }
         }
     }
