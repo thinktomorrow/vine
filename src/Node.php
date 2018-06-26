@@ -66,7 +66,7 @@ class Node
      */
     public function hasChildren(): bool
     {
-        return !empty($this->children);
+        return !$this->children->isEmpty();
     }
 
     public function sort($key)

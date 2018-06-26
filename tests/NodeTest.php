@@ -157,4 +157,14 @@ class NodeTest extends TestCase
         $this->assertSame($child,$node->children->first());
     }
 
+    /** @test */
+    public function it_can_check_if_it_has_children()
+    {
+        $node = new Node(null);
+        $node->addChildren([$child = new Node(null)]);
+        $child->addChildren([$child2 = new Node(null)]);
+
+        $this->assertTrue($node->hasChildren());
+        $this->assertFalse($child2->hasChildren());
+    }
 }
