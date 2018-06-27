@@ -2,8 +2,6 @@
 
 namespace Vine;
 
-use Vine\Source;
-
 class NodeCollectionFactory
 {
     /**

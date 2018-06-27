@@ -83,7 +83,7 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
     {
         $nodes = $this->nodes;
 
-        uasort($nodes, function (Node $a,Node $b) use ($key) {
+        uasort($nodes, function (Node $a, Node $b) use ($key) {
 
             if ($a->entry($key) == $b->entry($key)) {
                 return 0;
