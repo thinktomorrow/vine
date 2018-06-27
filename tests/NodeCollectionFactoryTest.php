@@ -40,6 +40,6 @@ class NodeCollectionFactoryTest extends TestCase
         ];
 
         $translator = new ArraySource($records);
-        return (new \Vine\NodeCollectionFactory())->create($translator);
+        return (new \Vine\NodeCollectionFactory())->fromSource($translator);
     }
 }

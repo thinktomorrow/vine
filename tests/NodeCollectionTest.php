@@ -80,18 +80,20 @@ class NodeCollectionTest extends TestCase
     }
 
     /** @test */
-    function it_can_sort_collection()
+    function it_can_change_each_child_node_with_a_callback()
     {
-        $collection = new NodeCollection(
-            new Node(['id' => 2]),
-            new Node(['id' => 4]),
-            new Node(['id' => 1])
-        );
+        $original = new Node((object)['id' => 2]);
+        $original->addChildren([new Node(['id' => '23']), new Node(['id' => '22']), new Node(['id' => '21'])]);
 
-        $this->assertEquals(new NodeCollection(
-            new Node(['id' => 1]),
-            new Node(['id' => 2]),
-            new Node(['id' => 4])
-        ), $collection->sort('id'));
+        $original->children()->map(function($node){
+            $entry = $node->entry();
+            $entry['title'] = 'new';
+            return $node->replaceEntry($entry);
+        });
+
+        $expected = new Node((object)['id' => 2]);
+        $expected->addChildren([new Node(['id' => '23', 'title' => 'new']), new Node(['id' => '22', 'title' => 'new']), new Node(['id' => '21', 'title' => 'new'])]);
+
+        $this->assertEquals($expected, $original);
     }
 }

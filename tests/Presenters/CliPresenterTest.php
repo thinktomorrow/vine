@@ -10,7 +10,7 @@ class CliPresenterTest extends TestCase
     /** @test */
     function it_can_represent_tree_in_terminal()
     {
-        $tree = (new \Vine\NodeCollectionFactory)->create($this->getTranslation());
+        $tree = (new \Vine\NodeCollectionFactory)->fromSource($this->getTranslation());
 
         $output = (new CliPresenter)->collection($tree)->render();
 

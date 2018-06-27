@@ -12,7 +12,6 @@ use Vine\Queries\Count;
 use Vine\Queries\Find;
 use Vine\Queries\Pluck;
 use Vine\Sources\ArraySource;
-use Vine\Source;
 
 class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
 {
@@ -31,9 +30,9 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
         return static::fromSource(new ArraySource($entries));
     }
 
-    public static function fromSource(Source $transposable)
+    public static function fromSource(Source $source)
     {
-        return (new NodeCollectionFactory())->create($transposable);
+        return (new NodeCollectionFactory())->fromSource($source);
     }
 
     public function all()
@@ -79,6 +78,24 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
         return $this;
     }
 
+    public function map(callable $callback)
+    {
+        foreach($this->nodes as $k => $node) {
+            $nodes[$k] = call_user_func($callback, $node);
+        }
+
+        return $this;
+    }
+
+    public function each(callable $callback)
+    {
+        foreach($this->nodes as $node) {
+            call_user_func($callback, $node);
+        }
+
+        return $this;
+    }
+
     public function sort($key)
     {
         $nodes = $this->nodes;
@@ -92,7 +109,12 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
             return ($a->entry($key) < $b->entry($key)) ? -1 : 1;
         });
 
-        return new self(...$nodes);
+        // Now delegate the sorting to the children
+        $collection = (new self(...$nodes))->map(function($node) use($key){
+            return $node->sort($key);
+        });
+
+        return $collection;
     }
 
     /**
