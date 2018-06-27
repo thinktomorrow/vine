@@ -37,7 +37,7 @@ class Node
     }
 
     /**
-     * @param array|NodeCollection $children
+     * @param array|NodeCollection|Node $children
      * @return Node
      */
     public function addChildren($children): self

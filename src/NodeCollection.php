@@ -87,6 +87,19 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
         return $this;
     }
 
+    public function mapRecursive(callable $callback)
+    {
+        $this->map($callback);
+
+        foreach($this->nodes as $k => $node) {
+            if($node->hasChildren()) {
+                $node->children()->mapRecursive($callback);
+            }
+        }
+
+        return $this;
+    }
+
     public function each(callable $callback)
     {
         foreach($this->nodes as $node) {

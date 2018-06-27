@@ -96,4 +96,22 @@ class NodeCollectionTest extends TestCase
 
         $this->assertEquals($expected, $original);
     }
+
+    /** @test */
+    function it_can_map_all_child_nodes_recursively()
+    {
+        $original = new Node((object)['id' => 2]);
+        $original->addChildren([(new Node(['id' => '23']))->addChildren(new Node(['id' => '24'])), new Node(['id' => '22']), new Node(['id' => '21'])]);
+
+        $original->children()->mapRecursive(function($node){
+            $entry = $node->entry();
+            $entry['title'] = 'new';
+            return $node->replaceEntry($entry);
+        });
+
+        $expected = new Node((object)['id' => 2]);
+        $expected->addChildren([(new Node(['id' => '23', 'title' => 'new']))->addChildren(new Node(['id' => '24', 'title' => 'new'])), new Node(['id' => '22', 'title' => 'new']), new Node(['id' => '21', 'title' => 'new'])]);
+
+        $this->assertEquals($expected, $original);
+    }
 }
