@@ -2,11 +2,11 @@
 
 namespace Vine;
 
+use Vine\Commands\Copy;
+use Vine\Commands\Move;
+use Vine\Queries\Ancestors;
 use Vine\Queries\Count;
 use Vine\Queries\Pluck;
-use Vine\Queries\Ancestors;
-use Vine\Commands\Move;
-use Vine\Commands\Copy;
 
 class Node
 {
@@ -22,7 +22,7 @@ class Node
     public function __construct($entry)
     {
         $this->entry = $entry;
-        $this->children = new NodeCollection;
+        $this->children = new NodeCollection();
     }
 
     public function equals(self $other)
@@ -32,6 +32,7 @@ class Node
 
     /**
      * @param array|NodeCollection|Node $children
+     *
      * @return Node
      */
     public function addChildren($children): self
@@ -40,9 +41,9 @@ class Node
 
         $this->children->merge($children);
 
-        array_map(function(Node $child){
+        array_map(function (Node $child) {
             $child->parent($this);
-        },$children->all());
+        }, $children->all());
 
         return $this;
     }
@@ -59,7 +60,7 @@ class Node
 
     public function sort($key)
     {
-        if($this->hasChildren()) {
+        if ($this->hasChildren()) {
             $this->children = $this->children->sort($key);
         }
 
@@ -68,8 +69,7 @@ class Node
 
     public function entry($key = null, $default = null)
     {
-        if(!is_null($key))
-        {
+        if (!is_null($key)) {
             return (is_array($this->entry) && isset($this->entry[$key]))
                     ? $this->entry[$key]
                     : (is_object($this->entry) ? $this->entry->{$key} : $default);
@@ -87,12 +87,15 @@ class Node
      * Get the current parent or set it.
      *
      * @param Node|null $parent
+     *
      * @return Node
      */
-    public function parent(Node $parent = null)
+    public function parent(self $parent = null)
     {
         // Without arguments this method returns the parent node
-        if(!$parent) return $this->parent;
+        if (!$parent) {
+            return $this->parent;
+        }
 
         $this->parent = $parent;
 
@@ -105,15 +108,14 @@ class Node
      * from any depth in the graph. Also removes the entire children tree from that node!
      *
      * @param Node $node
+     *
      * @return $this
      */
-    public function remove(Node $node = null)
+    public function remove(self $node = null)
     {
         // Remove self from the parent node
-        if(is_null($node))
-        {
-            if(!$this->isRoot())
-            {
+        if (is_null($node)) {
+            if (!$this->isRoot()) {
                 $this->parent()->remove($this);
                 $this->parent = null;
             }
@@ -126,14 +128,15 @@ class Node
     }
 
     /**
-     * Move a child node to a different parent
+     * Move a child node to a different parent.
      *
      * @param Node $parent
+     *
      * @return mixed
      */
-    public function move(Node $parent)
+    public function move(self $parent)
     {
-        return (new Move())($this,$parent);
+        return (new Move())($this, $parent);
     }
 
     public function moveToRoot()
@@ -142,39 +145,45 @@ class Node
     }
 
     /**
-     * At which depth does this node resides inside the entire tree
+     * At which depth does this node resides inside the entire tree.
      *
      * @return int
      */
     public function depth(): int
     {
-        if($this->isRoot()) return 0;
+        if ($this->isRoot()) {
+            return 0;
+        }
 
         return $this->parent()->depth() + 1;
     }
 
     /**
-     * count of all direct child nodes
+     * count of all direct child nodes.
      *
      * @return int
      */
     public function count(): int
     {
-        if($this->isLeaf()) return 0;
+        if ($this->isLeaf()) {
+            return 0;
+        }
 
         return $this->children()->count();
     }
 
     /**
-     * Total of all child nodes
+     * Total of all child nodes.
      *
      * @return int
      */
     public function total(): int
     {
-        if($this->isLeaf()) return 0;
+        if ($this->isLeaf()) {
+            return 0;
+        }
 
-        return (new Count)($this);
+        return (new Count())($this);
     }
 
     /**
@@ -195,7 +204,8 @@ class Node
 
     /**
      * @param string|int $key
-     * @param array $values
+     * @param array      $values
+     *
      * @return NodeCollection
      */
     public function findMany($key, array $values): NodeCollection
@@ -205,41 +215,45 @@ class Node
 
     /**
      * @param string|int $key
-     * @param mixed $value
+     * @param mixed      $value
+     *
      * @return Node
      */
-    public function find($key, $value): Node
+    public function find($key, $value): self
     {
         return $this->children()->find($key, $value);
     }
 
     /**
      * @param int|null $depth
+     *
      * @return NodeCollection
      */
     public function ancestors($depth = null): NodeCollection
     {
-        return (new Ancestors)($this, $depth);
+        return (new Ancestors())($this, $depth);
     }
 
     /**
-     * Get flat array of plucked values from child nodes
+     * Get flat array of plucked values from child nodes.
      *
-     * @param string|int $key
+     * @param string|int      $key
      * @param string|int|null $value
-     * @param bool $down
+     * @param bool            $down
+     *
      * @return array
      */
     public function pluck($key, $value = null, $down = true): array
     {
-        return (new Pluck)($this, $key, $value, $down);
+        return (new Pluck())($this, $key, $value, $down);
     }
 
     /**
-     * Get flat array of plucked values from child nodes
+     * Get flat array of plucked values from child nodes.
      *
      * @param $key
      * @param null $value
+     *
      * @return array
      */
     public function pluckAncestors($key, $value = null): array
@@ -248,20 +262,21 @@ class Node
     }
 
     /**
-     * Get a copy of this node
+     * Get a copy of this node.
      *
      * @param int|null $depth
+     *
      * @return Node
      */
     public function copy($depth = null): self
     {
         return $depth === 0
                 ? new self($this->entry())
-                : (new Copy())($this,$depth);
+                : (new Copy())($this, $depth);
     }
 
     /**
-     * Copy of this node without its parent / children relationships
+     * Copy of this node without its parent / children relationships.
      *
      * @return Node
      */
@@ -272,12 +287,13 @@ class Node
 
     /**
      * Reduce collection to the nodes that pass the callback
-     * Shaking a collection will keep the ancestor structure
+     * Shaking a collection will keep the ancestor structure.
      *
      * @param callable $callback
+     *
      * @return self
      */
-    public function shake(Callable $callback): self
+    public function shake(callable $callback): self
     {
         $node = $this->isolatedCopy();
 
@@ -285,12 +301,13 @@ class Node
     }
 
     /**
-     * Same as shaking except that it will not keep the ancestor structure
+     * Same as shaking except that it will not keep the ancestor structure.
      *
      * @param callable $callback
+     *
      * @return self
      */
-    public function prune(Callable $callback): self
+    public function prune(callable $callback): self
     {
         $node = $this->isolatedCopy();
 
@@ -299,13 +316,14 @@ class Node
 
     /**
      * @param $children
+     *
      * @return NodeCollection
      */
     private function transformToNodeCollection($children): NodeCollection
     {
         if (is_array($children)) {
             $children = new NodeCollection(...$children);
-        } elseif ($children instanceof Node) {
+        } elseif ($children instanceof self) {
             $children = new NodeCollection($children);
         } elseif (!$children instanceof NodeCollection) {
             throw new \InvalidArgumentException('Invalid children parameter. Accepted types are array or NodeCollection.');
@@ -316,14 +334,17 @@ class Node
 
     /**
      * Fetch entry data via a direct call to Node.
-     * E.g. $node->name resolves to $node->entry('name')
+     * E.g. $node->name resolves to $node->entry('name').
      *
      * @param string|int $name
+     *
      * @return mixed|null|NodeCollection
      */
     public function __get($name)
     {
-        if($name == 'children') return $this->children();
+        if ($name == 'children') {
+            return $this->children();
+        }
 
         return $this->entry($name);
     }

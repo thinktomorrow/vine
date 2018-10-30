@@ -8,7 +8,7 @@ use Vine\Sources\ArraySource;
 class NodeCollectionTest extends TestCase
 {
     /** @test */
-    function it_contains_array_of_nodes()
+    public function it_contains_array_of_nodes()
     {
         $collection = new NodeCollection();
 
@@ -17,7 +17,7 @@ class NodeCollectionTest extends TestCase
     }
 
     /** @test */
-    function it_accepts_variadic_array_of_nodes()
+    public function it_accepts_variadic_array_of_nodes()
     {
         $collection = new NodeCollection(
             new Node('foobar'),
@@ -28,29 +28,29 @@ class NodeCollectionTest extends TestCase
     }
 
     /** @test */
-    function it_accepts_an_array_of_nodes()
+    public function it_accepts_an_array_of_nodes()
     {
         $collection = NodeCollection::fromArray([
             new Node('foobar'),
-            new Node('foobar-2')
+            new Node('foobar-2'),
         ]);
 
         $this->assertCount(2, $collection->all());
     }
 
     /** @test */
-    function it_accepts_a_transposer()
+    public function it_accepts_a_transposer()
     {
         $collection = NodeCollection::fromSource(new ArraySource([
             new Node('foobar'),
-            new Node('foobar-2')
+            new Node('foobar-2'),
         ]));
 
         $this->assertCount(2, $collection->all());
     }
 
     /** @test */
-    function it_can_add_array_of_nodes()
+    public function it_can_add_array_of_nodes()
     {
         $collection = new NodeCollection(
             new Node('foobar')
@@ -65,7 +65,7 @@ class NodeCollectionTest extends TestCase
     }
 
     /** @test */
-    function it_can_get_total_count_of_all_nodes_and_children()
+    public function it_can_get_total_count_of_all_nodes_and_children()
     {
         $collection = new NodeCollection(
             (new Node(['id' => 1]))
@@ -75,41 +75,43 @@ class NodeCollectionTest extends TestCase
             new Node(['id' => 4])
         );
 
-        $this->assertEquals(4,$collection->total());
-        $this->assertEquals(2,$collection->first()->children()->total());
+        $this->assertEquals(4, $collection->total());
+        $this->assertEquals(2, $collection->first()->children()->total());
     }
 
     /** @test */
-    function it_can_change_each_child_node_with_a_callback()
+    public function it_can_change_each_child_node_with_a_callback()
     {
-        $original = new Node((object)['id' => 2]);
+        $original = new Node((object) ['id' => 2]);
         $original->addChildren([new Node(['id' => '23']), new Node(['id' => '22']), new Node(['id' => '21'])]);
 
-        $original->children()->map(function($node){
+        $original->children()->map(function ($node) {
             $entry = $node->entry();
             $entry['title'] = 'new';
+
             return $node->replaceEntry($entry);
         });
 
-        $expected = new Node((object)['id' => 2]);
+        $expected = new Node((object) ['id' => 2]);
         $expected->addChildren([new Node(['id' => '23', 'title' => 'new']), new Node(['id' => '22', 'title' => 'new']), new Node(['id' => '21', 'title' => 'new'])]);
 
         $this->assertEquals($expected, $original);
     }
 
     /** @test */
-    function it_can_map_all_child_nodes_recursively()
+    public function it_can_map_all_child_nodes_recursively()
     {
-        $original = new Node((object)['id' => 2]);
+        $original = new Node((object) ['id' => 2]);
         $original->addChildren([(new Node(['id' => '23']))->addChildren(new Node(['id' => '24'])), new Node(['id' => '22']), new Node(['id' => '21'])]);
 
-        $original->children()->mapRecursive(function($node){
+        $original->children()->mapRecursive(function ($node) {
             $entry = $node->entry();
             $entry['title'] = 'new';
+
             return $node->replaceEntry($entry);
         });
 
-        $expected = new Node((object)['id' => 2]);
+        $expected = new Node((object) ['id' => 2]);
         $expected->addChildren([(new Node(['id' => '23', 'title' => 'new']))->addChildren(new Node(['id' => '24', 'title' => 'new'])), new Node(['id' => '22', 'title' => 'new']), new Node(['id' => '21', 'title' => 'new'])]);
 
         $this->assertEquals($expected, $original);

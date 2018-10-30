@@ -6,11 +6,11 @@ use Vine\Node;
 class PruneTest extends TestCase
 {
     /** @test */
-    function a_node_collection_that_does_not_need_pruning_is_copied_but_has_exact_same_structure()
+    public function a_node_collection_that_does_not_need_pruning_is_copied_but_has_exact_same_structure()
     {
         $node = $this->getNode();
 
-        $prunedNode = $node->prune(function(Node $node){
+        $prunedNode = $node->prune(function (Node $node) {
             return true;
         });
 
@@ -26,11 +26,11 @@ class PruneTest extends TestCase
     }
 
     /** @test */
-    function if_all_is_pruned_only_the_root_remains()
+    public function if_all_is_pruned_only_the_root_remains()
     {
         $node = $this->getNode();
 
-        $prunedNode = $node->prune(function(Node $node){
+        $prunedNode = $node->prune(function (Node $node) {
             return false;
         });
 
@@ -38,11 +38,11 @@ class PruneTest extends TestCase
     }
 
     /** @test */
-    function it_can_prune_by_specific_closure()
+    public function it_can_prune_by_specific_closure()
     {
         $node = $this->getNode();
 
-        $prunedNode = $node->prune(function(Node $node){
+        $prunedNode = $node->prune(function (Node $node) {
             return $node->id == 3;
         });
 
@@ -53,11 +53,11 @@ class PruneTest extends TestCase
     }
 
     /** @test */
-    function prune_maintains_the_ancestors_for_each_kept_node()
+    public function prune_maintains_the_ancestors_for_each_kept_node()
     {
         $node = $this->getNode();
 
-        $prunedNode = $node->prune(function(Node $node){
+        $prunedNode = $node->prune(function (Node $node) {
             return $node->id == 3;
         });
 
@@ -68,11 +68,11 @@ class PruneTest extends TestCase
     }
 
     /** @test */
-    function it_can_prune_a_node_collection()
+    public function it_can_prune_a_node_collection()
     {
         $nodeCollection = $this->getNode()->children();
 
-        $prunedNodeCollection = $nodeCollection->prune(function(Node $node){
+        $prunedNodeCollection = $nodeCollection->prune(function (Node $node) {
             return $node->id == 3;
         });
 
@@ -94,5 +94,4 @@ class PruneTest extends TestCase
 
         return $node;
     }
-
 }

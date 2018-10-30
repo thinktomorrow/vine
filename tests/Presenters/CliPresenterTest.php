@@ -8,14 +8,14 @@ use Vine\Source;
 class CliPresenterTest extends TestCase
 {
     /** @test */
-    function it_can_represent_tree_in_terminal()
+    public function it_can_represent_tree_in_terminal()
     {
-        $tree = (new \Vine\NodeCollectionFactory)->fromSource($this->getTranslation());
+        $tree = (new \Vine\NodeCollectionFactory())->fromSource($this->getTranslation());
 
-        $output = (new CliPresenter)->collection($tree)->render();
+        $output = (new CliPresenter())->collection($tree)->render();
 
-        $this->assertInternalType('string',$output);
-        $this->assertStringStartsWith('|-root-1',trim($output,PHP_EOL));
+        $this->assertInternalType('string', $output);
+        $this->assertStringStartsWith('|-root-1', trim($output, PHP_EOL));
     }
 
     /**

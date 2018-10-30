@@ -20,8 +20,7 @@ class CliPresenter extends ArrayPresenter implements Presenter
             RecursiveTreeIterator::SELF_FIRST
         ));
 
-        foreach($treeIterator as $key => $value)
-        {
+        foreach ($treeIterator as $key => $value) {
             $output .= $value.PHP_EOL;
         }
 

@@ -9,7 +9,7 @@ use Vine\Source;
 class AncestorsTest extends TestCase
 {
     /** @test */
-    function it_can_get_ancestors()
+    public function it_can_get_ancestors()
     {
         $root = new Node('foobar');
         $root->addChildren([$firstChild = new Node('first-child')]);
@@ -17,27 +17,25 @@ class AncestorsTest extends TestCase
 
         $ancestors = (new \Vine\Queries\Ancestors())->__invoke($secondChild);
 
-        $this->assertCount(2,$ancestors);
-        $this->assertEquals(new NodeCollection(...[ $root, $firstChild ]),$ancestors);
-
+        $this->assertCount(2, $ancestors);
+        $this->assertEquals(new NodeCollection(...[$root, $firstChild]), $ancestors);
     }
 
     /** @test */
-    function it_can_get_ancestors_at_certain_depth()
+    public function it_can_get_ancestors_at_certain_depth()
     {
         $root = new Node('foobar');
         $root->addChildren([$firstChild = new Node('first-child')]);
         $firstChild->addChildren([$secondChild = new Node('second-child')]);
 
-        $ancestors = (new \Vine\Queries\Ancestors())->__invoke($secondChild,1);
+        $ancestors = (new \Vine\Queries\Ancestors())->__invoke($secondChild, 1);
 
-        $this->assertCount(1,$ancestors);
-        $this->assertEquals(new NodeCollection(...[ $firstChild ]),$ancestors);
-
+        $this->assertCount(1, $ancestors);
+        $this->assertEquals(new NodeCollection(...[$firstChild]), $ancestors);
     }
 
     /** @test */
-    function node_can_get_the_ancestor_tree()
+    public function node_can_get_the_ancestor_tree()
     {
         $root = new Node('foobar');
         $root->addChildren([$firstChild = new Node('first-child')]);
@@ -45,8 +43,8 @@ class AncestorsTest extends TestCase
 
         $ancestors = $secondChild->ancestors();
 
-        $this->assertCount(2,$ancestors);
-        $this->assertEquals(new NodeCollection(...[ $root, $firstChild ]),$ancestors);
+        $this->assertCount(2, $ancestors);
+        $this->assertEquals(new NodeCollection(...[$root, $firstChild]), $ancestors);
     }
 
     /**
