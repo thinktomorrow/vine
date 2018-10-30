@@ -4,8 +4,6 @@ namespace Vine\Presenters;
 
 use RecursiveArrayIterator;
 use RecursiveTreeIterator;
-use Vine\Presenters\ArrayPresenter;
-use Vine\Presenters\Presenter;
 
 class CliPresenter extends ArrayPresenter implements Presenter
 {

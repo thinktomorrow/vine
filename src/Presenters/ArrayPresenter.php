@@ -4,8 +4,6 @@ namespace Vine\Presenters;
 
 use Vine\Node;
 use Vine\NodeCollection;
-use Vine\Presenters\BasePresenter;
-use Vine\Presenters\Presenter;
 
 class ArrayPresenter extends BasePresenter implements Presenter
 {
@@ -22,7 +20,7 @@ class ArrayPresenter extends BasePresenter implements Presenter
     /**
      * Render each node and its children recursively
      *
-     * Important! Children are added as subarray right after the parent, not inside him.
+     * Children are added inside a specific 'children' property and are not nested inside the parent element itself.
      * This allows for a cleaner recursion and faster rendering of the tree.
      *
      * @param NodeCollection $nodeCollection

@@ -55,7 +55,7 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Add one / many nodes to this collection
      *
-     * @param Node[] ...$nodes
+     * @param Node[] $nodes
      * @return $this
      */
     public function add(Node ...$nodes)

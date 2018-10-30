@@ -10,19 +10,13 @@ use Vine\Commands\Copy;
 
 class Node
 {
-    /**
-     * @var self
-     */
+    /** @var self */
     private $parent;
 
-    /**
-     * @var NodeCollection
-     */
+    /** @var NodeCollection */
     private $children;
 
-    /**
-     * @var mixed
-     */
+    /** @var mixed */
     private $entry;
 
     public function __construct($entry)
@@ -53,17 +47,11 @@ class Node
         return $this;
     }
 
-    /**
-     * @return NodeCollection
-     */
     public function children(): NodeCollection
     {
         return $this->children;
     }
 
-    /**
-     * @return bool
-     */
     public function hasChildren(): bool
     {
         return !$this->children->isEmpty();
@@ -90,21 +78,18 @@ class Node
         return $this->entry;
     }
 
-    /**
-     * Replace entire entry value
-     *
-     * @param $entry
-     */
     public function replaceEntry($entry)
     {
         $this->entry = $entry;
     }
 
     /**
-     * @param Node $parent
-     * @return $this
+     * Get the current parent or set it.
+     *
+     * @param Node|null $parent
+     * @return Node
      */
-    public function parent(self $parent = null)
+    public function parent(Node $parent = null)
     {
         // Without arguments this method returns the parent node
         if(!$parent) return $this->parent;
@@ -115,14 +100,14 @@ class Node
     }
 
     /**
-     * Remove this node or (detaches) a child node.
-     * This detaches self from parent or when node is passed, it deletes that child node from any depth in the graph
-     * Also removes the entire children tree from that node!
+     * Remove this node or detaches a child node.
+     * This detaches self from parent or when node is passed, it deletes that child node
+     * from any depth in the graph. Also removes the entire children tree from that node!
      *
      * @param Node $node
      * @return $this
      */
-    public function remove(self $node = null)
+    public function remove(Node $node = null)
     {
         // Remove self from the parent node
         if(is_null($node))
@@ -146,7 +131,7 @@ class Node
      * @param Node $parent
      * @return mixed
      */
-    public function move(self $parent)
+    public function move(Node $parent)
     {
         return (new Move())($this,$parent);
     }
