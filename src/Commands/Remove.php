@@ -8,26 +8,23 @@ use Vine\NodeCollection;
 class Remove
 {
     /**
-     * Return collection of removed nodes?
+     * Return collection of removed nodes.
      *
      * @param NodeCollection $nodeCollection
-     * @param Node[] $nodes
+     * @param Node[]         $nodes
+     *
      * @return NodeCollection
      */
     public function __invoke(NodeCollection $nodeCollection, Node ...$nodes): NodeCollection
     {
-        foreach($nodeCollection as $k => $node)
-        {
-            foreach($nodes as $removeNode)
-            {
-                if($node->equals($removeNode))
-                {
+        foreach ($nodeCollection as $k => $node) {
+            foreach ($nodes as $removeNode) {
+                if ($node->equals($removeNode)) {
                     unset($nodeCollection[$k]);
                 }
             }
 
-            if(!$node->children()->isEmpty())
-            {
+            if (!$node->children()->isEmpty()) {
                 $this->__invoke($node->children(), ...$nodes);
             }
         }

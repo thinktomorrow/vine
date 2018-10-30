@@ -13,6 +13,7 @@ class Copy
      *
      * @param Node $node
      * @param null $depth (null is infinite)
+     *
      * @return Node
      */
     public function __invoke(Node $node, $depth = null): Node
@@ -23,21 +24,22 @@ class Copy
     }
 
     /**
-     * @param Node $node
-     * @param NodeCollection $children
-     * @param $depth
-     * @param null|int $currentDepth
-     * @return bool|Node
+     * @param NodeCollection $nodeCollection
+     * @param null           $depth
+     * @param int            $currentDepth
+     *
+     * @return NodeCollection
      */
     private function recursiveDepth(NodeCollection $nodeCollection, $depth = null, $currentDepth = 0)
     {
-        if(!is_null($depth) && $depth <= $currentDepth) return new NodeCollection();
+        if (!is_null($depth) && $depth <= $currentDepth) {
+            return new NodeCollection();
+        }
 
         $copyCollection = new NodeCollection();
         $currentDepth++;
 
-        foreach($nodeCollection as $node)
-        {
+        foreach ($nodeCollection as $node) {
             $copyCollection->add($subNode = $node->isolatedCopy());
 
             $subNode->addChildren($this->recursiveDepth($node->children(), $depth, $currentDepth));

@@ -2,11 +2,11 @@
 
 namespace Vine;
 
-use Vine\Commands\Prune;
-use Vine\Commands\Shake;
 use Vine\Commands\Flatten;
 use Vine\Commands\Inflate;
+use Vine\Commands\Prune;
 use Vine\Commands\Remove;
+use Vine\Commands\Shake;
 use Vine\Commands\Slice;
 use Vine\Queries\Count;
 use Vine\Queries\Find;
@@ -42,7 +42,9 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
 
     public function first()
     {
-        if($this->isEmpty()) return null;
+        if ($this->isEmpty()) {
+            return;
+        }
 
         return reset($this->nodes);
     }
@@ -53,9 +55,10 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * Add one / many nodes to this collection
+     * Add one / many nodes to this collection.
      *
-     * @param Node[] ...$nodes
+     * @param Node[] $nodes
+     *
      * @return $this
      */
     public function add(Node ...$nodes)
@@ -69,6 +72,7 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
      * Merge a collection into current one.
      *
      * @param NodeCollection $nodeCollection
+     *
      * @return $this
      */
     public function merge(self $nodeCollection)
@@ -80,7 +84,7 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
 
     public function map(callable $callback)
     {
-        foreach($this->nodes as $k => $node) {
+        foreach ($this->nodes as $k => $node) {
             $nodes[$k] = call_user_func($callback, $node);
         }
 
@@ -91,8 +95,8 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
     {
         $this->map($callback);
 
-        foreach($this->nodes as $k => $node) {
-            if($node->hasChildren()) {
+        foreach ($this->nodes as $k => $node) {
+            if ($node->hasChildren()) {
                 $node->children()->mapRecursive($callback);
             }
         }
@@ -102,7 +106,7 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
 
     public function each(callable $callback)
     {
-        foreach($this->nodes as $node) {
+        foreach ($this->nodes as $node) {
             call_user_func($callback, $node);
         }
 
@@ -114,7 +118,6 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
         $nodes = $this->nodes;
 
         uasort($nodes, function (Node $a, Node $b) use ($key) {
-
             if ($a->entry($key) == $b->entry($key)) {
                 return 0;
             }
@@ -123,7 +126,7 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
         });
 
         // Now delegate the sorting to the children
-        $collection = (new self(...$nodes))->map(function($node) use($key){
+        $collection = (new self(...$nodes))->map(function ($node) use ($key) {
             return $node->sort($key);
         });
 
@@ -131,17 +134,17 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * Get a copy of this node collection
+     * Get a copy of this node collection.
      *
      * @param null|int $depth
+     *
      * @return NodeCollection
      */
     public function copy($depth = null): self
     {
-        $collection = new self;
+        $collection = new self();
 
-        foreach($this->all() as $child)
-        {
+        foreach ($this->all() as $child) {
             $collection->add($child->copy($depth));
         }
 
@@ -149,22 +152,23 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * Remove the child node
+     * Remove the child node.
      *
      * Children of the removed child node will be removed as well. This does not
      * remove the parent / child relations of the removed node. For this
      * the node->remove() should be called instead.
      *
      * @param Node $child
+     *
      * @return $this
      */
     public function remove(Node $child)
     {
-        return (new Remove)($this,$child);
+        return (new Remove())($this, $child);
     }
 
     /**
-     * Return flattened list of all nodes in this collection
+     * Return flattened list of all nodes in this collection.
      *
      * @return NodeCollection
      */
@@ -174,31 +178,30 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * Get flat array of plucked values from child nodes
+     * Get flat array of plucked values from child nodes.
      *
-     * @param $key
-     * @param null $value
-     * @param bool $down
+     * @param string|int      $key
+     * @param string|int|null $value
+     * @param bool            $down
+     *
      * @return array
      */
     public function pluck($key, $value = null, $down = true): array
     {
         $plucks = [];
 
-        foreach($this->all() as $child)
-        {
+        foreach ($this->all() as $child) {
             // Keep key identifier in case this is explicitly given
             $plucks = (!is_null($value))
-                        ? $plucks + (new Pluck)($child, $key, $value, $down)
-                        : array_merge($plucks,(new Pluck)($child, $key, $value, $down));
+                        ? $plucks + (new Pluck())($child, $key, $value, $down)
+                        : array_merge($plucks, (new Pluck())($child, $key, $value, $down));
         }
 
         return $plucks;
-
     }
 
     /**
-     * Inflate a flattened collection back to its original structure
+     * Inflate a flattened collection back to its original structure.
      *
      * @return NodeCollection
      */
@@ -208,9 +211,10 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
     }
 
     /**
-     * Slice one or more nodes out of the collection
+     * Slice one or more nodes out of the collection.
      *
      * @param Node[] ...$nodes
+     *
      * @return mixed
      */
     public function slice(Node ...$nodes)
@@ -220,66 +224,72 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
 
     /**
      * Reduce collection to the nodes that pass the callback
-     * Shaking a collection will keep the ancestor structure
+     * Shaking a collection will keep the ancestor structure.
      *
      * @param callable $callback
+     *
      * @return self
      */
-    public function shake(Callable $callback): self
+    public function shake(callable $callback): self
     {
         return (new Shake())($this, $callback);
     }
 
     /**
-     * Same as shaking except that it will not keep the ancestor structure
+     * Same as shaking except that it will not keep the ancestor structure.
      *
      * @param callable $callback
+     *
      * @return self
      */
-    public function prune(Callable $callback): self
+    public function prune(callable $callback): self
     {
         return (new Prune())($this, $callback);
     }
 
     /**
-     * Find many nodes by attribute value
+     * Find many nodes by attribute value.
      *
      * @param $key
      * @param array $values
+     *
      * @return NodeCollection
      */
     public function findMany($key, array $values): self
     {
-        return (new Find)($this,$key,$values);
+        return (new Find())($this, $key, $values);
     }
 
     /**
-     * Find specific node by attribute value
+     * Find specific node by attribute value.
      *
      * @param $key
      * @param $value
+     *
      * @return Node|null
      */
     public function find($key, $value)
     {
-        return (new Find)($this,$key,[$value])->first();
+        return (new Find())($this, $key, [$value])->first();
     }
 
     /**
-     * Total of all nodes and their children
+     * Total of all nodes and their children.
      *
      * @return int
      */
     public function total(): int
     {
-        return array_reduce($this->all(),function($carry, Node $node){
-            return $carry + (new Count)($node);
-        },$this->count());
+        return array_reduce($this->all(), function ($carry, Node $node) {
+            return $carry + (new Count())($node);
+        }, $this->count());
     }
 
     public function offsetExists($offset)
     {
-        if(!is_string($offset) && !is_int($offset)) return false;
+        if (!is_string($offset) && !is_int($offset)) {
+            return false;
+        }
 
         return array_key_exists($offset, $this->nodes);
     }
@@ -291,9 +301,11 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
 
     public function offsetSet($offset, $value)
     {
-        if(is_null($offset)) $this->nodes[] = $value;
-
-        else $this->nodes[$offset] = $value;
+        if (is_null($offset)) {
+            $this->nodes[] = $value;
+        } else {
+            $this->nodes[$offset] = $value;
+        }
     }
 
     public function offsetUnset($offset)

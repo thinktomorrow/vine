@@ -6,7 +6,7 @@ use Vine\Node;
 class FlattenTest extends TestCase
 {
     /** @test */
-    function it_can_flatten_a_node_collection()
+    public function it_can_flatten_a_node_collection()
     {
         $node = new Node(['id' => 1, 'name' => 'foobar']);
         $node->addChildren([$child = new Node(['id' => 2, 'name' => 'first-child'])]);
@@ -19,5 +19,4 @@ class FlattenTest extends TestCase
         $this->assertSame($child, $flatNodes[1]);
         $this->assertSame($child2, $flatNodes[2]);
     }
-
 }

@@ -4,8 +4,6 @@ namespace Vine\Presenters;
 
 use RecursiveArrayIterator;
 use RecursiveTreeIterator;
-use Vine\Presenters\ArrayPresenter;
-use Vine\Presenters\Presenter;
 
 class CliPresenter extends ArrayPresenter implements Presenter
 {
@@ -15,10 +13,14 @@ class CliPresenter extends ArrayPresenter implements Presenter
         $result = parent::render();
 
         $iterator = new RecursiveArrayIterator($result);
-        $treeIterator = (new RecursiveTreeIterator($iterator));
+        $treeIterator = (new RecursiveTreeIterator(
+            $iterator,
+            RecursiveTreeIterator::BYPASS_KEY,
+            \CachingIterator::CATCH_GET_CHILD,
+            RecursiveTreeIterator::SELF_FIRST
+        ));
 
-        foreach($treeIterator as $key => $value)
-        {
+        foreach ($treeIterator as $key => $value) {
             $output .= $value.PHP_EOL;
         }
 

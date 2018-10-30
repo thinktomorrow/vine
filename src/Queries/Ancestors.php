@@ -10,16 +10,18 @@ class Ancestors
     /**
      * @param Node $node
      * @param null $depth
+     *
      * @return NodeCollection
      */
     public function __invoke(Node $node, $depth = null): NodeCollection
     {
-        $ancestors = new NodeCollection;
+        $ancestors = new NodeCollection();
         $currentDepth = 0;
 
-        while($parent = $node->parent())
-        {
-            if(!is_null($depth) && $currentDepth >= $depth) break;
+        while ($parent = $node->parent()) {
+            if (!is_null($depth) && $currentDepth >= $depth) {
+                break;
+            }
             $currentDepth++;
 
             $node = $parent;

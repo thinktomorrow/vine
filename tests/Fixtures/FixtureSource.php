@@ -5,7 +5,7 @@ namespace Tests\Fixtures;
 use Vine\Source;
 
 /**
- * User: bencavens
+ * User: bencavens.
  */
 class FixtureSource implements Source
 {
@@ -15,25 +15,24 @@ class FixtureSource implements Source
     {
         $filename = 'dataFixture.php';
 
-        if($type == 'large')
-        {
+        if ($type == 'large') {
             $filename = 'largeDataFixture.php';
         }
 
         $this->flatten = require __DIR__.'/'.$filename;
     }
 
-    function nodeEntries(): array
+    public function nodeEntries(): array
     {
         return $this->flatten;
     }
 
-    function nodeKeyIdentifier(): string
+    public function nodeKeyIdentifier(): string
     {
         return 0;
     }
 
-    function nodeParentKeyIdentifier(): string
+    public function nodeParentKeyIdentifier(): string
     {
         return 1;
     }

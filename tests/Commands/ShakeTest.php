@@ -6,11 +6,11 @@ use Vine\Node;
 class ShakeTest extends TestCase
 {
     /** @test */
-    function a_node_collection_that_does_not_need_shaking_is_copied_but_has_exact_same_structure()
+    public function a_node_collection_that_does_not_need_shaking_is_copied_but_has_exact_same_structure()
     {
         $node = $this->getNode();
 
-        $shakedNode = $node->shake(function(Node $node){
+        $shakedNode = $node->shake(function (Node $node) {
             return true;
         });
 
@@ -26,11 +26,11 @@ class ShakeTest extends TestCase
     }
 
     /** @test */
-    function if_all_is_shaken_only_the_root_remains()
+    public function if_all_is_shaken_only_the_root_remains()
     {
         $node = $this->getNode();
 
-        $shakedNode = $node->shake(function(Node $node){
+        $shakedNode = $node->shake(function (Node $node) {
             return false;
         });
 
@@ -38,11 +38,11 @@ class ShakeTest extends TestCase
     }
 
     /** @test */
-    function shake_maintains_the_ancestors_for_each_kept_node()
+    public function shake_maintains_the_ancestors_for_each_kept_node()
     {
         $node = $this->getNode();
 
-        $shakedNode = $node->shake(function(Node $node){
+        $shakedNode = $node->shake(function (Node $node) {
             return $node->id == 3;
         });
 
@@ -57,11 +57,11 @@ class ShakeTest extends TestCase
     }
 
     /** @test */
-    function it_can_shake_a_node_collection()
+    public function it_can_shake_a_node_collection()
     {
         $nodeCollection = $this->getNode()->children();
 
-        $shakedNodeCollection = $nodeCollection->shake(function(Node $node){
+        $shakedNodeCollection = $nodeCollection->shake(function (Node $node) {
             return $node->id == 3;
         });
 
@@ -85,5 +85,4 @@ class ShakeTest extends TestCase
 
         return $node;
     }
-
 }

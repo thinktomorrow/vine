@@ -6,7 +6,7 @@ use Vine\Node;
 class InflateTest extends TestCase
 {
     /** @test */
-    function it_can_inflate_a_flattened_node_collection_back_to_its_original_structure()
+    public function it_can_inflate_a_flattened_node_collection_back_to_its_original_structure()
     {
         $node = new Node(['id' => 1, 'name' => 'foobar']);
         $node->addChildren([$child = new Node(['id' => 2, 'name' => 'first-child'])]);
@@ -22,7 +22,7 @@ class InflateTest extends TestCase
     }
 
     /** @test */
-    function inflating_a_non_flattened_collection_remains_the_same()
+    public function inflating_a_non_flattened_collection_remains_the_same()
     {
         $node = new Node(['id' => 1, 'name' => 'foobar']);
         $node->addChildren([$child = new Node(['id' => 2, 'name' => 'first-child'])]);
@@ -33,5 +33,4 @@ class InflateTest extends TestCase
         $this->assertEquals(1, $collection->inflate()->count());
         $this->assertSame($node, $collection->inflate()->first());
     }
-
 }
