@@ -23,11 +23,10 @@ class Copy
     }
 
     /**
-     * @param Node $node
-     * @param NodeCollection $children
-     * @param $depth
-     * @param null|int $currentDepth
-     * @return bool|Node
+     * @param NodeCollection $nodeCollection
+     * @param null $depth
+     * @param int $currentDepth
+     * @return NodeCollection
      */
     private function recursiveDepth(NodeCollection $nodeCollection, $depth = null, $currentDepth = 0)
     {

@@ -31,7 +31,7 @@ class Prune
      * Note: the passed callback determines the nodes which should be kept but here
      * we reverse the callback so we get the nodes that need to be excluded
      *
-     * @param $copiedNodeCollection
+     * @param NodeCollection $copiedNodeCollection
      * @param callable $callback
      * @return array
      */

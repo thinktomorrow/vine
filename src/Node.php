@@ -194,7 +194,7 @@ class Node
     }
 
     /**
-     * @param $key
+     * @param string|int $key
      * @param array $values
      * @return NodeCollection
      */
@@ -204,8 +204,8 @@ class Node
     }
 
     /**
-     * @param $key
-     * @param $value
+     * @param string|int $key
+     * @param mixed $value
      * @return Node
      */
     public function find($key, $value): Node
@@ -214,7 +214,7 @@ class Node
     }
 
     /**
-     * @param null $depth
+     * @param int|null $depth
      * @return NodeCollection
      */
     public function ancestors($depth = null): NodeCollection
@@ -225,8 +225,8 @@ class Node
     /**
      * Get flat array of plucked values from child nodes
      *
-     * @param $key
-     * @param null $value
+     * @param string|int $key
+     * @param string|int|null $value
      * @param bool $down
      * @return array
      */
@@ -250,7 +250,7 @@ class Node
     /**
      * Get a copy of this node
      *
-     * @param null|int $depth
+     * @param int|null $depth
      * @return Node
      */
     public function copy($depth = null): self
@@ -318,7 +318,7 @@ class Node
      * Fetch entry data via a direct call to Node.
      * E.g. $node->name resolves to $node->entry('name')
      *
-     * @param $name
+     * @param string|int $name
      * @return mixed|null|NodeCollection
      */
     public function __get($name)

@@ -8,7 +8,7 @@ use Vine\NodeCollection;
 class Remove
 {
     /**
-     * Return collection of removed nodes?
+     * Return collection of removed nodes.
      *
      * @param NodeCollection $nodeCollection
      * @param Node[] $nodes

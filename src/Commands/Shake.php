@@ -14,9 +14,8 @@ class Shake
      *
      * @param NodeCollection $nodeCollection
      * @param callable $callback
-     * @param bool $prune -
-     * @return Node
-     * @internal param Node[] $nodes
+     * @param bool $prune
+     * @return NodeCollection
      */
     public function __invoke(NodeCollection $nodeCollection, Callable $callback, $prune = false): NodeCollection
     {
