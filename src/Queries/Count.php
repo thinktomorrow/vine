@@ -8,6 +8,7 @@ class Count
 {
     /**
      * @param Node $node
+     *
      * @return int
      */
     public function __invoke(Node $node): int
@@ -16,17 +17,17 @@ class Count
     }
 
     /**
-     * Count of all the children nodes
+     * Count of all the children nodes.
      *
      * @param Node $node
+     *
      * @return int
      */
     private function recursiveCount(Node $node): int
     {
         $count = 0;
 
-        foreach($node->children() as $child)
-        {
+        foreach ($node->children() as $child) {
             $count++; // Childnode itself
             $count += $this->recursiveCount($child); // Children of childnode
         }

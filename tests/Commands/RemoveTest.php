@@ -5,7 +5,7 @@ use Vine\Node;
 class RemoveTest extends \PHPUnit\Framework\TestCase
 {
     /** @test */
-    function it_can_remove_self_from_parent()
+    public function it_can_remove_self_from_parent()
     {
         $node = new Node(null);
         $node->addChildren([$child = new Node(null)]);
@@ -13,16 +13,16 @@ class RemoveTest extends \PHPUnit\Framework\TestCase
 
         $child->remove();
 
-        $this->assertCount(0,$node->children());
-        $this->assertCount(1,$child->children());
+        $this->assertCount(0, $node->children());
+        $this->assertCount(1, $child->children());
         $this->assertNull($child->parent());
 
         // Assert parent still exists
-        $this->assertInstanceOf(Node::class,$node);
+        $this->assertInstanceOf(Node::class, $node);
     }
 
     /** @test */
-    function it_can_remove_nodes()
+    public function it_can_remove_nodes()
     {
         $collection = new \Vine\NodeCollection(
             $child = new Node(['id' => 1, 'name' => 'foobar']),
@@ -33,13 +33,13 @@ class RemoveTest extends \PHPUnit\Framework\TestCase
         $collection->remove($child);
 
         $this->assertCount(2, $collection->all());
-        $this->assertSame($child2,$collection->find('id',2));
-        $this->assertSame($child3,$collection->find('id',3));
-        $this->assertNull($collection->find('id',1));
+        $this->assertSame($child2, $collection->find('id', 2));
+        $this->assertSame($child3, $collection->find('id', 3));
+        $this->assertNull($collection->find('id', 1));
     }
 
     /** @test */
-    function it_can_remove_nested_nodes()
+    public function it_can_remove_nested_nodes()
     {
         $root = new Node(['id' => 1, 'name' => 'foobar']);
         $root->addChildren($child2 = new Node(['id' => 2, 'name' => 'foobar-2']));
@@ -51,14 +51,14 @@ class RemoveTest extends \PHPUnit\Framework\TestCase
         $root->remove($child3);
 
         $this->assertEquals(2, $root->total());
-        $this->assertSame($child2,$root->children()->find('id',2));
-        $this->assertSame($child4,$root->children()->find('id',4));
-        $this->assertNull($root->children()->find('id',3));
-        $this->assertNull($root->children()->find('id',5));
+        $this->assertSame($child2, $root->children()->find('id', 2));
+        $this->assertSame($child4, $root->children()->find('id', 4));
+        $this->assertNull($root->children()->find('id', 3));
+        $this->assertNull($root->children()->find('id', 5));
     }
 
     /** @test */
-    function node_can_be_removed_from_collection()
+    public function node_can_be_removed_from_collection()
     {
         $node = new Node(1);
         $node2 = new Node(2);
@@ -71,8 +71,8 @@ class RemoveTest extends \PHPUnit\Framework\TestCase
 
         $collection->remove($child3);
 
-        $this->assertEquals(3,$collection->total());
-        $this->assertCount(0,$node2->children());
+        $this->assertEquals(3, $collection->total());
+        $this->assertCount(0, $node2->children());
         $this->assertNotNull($child3->parent());
     }
 }

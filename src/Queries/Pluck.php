@@ -10,7 +10,8 @@ class Pluck
      * @param Node $node
      * @param $key
      * @param null $value
-     * @param bool $down | down: pluck from children, up: pluck from ancestors
+     * @param bool $down  | down: pluck from children, up: pluck from ancestors
+     *
      * @return array
      */
     public function __invoke(Node $node, $key, $value = null, $down = true): array
@@ -21,10 +22,11 @@ class Pluck
 
         $nodes = $down ? $node->children() : [$node->parent()];
 
-        foreach($nodes as $node)
-        {
+        foreach ($nodes as $node) {
             // If node entry is empty, which means there is no parent, we bail out
-            if(!$node) break;
+            if (!$node) {
+                break;
+            }
 
             $values = $value
                 ? array_replace($values, $this->__invoke($node, $key, $value, $down)) // Respect the passed key values

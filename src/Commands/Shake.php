@@ -13,11 +13,12 @@ class Shake
      * Pruning a collection only keeps the filtered nodes and collapses the ancestor tree.
      *
      * @param NodeCollection $nodeCollection
-     * @param callable $callback
-     * @param bool $prune
+     * @param callable       $callback
+     * @param bool           $prune
+     *
      * @return NodeCollection
      */
-    public function __invoke(NodeCollection $nodeCollection, Callable $callback, $prune = false): NodeCollection
+    public function __invoke(NodeCollection $nodeCollection, callable $callback, $prune = false): NodeCollection
     {
         $copiedNodeCollection = $nodeCollection->copy();
 
@@ -27,29 +28,27 @@ class Shake
     }
 
     /**
-     * Blacklist of allowed nodes - we reverse the callback so we get the nodes that we do not want included
+     * Blacklist of allowed nodes - we reverse the callback so we get the nodes that we do not want included.
+     *
      * @param $copiedNodeCollection
      * @param callable $callback
+     *
      * @return array
      */
-    private function getBlacklistedNodes(NodeCollection $copiedNodeCollection, Callable $callback): array
+    private function getBlacklistedNodes(NodeCollection $copiedNodeCollection, callable $callback): array
     {
         $flatten = (new Flatten())($copiedNodeCollection);
 
-        $whitelistedNodes = new NodeCollection(...array_filter($flatten->all(),$callback));
+        $whitelistedNodes = new NodeCollection(...array_filter($flatten->all(), $callback));
 
-        foreach($whitelistedNodes as $node)
-        {
+        foreach ($whitelistedNodes as $node) {
             $whitelistedNodes->merge($node->ancestors());
         }
 
-        return array_filter($flatten->all(), function (Node $node) use ($whitelistedNodes)
-        {
+        return array_filter($flatten->all(), function (Node $node) use ($whitelistedNodes) {
             // Todo we should make this check optimized for performance
-            foreach($whitelistedNodes as $whitelistedNode)
-            {
-                if($node->equals($whitelistedNode))
-                {
+            foreach ($whitelistedNodes as $whitelistedNode) {
+                if ($node->equals($whitelistedNode)) {
                     return false;
                 }
             }

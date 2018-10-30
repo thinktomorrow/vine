@@ -10,26 +10,24 @@ class Slice
     /**
      * Slice a node from the tree and return a new tree structure where
      * the children from this node get the parent of the extracted Node
-     * as their parent
+     * as their parent.
      *
      * @param NodeCollection $nodeCollection
-     * @param Node[] $sliceNodes
+     * @param Node[]         $sliceNodes
+     *
      * @return NodeCollection
      */
-    public function __invoke(NodeCollection $nodeCollection,Node ...$sliceNodes): NodeCollection
+    public function __invoke(NodeCollection $nodeCollection, Node ...$sliceNodes): NodeCollection
     {
         // Check if current node is one of the passed nodes to be sliced out
         foreach ($sliceNodes as $node) {
 
             // Add children to parent of this node
             foreach ($node->children() as $child) {
-                if(($node->isRoot()))
-                {
+                if (($node->isRoot())) {
                     $child->moveToRoot();
                     $nodeCollection->add($child);
-                }
-                else
-                {
+                } else {
                     $child->move($node->parent());
                 }
             }
@@ -48,7 +46,7 @@ class Slice
 
     /**
      * @param NodeCollection $nodeCollection
-     * @param Node[] $sliceNodes
+     * @param Node[]         $sliceNodes
      */
     private function removeCollectionChildren(NodeCollection $nodeCollection, array $sliceNodes)
     {

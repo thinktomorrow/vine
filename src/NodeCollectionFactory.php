@@ -14,7 +14,8 @@ class NodeCollectionFactory
     private $strict = false;
 
     /**
-     * The resulting node collection build up from the source data
+     * The resulting node collection build up from the source data.
+     *
      * @var NodeCollection
      */
     private $nodeCollection;
@@ -31,11 +32,12 @@ class NodeCollectionFactory
 
     /**
      * @param bool $strict
+     *
      * @return $this
      */
     public function strict($strict = true)
     {
-        $this->strict = !!$strict;
+        $this->strict = (bool) $strict;
 
         return $this;
     }
@@ -59,7 +61,6 @@ class NodeCollectionFactory
         $parent_key = $source->nodeParentKeyIdentifier();
 
         foreach ($source->nodeEntries() as $i => $entry) {
-
             $id = is_object($entry) ? $entry->{$id_key} : $entry[$id_key];
             $parentId = is_object($entry) ? $entry->{$parent_key} : $entry[$parent_key];
 
@@ -75,14 +76,17 @@ class NodeCollectionFactory
 
     /**
      * @param string|int $parentId
-     * @param mixed $entryNode
+     * @param mixed      $entryNode
      */
     private function addChild($parentId, $entryNode)
     {
-        if (!$parentId) return;
+        if (!$parentId) {
+            return;
+        }
 
         if (isset($this->index[$parentId])) {
             $this->index[$parentId]->addChildren([$entryNode]);
+
             return;
         }
 
@@ -91,7 +95,7 @@ class NodeCollectionFactory
 
     /**
      * @param string|int $parentId
-     * @param mixed $entryNode
+     * @param mixed      $entryNode
      */
     private function catchOrphan($parentId, $entryNode)
     {
@@ -102,7 +106,7 @@ class NodeCollectionFactory
     }
 
     /**
-     * All orphans need to be assigned to their respective parents
+     * All orphans need to be assigned to their respective parents.
      */
     private function addOrphans()
     {
@@ -111,7 +115,7 @@ class NodeCollectionFactory
 
                 // Strict check which means there is a node assigned to an non-existing parent
                 if ($this->strict) {
-                    throw new \LogicException('Parent reference to a non-existing node via identifier [' . $parentId . ']');
+                    throw new \LogicException('Parent reference to a non-existing node via identifier ['.$parentId.']');
                 }
 
                 continue;

@@ -5,7 +5,7 @@ use Vine\Node;
 class MoveTest extends \PHPUnit\Framework\TestCase
 {
     /** @test */
-    function a_node_can_be_moved_to_different_parent()
+    public function a_node_can_be_moved_to_different_parent()
     {
         $node = new Node(['id' => 1, 'name' => 'root-1']);
         $node2 = new Node(['id' => 2, 'name' => 'root-2']);
@@ -25,17 +25,17 @@ class MoveTest extends \PHPUnit\Framework\TestCase
     }
 
     /** @test */
-    function a_node_is_moved_along_with_its_children()
+    public function a_node_is_moved_along_with_its_children()
     {
         $root = new Node(['id' => 1, 'name' => 'root-1']);
-            $root->addChildren([$main1 = new Node(['id' => 2, 'name' => 'child-1'])]);
-                $main1->addChildren([$child3 = new Node(['id' => 4, 'name' => 'child-3'])]);
-                    $child3->addChildren([$child4 = new Node(['id' => 5, 'name' => 'child-4'])]);
-            $root->addChildren([$main2 = new Node(['id' => 3, 'name' => 'child-2'])]);
-                $main2->addChildren([$child5 = new Node(['id' => 6, 'name' => 'child-5'])]);
+        $root->addChildren([$main1 = new Node(['id' => 2, 'name' => 'child-1'])]);
+        $main1->addChildren([$child3 = new Node(['id' => 4, 'name' => 'child-3'])]);
+        $child3->addChildren([$child4 = new Node(['id' => 5, 'name' => 'child-4'])]);
+        $root->addChildren([$main2 = new Node(['id' => 3, 'name' => 'child-2'])]);
+        $main2->addChildren([$child5 = new Node(['id' => 6, 'name' => 'child-5'])]);
 
         // Assert defaults
-        $this->assertSame($main1,$child3->parent());
+        $this->assertSame($main1, $child3->parent());
 
         $child3->move($main2);
 
@@ -47,7 +47,7 @@ class MoveTest extends \PHPUnit\Framework\TestCase
     }
 
     /** @test */
-    function a_node_can_be_moved_to_root()
+    public function a_node_can_be_moved_to_root()
     {
         $root = new Node(['id' => 1, 'name' => 'root-1']);
         $root->addChildren([$main1 = new Node(['id' => 2, 'name' => 'child-1'])]);

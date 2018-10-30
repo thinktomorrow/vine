@@ -5,7 +5,7 @@ use Vine\Node;
 class SliceTest extends \PHPUnit\Framework\TestCase
 {
     /** @test */
-    function when_removing_node_from_flat_collection_node_is_removed_and_children_are_added_to_ancestor()
+    public function when_removing_node_from_flat_collection_node_is_removed_and_children_are_added_to_ancestor()
     {
         $node = new Node(['id' => 1, 'name' => 'foobar']);
         $node->addChildren([$child = new Node(['id' => 2, 'name' => 'first-child'])]);
@@ -21,7 +21,7 @@ class SliceTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($child2, $newChild2);
         $this->assertSame($node, $newChild2->parent());
 
-        $this->assertEquals(1,$node->total());
+        $this->assertEquals(1, $node->total());
         $this->assertEmpty($newChild2->children());
     }
 }

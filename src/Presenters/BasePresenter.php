@@ -4,7 +4,6 @@ namespace Vine\Presenters;
 
 use Vine\Node;
 use Vine\NodeCollection;
-use Vine\Tree;
 
 abstract class BasePresenter
 {
@@ -23,28 +22,30 @@ abstract class BasePresenter
     }
 
     /**
-     * Render collection
+     * Render collection.
      *
      * @return string
      */
     abstract public function render();
 
     /**
-     * Render each branch and its children recursively
+     * Render each branch and its children recursively.
      *
      * @param NodeCollection $nodeCollection
-     * @param int $level
+     * @param int            $level
+     *
      * @return string
      */
     protected function renderRecursiveToString(NodeCollection $nodeCollection, $level = 0): string
     {
         $output = '';
 
-        foreach($nodeCollection as $node)
-        {
-            $output .= $this->template($node,$level);
+        foreach ($nodeCollection as $node) {
+            $output .= $this->template($node, $level);
 
-            if(!$node->isLeaf()) $output .= $this->renderRecursiveToString($node->children(),$level+1);
+            if (!$node->isLeaf()) {
+                $output .= $this->renderRecursiveToString($node->children(), $level + 1);
+            }
         }
 
         return $output;
@@ -54,8 +55,9 @@ abstract class BasePresenter
      * Template for a single node entry.
      *
      * @param Node $node
-     * @param int $level
+     * @param int  $level
+     *
      * @return string
      */
-    abstract protected function template(Node $node,$level = 0);
+    abstract protected function template(Node $node, $level = 0);
 }
