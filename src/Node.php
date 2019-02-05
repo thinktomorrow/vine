@@ -19,9 +19,13 @@ class Node
     /** @var mixed */
     private $entry;
 
+    /** @var bool */
+    private $entryAsObject = false;
+
     public function __construct($entry)
     {
-        $this->entry = $entry;
+        $this->replaceEntry($entry);
+
         $this->children = new NodeCollection();
     }
 
@@ -71,7 +75,7 @@ class Node
     {
         if (!($key === null)) {
 
-            if(is_array($this->entry)) {
+            if(!$this->entryAsObject) {
                 return isset($this->entry[$key]) ? $this->entry[$key] : $default;
             }
 
@@ -84,6 +88,9 @@ class Node
     public function replaceEntry($entry)
     {
         $this->entry = $entry;
+
+        // Track the type of the entry to speed up retrieval of nested properties
+        $this->entryAsObject = is_object($entry);
     }
 
     /**
