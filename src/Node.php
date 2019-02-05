@@ -69,10 +69,13 @@ class Node
 
     public function entry($key = null, $default = null)
     {
-        if (!is_null($key)) {
-            return (is_array($this->entry) && isset($this->entry[$key]))
-                    ? $this->entry[$key]
-                    : (is_object($this->entry) ? $this->entry->{$key} : $default);
+        if (!($key === null)) {
+
+            if(is_array($this->entry)) {
+                return isset($this->entry[$key]) ? $this->entry[$key] : $default;
+            }
+
+            return isset($this->entry->{$key}) ? $this->entry->{$key} : $default;
         }
 
         return $this->entry;
@@ -114,7 +117,7 @@ class Node
     public function remove(self $node = null)
     {
         // Remove self from the parent node
-        if (is_null($node)) {
+        if (null === $node) {
             if (!$this->isRoot()) {
                 $this->parent()->remove($this);
                 $this->parent = null;

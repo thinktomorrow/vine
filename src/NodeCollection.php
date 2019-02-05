@@ -192,7 +192,7 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
 
         foreach ($this->all() as $child) {
             // Keep key identifier in case this is explicitly given
-            $plucks = (!is_null($value))
+            $plucks = (!($value === null))
                         ? $plucks + (new Pluck())($child, $key, $value, $down)
                         : array_merge($plucks, (new Pluck())($child, $key, $value, $down));
         }
@@ -301,7 +301,7 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
 
     public function offsetSet($offset, $value)
     {
-        if (is_null($offset)) {
+        if (null === $offset) {
             $this->nodes[] = $value;
         } else {
             $this->nodes[$offset] = $value;
