@@ -10,6 +10,7 @@ use Vine\Commands\Shake;
 use Vine\Commands\Slice;
 use Vine\Queries\Count;
 use Vine\Queries\Find;
+use Vine\Queries\FindFirst;
 use Vine\Queries\Pluck;
 use Vine\Sources\ArraySource;
 
@@ -270,7 +271,7 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function find($key, $value)
     {
-        return (new Find())($this, $key, [$value])->first();
+        return (new FindFirst())($this, $key, [$value]);
     }
 
     /**
