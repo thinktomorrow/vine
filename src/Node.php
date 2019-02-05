@@ -212,6 +212,11 @@ class Node
         return !$this->parent;
     }
 
+    public function has($key, $value): bool
+    {
+        return in_array($this->entry($key), (array) $value);
+    }
+
     /**
      * @param string|int $key
      * @param array      $values

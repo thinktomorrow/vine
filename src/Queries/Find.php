@@ -18,11 +18,11 @@ class Find
         $nodes = new NodeCollection();
 
         foreach ($nodeCollection as $node) {
-            if (in_array($node->entry($key), $values)) {
+            if ($node->has($key, $values)) {
                 $nodes->add($node);
             }
 
-            if (!$node->children()->isEmpty()) {
+            if ($node->hasChildren()) {
                 $nodes->merge($this->__invoke($node->children(), $key, $values));
             }
         }
