@@ -2,12 +2,12 @@
 
 namespace Vine;
 
+use InvalidArgumentException;
 use Vine\Commands\Copy;
 use Vine\Commands\Move;
 use Vine\Queries\Ancestors;
 use Vine\Queries\Count;
 use Vine\Queries\Pluck;
-use InvalidArgumentException;
 
 class Node
 {
@@ -43,7 +43,7 @@ class Node
 
         $this->children->merge($children);
 
-        array_map(function (Node $child) {
+        array_map(function (self $child) {
             $child->parent($this);
         }, $children->all());
 
@@ -72,8 +72,7 @@ class Node
     public function entry($key = null, $default = null)
     {
         if (!($key === null)) {
-
-            if(is_array($this->entry)) {
+            if (is_array($this->entry)) {
                 return isset($this->entry[$key]) ? $this->entry[$key] : $default;
             }
 
@@ -361,10 +360,10 @@ class Node
 
     public function __call($name, $args)
     {
-        if(method_exists($this->entry(), $name)) {
+        if (method_exists($this->entry(), $name)) {
             return $this->entry()->{$name}(...$args);
         }
 
-        throw new InvalidArgumentException('No method [' .$name.'] found on ' . get_class($this) . ' or underlying entry.');
-   }
+        throw new InvalidArgumentException('No method ['.$name.'] found on '.get_class($this).' or underlying entry.');
+    }
 }
