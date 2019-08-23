@@ -177,6 +177,14 @@ class NodeTest extends TestCase
     }
 
     /** @test */
+    public function it_forwards_call_to_entry_method_with_respect_of_arguments()
+    {
+        $node = new Node(new CustomEntry());
+
+        $this->assertEquals('foobar', $node->compose('foo', 'bar'));
+    }
+
+    /** @test */
     public function non_found_method_results_in_exception()
     {
         $this->expectException(InvalidArgumentException::class);
@@ -189,5 +197,10 @@ class CustomEntry{
     public function url()
     {
         return 'foobar';
+    }
+
+    public function compose($first, $second)
+    {
+        return $first . $second;
     }
 }

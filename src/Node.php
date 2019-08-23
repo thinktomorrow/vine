@@ -362,7 +362,7 @@ class Node
     public function __call($name, $args)
     {
         if(method_exists($this->entry(), $name)) {
-            return $this->entry()->{$name}($args);
+            return $this->entry()->{$name}(...$args);
         }
 
         throw new InvalidArgumentException('No method [' .$name.'] found on ' . get_class($this) . ' or underlying entry.');
