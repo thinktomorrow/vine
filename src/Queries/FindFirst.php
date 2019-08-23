@@ -21,9 +21,8 @@ class FindFirst
                 return $node;
             }
 
-            if ($node->hasChildren())
-            {
-                if($childNode = $this->__invoke($node->children(), $key, $values)){
+            if ($node->hasChildren()) {
+                if ($childNode = $this->__invoke($node->children(), $key, $values)) {
                     return $childNode;
                 }
             }

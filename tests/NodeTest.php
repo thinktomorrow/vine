@@ -184,8 +184,8 @@ class NodeTest extends TestCase
     }
 }
 
-class CustomEntry{
-
+class CustomEntry
+{
     public function url()
     {
         return 'foobar';
