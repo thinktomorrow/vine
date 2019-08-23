@@ -7,6 +7,7 @@ use Vine\Commands\Move;
 use Vine\Queries\Ancestors;
 use Vine\Queries\Count;
 use Vine\Queries\Pluck;
+use InvalidArgumentException;
 
 class Node
 {
@@ -357,4 +358,13 @@ class Node
 
         return $this->entry($name);
     }
+
+    public function __call($name, $args)
+    {
+        if(method_exists($this->entry(), $name)) {
+            return $this->entry()->{$name}($args);
+        }
+
+        throw new InvalidArgumentException('No method [' .$name.'] found on ' . get_class($this) . ' or underlying entry.');
+   }
 }

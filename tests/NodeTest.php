@@ -167,4 +167,27 @@ class NodeTest extends TestCase
         $this->assertTrue($node->hasChildren());
         $this->assertFalse($child2->hasChildren());
     }
+
+    /** @test */
+    public function it_forwards_call_to_entry_method()
+    {
+        $node = new Node(new CustomEntry());
+
+        $this->assertEquals('foobar', $node->url());
+    }
+
+    /** @test */
+    public function non_found_method_results_in_exception()
+    {
+        $this->expectException(InvalidArgumentException::class);
+        (new Node([]))->unknown();
+    }
+}
+
+class CustomEntry{
+
+    public function url()
+    {
+        return 'foobar';
+    }
 }
