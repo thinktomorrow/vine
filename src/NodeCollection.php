@@ -269,7 +269,7 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
      *
      * @return Node|null
      */
-    public function find($key, $value)
+    public function find($key, $value): ?Node
     {
         return (new FindFirst())($this, $key, [$value]);
     }

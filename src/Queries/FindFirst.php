@@ -12,7 +12,7 @@ class FindFirst
      * @param $key
      * @param array $values
      *
-     * @return Node
+     * @return null|Node
      */
     public function __invoke(NodeCollection $nodeCollection, $key, array $values): ?Node
     {

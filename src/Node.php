@@ -226,9 +226,9 @@ class Node
      * @param string|int $key
      * @param mixed      $value
      *
-     * @return Node
+     * @return Node|null
      */
-    public function find($key, $value): self
+    public function find($key, $value): ?Node
     {
         return $this->children()->find($key, $value);
     }
@@ -258,7 +258,7 @@ class Node
     }
 
     /**
-     * Get flat array of plucked values from child nodes.
+     * Get flat array of plucked values from parent nodes.
      *
      * @param $key
      * @param null $value
