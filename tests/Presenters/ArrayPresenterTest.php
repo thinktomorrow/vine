@@ -13,7 +13,7 @@ class ArrayPresenterTest extends TestCase
     {
         $result = (new ArrayPresenter())->collection(new \Vine\NodeCollection(new Node(null)))->render();
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
     }
 
     /** @test */
@@ -23,7 +23,7 @@ class ArrayPresenterTest extends TestCase
 
         $result = (new ArrayPresenter())->collection($tree)->render();
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
     }
 
     /**
