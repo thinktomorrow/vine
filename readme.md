@@ -25,9 +25,11 @@ $node->isLeaf(); // returns false or true
 $child->depth(); // returns 1
 ```
 
-## Loading a dataset
+## Getting the data
 Usually you'll want to use a collection with values coming from a database. This data is fetched as a flat list of records.
- With the transposer pattern you are able to convert this structure to a nested node collection.
+ Next step is to convert this structure to a nested node collection. By default we assume that each record has the following:
+ - a value `id` which provides an unique reference to the entry.
+ - a value `parent_id` which is used by a child entry to refer to its parent entry.
 
 ```php
 // flat dataset as pulled from database
@@ -37,43 +39,34 @@ $dataset = [
     ['id' => 3, 'parent_id' => 2, 'label' => 'bazbaz'],
 ];
 
-// Convert this dataset to a node collection
 $collection = NodeCollection::fromArray($dataset);
 ```
 
-## Loading a dataset from a model
+## Loading a custom dataset
+ You can provide a custom data source. Here's how you use it:
+ ```php
+ // Using a custom source
+ $collection = NodeCollection::fromSource(
+     new ArraySource($dataset)
+ );
+ ```
+ 
+ This is useful when your data does not contain the default`id` or `parent_id` properties. 
+ With a custom source, you can set which is the `nodeKeyIdentifier` (id) and the `nodeParentKeyIdentifier` (parent id). A custom source should honour the `\Vine\Source` interface:
+ ```php 
+ interface Source
+ {
+    // array of all entries.
+     public function nodeEntries(): array;
 
-## Load an advanced dataset
+     // property to identify the key (default is 'id')
+     public function nodeKeyIdentifier(): string;
 
- What can you do with transposers?
- This will transpose your flat adjacent datamodel.
+     // property to identify the parent key (default is 'parent_id')
+     public function nodeParentKeyIdentifier(): string;
+ }
+ ```
  
- key method
- set the unique identifier of each entry
- 
- parentKey method
- set the attribute key that identifies the parent. 
- 
- optional entry method
- allows to enrich the entry data with custom data. Handy if you rely on the node info to
- enrich the entry data
- 
- optional sortChildrenBy method
- 
-```php
-// flat dataset as pulled from database
-$dataset = [
-    ['id' => 1, 'parent_id' => 0, 'label' => 'foobar'],
-    ['id' => 2, 'parent_id' => 1, 'label' => 'baz'],
-    ['id' => 3, 'parent_id' => 2, 'label' => 'bazbaz'],
-];
-
-// Convert this dataset to a node collection
-$collection = NodeCollection::fromTransposer(
-    new ArraySource($dataset)
-);
-```
-
 ## Render a collection
 You can loop over the nodes as if it was an array, since it implements the Iteratable interface.
 ```php
@@ -94,8 +87,3 @@ This will output something similar to:
 | \-Array
 |   \-bazbaz
 ```
-
-
-## TODO
-- allow for primitive value to be passed as entry; making sure that find methods work as expected
-- allow for regex patterns to be passed to our find methods
