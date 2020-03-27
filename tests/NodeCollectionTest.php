@@ -28,7 +28,33 @@ class NodeCollectionTest extends TestCase
     }
 
     /** @test */
-    public function it_accepts_an_array_of_nodes()
+    function it_can_return_only_the_last_node()
+    {
+        $collection = new NodeCollection(
+            new Node('foobar'),
+            new Node('foobar-2')
+        );
+
+        $this->assertEquals('foobar-2', $collection->last()->entry());
+    }
+
+    /** @test */
+    public function it_return_last_node_on_top_level()
+    {
+        $collection = new NodeCollection(
+            (new Node(['id' => 1]))
+                ->addChildren((new Node(['id' => 2]))
+                ->addChildren(new Node(['id' => 3]))
+            ),
+            new Node(['id' => 4])
+        );
+
+        $this->assertEquals(4, $collection->last()->id);
+
+    }
+
+    /** @test */
+    function it_accepts_an_array_of_nodes()
     {
         $collection = NodeCollection::fromArray([
             new Node('foobar'),

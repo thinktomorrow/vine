@@ -50,6 +50,15 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
         return reset($this->nodes);
     }
 
+    public function last()
+    {
+        if($this->isEmpty()) return null;
+
+        $reversed_array = array_reverse($this->nodes, true);
+
+        return reset($reversed_array);
+    }
+
     public function isEmpty(): bool
     {
         return empty($this->nodes);
