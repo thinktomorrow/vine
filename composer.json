@@ -26,6 +26,6 @@
         "phpstan/phpstan": "^0.10.5"
     },
     "require": {
-        "php": ">=7.1"
+        "php": ">=7.2"
     }
 }
