@@ -228,7 +228,7 @@ class Node
      *
      * @return Node|null
      */
-    public function find($key, $value): ?Node
+    public function find($key, $value): ?self
     {
         return $this->children()->find($key, $value);
     }

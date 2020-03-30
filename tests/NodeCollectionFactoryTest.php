@@ -33,9 +33,9 @@ class NodeCollectionFactoryTest extends TestCase
     {
         $records = [
             ['id' => 1, 'name' => 'foobar', 'parent_id' => 0],
-                ['id'     => 2, 'name' => 'foobar2', 'parent_id' => 1],
-                ['id'     => 3, 'name' => 'foobar3', 'parent_id' => 1],
-                    ['id' => 5, 'name' => 'foobar5', 'parent_id' => 3],
+            ['id'         => 2, 'name' => 'foobar2', 'parent_id' => 1],
+            ['id'         => 3, 'name' => 'foobar3', 'parent_id' => 1],
+            ['id'         => 5, 'name' => 'foobar5', 'parent_id' => 3],
             ['id'         => 4, 'name' => 'foobar4', 'parent_id' => 0],
         ];
 

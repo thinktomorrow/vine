@@ -201,6 +201,6 @@ class CustomEntry
 
     public function compose($first, $second)
     {
-        return $first . $second;
+        return $first.$second;
     }
 }

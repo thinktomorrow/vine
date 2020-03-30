@@ -66,7 +66,8 @@ class ShakeTest extends TestCase
         });
 
         $this->assertEquals(
-            new \Vine\NodeCollection((new Node(['id' => 2, 'name' => 'first-child']))
+            new \Vine\NodeCollection(
+                (new Node(['id' => 2, 'name' => 'first-child']))
                 ->addChildren(new Node(['id' => 3, 'name' => 'second-child']))
             ),
             $shakedNodeCollection
