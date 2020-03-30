@@ -64,6 +64,7 @@ $collection = NodeCollection::fromArray($dataset);
 ## NodeCollection Api
 - all(): array - Return all the nodes as array
 - first(): ?Node - Return the first node
+- last(): ?Node - Return the last node
 - isEmpty(): bool - checks if this collection is empty.
 - findMany($key, array $values): NodeCollection - Find nodes by value.
 - find($key, $value): ?Node - Find a node by value.
