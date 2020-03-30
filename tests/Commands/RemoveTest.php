@@ -66,7 +66,8 @@ class RemoveTest extends \PHPUnit\Framework\TestCase
         $node2->addChildren([$child3 = new Node(4)]);
 
         $collection = new \Vine\NodeCollection(
-            $node, $node2
+            $node,
+            $node2
         );
 
         $collection->remove($child3);

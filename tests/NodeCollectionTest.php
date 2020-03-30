@@ -28,7 +28,7 @@ class NodeCollectionTest extends TestCase
     }
 
     /** @test */
-    function it_can_return_only_the_last_node()
+    public function it_can_return_only_the_last_node()
     {
         $collection = new NodeCollection(
             new Node('foobar'),
@@ -43,18 +43,18 @@ class NodeCollectionTest extends TestCase
     {
         $collection = new NodeCollection(
             (new Node(['id' => 1]))
-                ->addChildren((new Node(['id' => 2]))
+                ->addChildren(
+                    (new Node(['id' => 2]))
                 ->addChildren(new Node(['id' => 3]))
-            ),
+                ),
             new Node(['id' => 4])
         );
 
         $this->assertEquals(4, $collection->last()->id);
-
     }
 
     /** @test */
-    function it_accepts_an_array_of_nodes()
+    public function it_accepts_an_array_of_nodes()
     {
         $collection = NodeCollection::fromArray([
             new Node('foobar'),
@@ -95,9 +95,10 @@ class NodeCollectionTest extends TestCase
     {
         $collection = new NodeCollection(
             (new Node(['id' => 1]))
-                ->addChildren((new Node(['id' => 2]))
+                ->addChildren(
+                    (new Node(['id' => 2]))
                 ->addChildren(new Node(['id' => 3]))
-            ),
+                ),
             new Node(['id' => 4])
         );
 
