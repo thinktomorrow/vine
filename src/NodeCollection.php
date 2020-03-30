@@ -52,7 +52,9 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
 
     public function last()
     {
-        if($this->isEmpty()) return null;
+        if ($this->isEmpty()) {
+            return null;
+        }
 
         $reversed_array = array_reverse($this->nodes, true);
 
