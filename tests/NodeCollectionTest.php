@@ -15,7 +15,7 @@ class NodeCollectionTest extends TestCase
     {
         $collection = new NodeCollection();
 
-        $this->assertInternalType('array', $collection->all());
+        $this->assertIsArray($collection->all());
         $this->assertCount(0, $collection->all());
     }
 

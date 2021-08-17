@@ -16,7 +16,7 @@ class CliPresenterTest extends TestCase
 
         $output = (new CliPresenter())->collection($tree)->render();
 
-        $this->assertInternalType('string', $output);
+        $this->assertIsString($output);
         $this->assertStringStartsWith('|-root-1', trim($output, PHP_EOL));
     }
 

@@ -17,7 +17,7 @@ class ArrayPresenterTest extends TestCase
     {
         $result = (new ArrayPresenter())->collection(new NodeCollection(new DefaultNode(['id' => 1])))->render();
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
     }
 
     /** @test */
@@ -27,7 +27,7 @@ class ArrayPresenterTest extends TestCase
 
         $result = (new ArrayPresenter())->collection($tree)->render();
 
-        $this->assertInternalType('array', $result);
+        $this->assertIsArray($result);
     }
 
     /**
