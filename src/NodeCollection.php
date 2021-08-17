@@ -1,50 +1,50 @@
 <?php
 
-namespace Vine;
+namespace Thinktomorrow\Vine;
 
-use Vine\Commands\Flatten;
-use Vine\Commands\Inflate;
-use Vine\Commands\Prune;
-use Vine\Commands\Remove;
-use Vine\Commands\Shake;
-use Vine\Commands\Slice;
-use Vine\Queries\Count;
-use Vine\Queries\Find;
-use Vine\Queries\FindFirst;
-use Vine\Queries\Pluck;
-use Vine\Sources\ArraySource;
+use Thinktomorrow\Vine\Commands\Flatten;
+use Thinktomorrow\Vine\Commands\Inflate;
+use Thinktomorrow\Vine\Commands\Prune;
+use Thinktomorrow\Vine\Commands\Remove;
+use Thinktomorrow\Vine\Commands\Shake;
+use Thinktomorrow\Vine\Commands\Slice;
+use Thinktomorrow\Vine\Queries\Count;
+use Thinktomorrow\Vine\Queries\Find;
+use Thinktomorrow\Vine\Queries\FindFirst;
+use Thinktomorrow\Vine\Queries\Pluck;
+use Thinktomorrow\Vine\Sources\ArraySource;
 
 class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
 {
     /**
      * @var Node[]
      */
-    protected $nodes;
+    protected array $nodes;
 
     public function __construct(Node ...$nodes)
     {
         $this->nodes = $nodes;
     }
 
-    public static function fromArray(array $entries)
+    public static function fromArray(array $entries): self
     {
         return static::fromSource(new ArraySource($entries));
     }
 
-    public static function fromSource(Source $source)
+    public static function fromSource(Source $source): self
     {
         return (new NodeCollectionFactory())->fromSource($source);
     }
 
-    public function all()
+    public function all(): array
     {
         return $this->nodes;
     }
 
-    public function first()
+    public function first(): ?Node
     {
         if ($this->isEmpty()) {
-            return;
+            return null;
         }
 
         return reset($this->nodes);
@@ -97,8 +97,8 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
         $this->map($callback);
 
         foreach ($this->nodes as $k => $node) {
-            if ($node->hasChildren()) {
-                $node->getChildren()->mapRecursive($callback);
+            if ($node->hasChildNodes()) {
+                $node->getChildNodes()->mapRecursive($callback);
             }
         }
 
@@ -118,17 +118,17 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
     {
         $nodes = $this->nodes;
 
-        uasort($nodes, function (Node $a, Node $b) use ($key) {
-            if ($a->entry($key) == $b->entry($key)) {
+        uasort($nodes, function (Node $a, DefaultNode $b) use ($key) {
+            if ($a->getNodeEntry($key) == $b->getNodeEntry($key)) {
                 return 0;
             }
 
-            return ($a->entry($key) < $b->entry($key)) ? -1 : 1;
+            return ($a->getNodeEntry($key) < $b->getNodeEntry($key)) ? -1 : 1;
         });
 
         // Now delegate the sorting to the children
         $collection = (new self(...$nodes))->map(function ($node) use ($key) {
-            return $node->sort($key);
+            return $node->sortChildNodes($key);
         });
 
         return $collection;
@@ -146,7 +146,7 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
         $collection = new self();
 
         foreach ($this->all() as $child) {
-            $collection->add($child->copy($depth));
+            $collection->add($child->copyNode($depth));
         }
 
         return $collection;
@@ -159,11 +159,11 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
      * remove the parent / child relations of the removed node. For this
      * the node->remove() should be called instead.
      *
-     * @param Node $child
+     * @param DefaultNode $child
      *
      * @return $this
      */
-    public function remove(Node $child)
+    public function remove(DefaultNode $child)
     {
         return (new Remove())($this, $child);
     }
@@ -214,11 +214,11 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Slice one or more nodes out of the collection.
      *
-     * @param Node[] ...$nodes
+     * @param DefaultNode[] ...$nodes
      *
      * @return mixed
      */
-    public function slice(Node ...$nodes)
+    public function slice(DefaultNode ...$nodes)
     {
         return (new Slice())($this, ...$nodes);
     }
@@ -267,7 +267,7 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
      * @param $key
      * @param $value
      *
-     * @return Node|null
+     * @return DefaultNode|null
      */
     public function find($key, $value)
     {
@@ -281,7 +281,7 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function total(): int
     {
-        return array_reduce($this->all(), function ($carry, Node $node) {
+        return array_reduce($this->all(), function ($carry, DefaultNode $node) {
             return $carry + (new Count())($node);
         }, $this->count());
     }

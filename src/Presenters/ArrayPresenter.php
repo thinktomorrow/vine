@@ -1,9 +1,9 @@
 <?php
 
-namespace Vine\Presenters;
+namespace Thinktomorrow\Vine\Presenters;
 
-use Vine\Node;
-use Vine\NodeCollection;
+use Thinktomorrow\Vine\Node;
+use Thinktomorrow\Vine\NodeCollection;
 
 class ArrayPresenter extends BasePresenter implements Presenter
 {
@@ -35,8 +35,8 @@ class ArrayPresenter extends BasePresenter implements Presenter
         foreach ($nodeCollection as $node) {
             $output[] = $this->template($node, $level);
 
-            if (!$node->isLeaf()) {
-                $output[] = $this->renderRecursiveToArray($node->getChildren(), $level + 1);
+            if (!$node->isLeafNode()) {
+                $output[] = $this->renderRecursiveToArray($node->getChildNodes(), $level + 1);
             }
         }
 
@@ -45,6 +45,6 @@ class ArrayPresenter extends BasePresenter implements Presenter
 
     protected function template(Node $node, $level = 0)
     {
-        return $node->entry(2);
+        return $node->getNodeEntry(2);
     }
 }

@@ -1,7 +1,10 @@
 <?php
 
+namespace Thinktomorrow\Vine\Tests\Commands;
+
+use Thinktomorrow\Vine\Node;
 use PHPUnit\Framework\TestCase;
-use Vine\Node;
+use Thinktomorrow\Vine\DefaultNode;
 
 class PruneTest extends TestCase
 {
@@ -10,19 +13,19 @@ class PruneTest extends TestCase
     {
         $node = $this->getNode();
 
-        $prunedNode = $node->prune(function (Node $node) {
+        $prunedNode = $node->pruneChildNodes(function (Node $node) {
             return true;
         });
 
         // Original is preserved
-        $this->assertEquals(1, $node->getChildren()->count());
-        $this->assertEquals(2, $node->getChildren()->first()->getChildren()->count());
+        $this->assertEquals(1, $node->getChildNodes()->count());
+        $this->assertEquals(2, $node->getChildNodes()->first()->getChildNodes()->count());
 
         $this->assertEquals($node, $prunedNode);
-        $this->assertNotSame($node->getChildren(), $prunedNode->getChildren());
-        $this->assertEquals($node->getChildren(), $prunedNode->getChildren());
-        $this->assertEquals(3, $prunedNode->total());
-        $this->assertEquals(1, $prunedNode->count());
+        $this->assertNotSame($node->getChildNodes(), $prunedNode->getChildNodes());
+        $this->assertEquals($node->getChildNodes(), $prunedNode->getChildNodes());
+        $this->assertEquals(3, $prunedNode->getTotalChildNodesCount());
+        $this->assertEquals(1, $prunedNode->getChildNodesCount());
     }
 
     /** @test */
@@ -30,11 +33,11 @@ class PruneTest extends TestCase
     {
         $node = $this->getNode();
 
-        $prunedNode = $node->prune(function (Node $node) {
+        $prunedNode = $node->pruneChildNodes(function (Node $node) {
             return false;
         });
 
-        $this->assertEquals($node->isolatedCopy(), $prunedNode);
+        $this->assertEquals($node->copyIsolatedNode(), $prunedNode);
     }
 
     /** @test */
@@ -42,12 +45,12 @@ class PruneTest extends TestCase
     {
         $node = $this->getNode();
 
-        $prunedNode = $node->prune(function (Node $node) {
-            return $node->id == 3;
+        $prunedNode = $node->pruneChildNodes(function (Node $node) {
+            return $node->getNodeEntry('id') == 3;
         });
 
         $this->assertEquals(
-            (new Node(['id' => 1, 'name' => 'foobar']))->addChildren(new Node(['id' => 3, 'name' => 'second-child'])),
+            (new DefaultNode(['id' => 1, 'name' => 'foobar']))->addChildNodes(new DefaultNode(['id' => 3, 'name' => 'second-child'])),
             $prunedNode
         );
     }
@@ -57,12 +60,12 @@ class PruneTest extends TestCase
     {
         $node = $this->getNode();
 
-        $prunedNode = $node->prune(function (Node $node) {
-            return $node->id == 3;
+        $prunedNode = $node->pruneChildNodes(function (Node $node) {
+            return $node->getNodeEntry('id') == 3;
         });
 
         $this->assertEquals(
-            (new Node(['id' => 1, 'name' => 'foobar']))->addChildren(new Node(['id' => 3, 'name' => 'second-child'])),
+            (new DefaultNode(['id' => 1, 'name' => 'foobar']))->addChildNodes(new DefaultNode(['id' => 3, 'name' => 'second-child'])),
             $prunedNode
         );
     }
@@ -70,14 +73,14 @@ class PruneTest extends TestCase
     /** @test */
     public function it_can_prune_a_node_collection()
     {
-        $nodeCollection = $this->getNode()->getChildren();
+        $nodeCollection = $this->getNode()->getChildNodes();
 
         $prunedNodeCollection = $nodeCollection->prune(function (Node $node) {
-            return $node->id == 3;
+            return $node->getNodeEntry('id') == 3;
         });
 
         $this->assertEquals(
-            new \Vine\NodeCollection(new Node(['id' => 3, 'name' => 'second-child'])),
+            new \Thinktomorrow\Vine\NodeCollection(new DefaultNode(['id' => 3, 'name' => 'second-child'])),
             $prunedNodeCollection
         );
     }
@@ -87,10 +90,10 @@ class PruneTest extends TestCase
      */
     private function getNode()
     {
-        $node = new Node(['id' => 1, 'name' => 'foobar']);
-        $node->addChildren([$child = new Node(['id' => 2, 'name' => 'first-child'])]);
-        $child->addChildren([$child2 = new Node(['id' => 3, 'name' => 'second-child'])]);
-        $child->addChildren([$child3 = new Node(['id' => 4, 'name' => 'third-child'])]);
+        $node = new DefaultNode(['id' => 1, 'name' => 'foobar']);
+        $node->addChildNodes([$child = new DefaultNode(['id' => 2, 'name' => 'first-child'])]);
+        $child->addChildNodes([$child2 = new DefaultNode(['id' => 3, 'name' => 'second-child'])]);
+        $child->addChildNodes([$child3 = new DefaultNode(['id' => 4, 'name' => 'third-child'])]);
 
         return $node;
     }

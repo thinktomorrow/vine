@@ -1,7 +1,11 @@
 <?php
 
+namespace Thinktomorrow\Vine\Tests\Commands;
+
+use Thinktomorrow\Vine\Node;
 use PHPUnit\Framework\TestCase;
-use Vine\Node;
+use Thinktomorrow\Vine\DefaultNode;
+use Thinktomorrow\Vine\NodeCollection;
 
 class ShakeTest extends TestCase
 {
@@ -10,19 +14,19 @@ class ShakeTest extends TestCase
     {
         $node = $this->getNode();
 
-        $shakedNode = $node->shake(function (Node $node) {
+        $shakedNode = $node->shakeChildNodes(function (Node $node) {
             return true;
         });
 
         // Original is preserved
-        $this->assertEquals(1, $node->getChildren()->count());
-        $this->assertEquals(2, $node->getChildren()->first()->getChildren()->count());
+        $this->assertEquals(1, $node->getChildNodes()->count());
+        $this->assertEquals(2, $node->getChildNodes()->first()->getChildNodes()->count());
 
         $this->assertEquals($node, $shakedNode);
-        $this->assertNotSame($node->getChildren(), $shakedNode->getChildren());
-        $this->assertEquals($node->getChildren(), $shakedNode->getChildren());
-        $this->assertEquals(3, $shakedNode->total());
-        $this->assertEquals(1, $shakedNode->count());
+        $this->assertNotSame($node->getChildNodes(), $shakedNode->getChildNodes());
+        $this->assertEquals($node->getChildNodes(), $shakedNode->getChildNodes());
+        $this->assertEquals(3, $shakedNode->getTotalChildNodesCount());
+        $this->assertEquals(1, $shakedNode->getChildNodesCount());
     }
 
     /** @test */
@@ -30,11 +34,11 @@ class ShakeTest extends TestCase
     {
         $node = $this->getNode();
 
-        $shakedNode = $node->shake(function (Node $node) {
+        $shakedNode = $node->shakeChildNodes(function (Node $node) {
             return false;
         });
 
-        $this->assertEquals($node->isolatedCopy(), $shakedNode);
+        $this->assertEquals($node->copyIsolatedNode(), $shakedNode);
     }
 
     /** @test */
@@ -42,15 +46,15 @@ class ShakeTest extends TestCase
     {
         $node = $this->getNode();
 
-        $shakedNode = $node->shake(function (Node $node) {
-            return $node->id == 3;
+        $shakedNode = $node->shakeChildNodes(function (Node $node) {
+            return $node->getNodeEntry('id') == 3;
         });
 
         $this->assertEquals(
-            (new Node(['id' => 1, 'name' => 'foobar']))
-                ->addChildren(
-                    (new Node(['id' => 2, 'name' => 'first-child']))
-                        ->addChildren(new Node(['id' => 3, 'name' => 'second-child']))
+            (new DefaultNode(['id' => 1, 'name' => 'foobar']))
+                ->addChildNodes(
+                    (new DefaultNode(['id' => 2, 'name' => 'first-child']))
+                        ->addChildNodes(new DefaultNode(['id' => 3, 'name' => 'second-child']))
                 ),
             $shakedNode
         );
@@ -59,29 +63,29 @@ class ShakeTest extends TestCase
     /** @test */
     public function it_can_shake_a_node_collection()
     {
-        $nodeCollection = $this->getNode()->getChildren();
+        $nodeCollection = $this->getNode()->getChildNodes();
 
         $shakedNodeCollection = $nodeCollection->shake(function (Node $node) {
-            return $node->id == 3;
+            return $node->getNodeEntry('id') == 3;
         });
 
         $this->assertEquals(
-            new \Vine\NodeCollection((new Node(['id' => 2, 'name' => 'first-child']))
-                ->addChildren(new Node(['id' => 3, 'name' => 'second-child']))
+            new NodeCollection((new DefaultNode(['id' => 2, 'name' => 'first-child']))
+                ->addChildNodes(new DefaultNode(['id' => 3, 'name' => 'second-child']))
             ),
             $shakedNodeCollection
         );
     }
 
     /**
-     * @return Node
+     * @return DefaultNode
      */
     private function getNode()
     {
-        $node = new Node(['id' => 1, 'name' => 'foobar']);
-        $node->addChildren([$child = new Node(['id' => 2, 'name' => 'first-child'])]);
-        $child->addChildren([$child2 = new Node(['id' => 3, 'name' => 'second-child'])]);
-        $child->addChildren([$child3 = new Node(['id' => 4, 'name' => 'third-child'])]);
+        $node = new DefaultNode(['id' => 1, 'name' => 'foobar']);
+        $node->addChildNodes([$child = new DefaultNode(['id' => 2, 'name' => 'first-child'])]);
+        $child->addChildNodes([$child2 = new DefaultNode(['id' => 3, 'name' => 'second-child'])]);
+        $child->addChildNodes([$child3 = new DefaultNode(['id' => 4, 'name' => 'third-child'])]);
 
         return $node;
     }

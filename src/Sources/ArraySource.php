@@ -1,9 +1,10 @@
 <?php
 
-namespace Vine\Sources;
+namespace Thinktomorrow\Vine\Sources;
 
-use Vine\Node;
-use Vine\Source;
+use Thinktomorrow\Vine\Node;
+use Thinktomorrow\Vine\DefaultNode;
+use Thinktomorrow\Vine\Source;
 
 class ArraySource implements Source
 {
@@ -32,6 +33,6 @@ class ArraySource implements Source
 
     public function createNode($entry): Node
     {
-        return ($entry instanceof Node) ? $entry : new Node($entry);
+        return new DefaultNode($entry);
     }
 }

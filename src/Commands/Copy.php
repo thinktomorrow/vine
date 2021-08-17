@@ -1,9 +1,9 @@
 <?php
 
-namespace Vine\Commands;
+namespace Thinktomorrow\Vine\Commands;
 
-use Vine\Node;
-use Vine\NodeCollection;
+use Thinktomorrow\Vine\Node;
+use Thinktomorrow\Vine\NodeCollection;
 
 class Copy
 {
@@ -18,9 +18,9 @@ class Copy
      */
     public function __invoke(Node $node, $depth = null): Node
     {
-        $copy = $node->isolatedCopy();
+        $copy = $node->copyIsolatedNode();
 
-        return $copy->addChildren($this->recursiveDepth($node->getChildren(), $depth));
+        return $copy->addChildNodes($this->recursiveDepth($node->getChildNodes(), $depth));
     }
 
     /**
@@ -39,10 +39,11 @@ class Copy
         $copyCollection = new NodeCollection();
         $currentDepth++;
 
+        /** @var Node $node */
         foreach ($nodeCollection as $node) {
-            $copyCollection->add($subNode = $node->isolatedCopy());
+            $copyCollection->add($subNode = $node->copyIsolatedNode());
 
-            $subNode->addChildren($this->recursiveDepth($node->getChildren(), $depth, $currentDepth));
+            $subNode->addChildNodes($this->recursiveDepth($node->getChildNodes(), $depth, $currentDepth));
         }
 
         return $copyCollection;

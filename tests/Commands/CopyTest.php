@@ -1,64 +1,66 @@
 <?php
 
+namespace Thinktomorrow\Vine\Tests\Commands;
+
 use PHPUnit\Framework\TestCase;
-use Tests\Fixtures\FixtureSource;
-use Vine\Node;
-use Vine\Source;
+use Thinktomorrow\Vine\Source;
+use Thinktomorrow\Vine\DefaultNode;
+use Thinktomorrow\Vine\Tests\Fixtures\FixtureSource;
 
 class CopyTest extends TestCase
 {
     /** @test */
     public function it_can_deep_copy_a_node()
     {
-        $node = new Node(['id' => 1, 'name' => 'foobar']);
-        $node->addChildren([$child = new Node(['id' => 2, 'name' => 'first-child'])]);
-        $child->addChildren([$child2 = new Node(['id' => 3, 'name' => 'second-child'])]);
-        $child->addChildren([$child3 = new Node(['id' => 4, 'name' => 'third-child'])]);
+        $node = new DefaultNode(['id' => 1, 'name' => 'foobar']);
+        $node->addChildNodes([$child = new DefaultNode(['id' => 2, 'name' => 'first-child'])]);
+        $child->addChildNodes([$child2 = new DefaultNode(['id' => 3, 'name' => 'second-child'])]);
+        $child->addChildNodes([$child3 = new DefaultNode(['id' => 4, 'name' => 'third-child'])]);
 
-        $cloned = $node->copy();
+        $cloned = $node->copyNode();
 
         $this->assertNotSame($node, $cloned);
-        $this->assertNotSame($node->getChildren()->first(), $cloned->getChildren()->first());
-        $this->assertNotSame($node->getChildren()->first()->getChildren()->first(), $cloned->getChildren()->first()->getChildren()->first());
-        $this->assertNotSame($node->getChildren()->first()->getChildren()[1], $cloned->getChildren()->first()->getChildren()[1]);
+        $this->assertNotSame($node->getChildNodes()->first(), $cloned->getChildNodes()->first());
+        $this->assertNotSame($node->getChildNodes()->first()->getChildNodes()->first(), $cloned->getChildNodes()->first()->getChildNodes()->first());
+        $this->assertNotSame($node->getChildNodes()->first()->getChildNodes()[1], $cloned->getChildNodes()->first()->getChildNodes()[1]);
     }
 
     /** @test */
     public function it_can_get_new_node_with_specific_depth_of_childnodes()
     {
-        $tree = (new \Vine\NodeCollectionFactory())->fromSource($this->getTranslation());
+        $tree = (new \Thinktomorrow\Vine\NodeCollectionFactory())->fromSource($this->getTranslation());
 
-        $root = $tree->first()->getChildren()->first();
-        $result = (new \Vine\Commands\Copy())->__invoke($root, 1);
+        $root = $tree->first()->getChildNodes()->first();
+        $result = (new \Thinktomorrow\Vine\Commands\Copy())->__invoke($root, 1);
 
         $this->assertNotSame($root, $result);
-        $this->assertCount(4, $result->getChildren());
-        foreach ($result->getChildren() as $child) {
-            $this->assertCount(0, $child->getChildren());
+        $this->assertCount(4, $result->getChildNodes());
+        foreach ($result->getChildNodes() as $child) {
+            $this->assertCount(0, $child->getChildNodes());
         }
     }
 
     /** @test */
     public function node_can_be_isolated()
     {
-        $root = new Node('foobar');
-        $root->addChildren([$firstChild = new Node('first-child')]);
-        $firstChild->addChildren([$secondChild = new Node('second-child')]);
+        $root = new DefaultNode('foobar');
+        $root->addChildNodes([$firstChild = new DefaultNode('first-child')]);
+        $firstChild->addChildNodes([$secondChild = new DefaultNode('second-child')]);
 
-        $isolatedNode = $firstChild->isolatedCopy();
+        $isolatedNode = $firstChild->copyIsolatedNode();
 
-        $this->assertTrue($isolatedNode->isRoot());
-        $this->assertTrue($isolatedNode->isLeaf());
+        $this->assertTrue($isolatedNode->isRootNode());
+        $this->assertTrue($isolatedNode->isLeafNode());
     }
 
     /** @test */
     public function collection_can_be_copied()
     {
-        $root = new Node('foobar');
-        $root2 = new Node('first-child');
-        $root2->addChildren([new Node('second-child')]);
+        $root = new DefaultNode('foobar');
+        $root2 = new DefaultNode('first-child');
+        $root2->addChildNodes([new DefaultNode('second-child')]);
 
-        $collection = new \Vine\NodeCollection($root, $root2);
+        $collection = new \Thinktomorrow\Vine\NodeCollection($root, $root2);
 
         $copy = $collection->copy();
 
@@ -69,15 +71,15 @@ class CopyTest extends TestCase
     /** @test */
     public function node_can_be_isolated_at_specified_depth()
     {
-        $root = new Node('foobar');
-        $root->addChildren([$firstChild = new Node('first-child')]);
-        $firstChild->addChildren([$secondChild = new Node('second-child')]);
+        $root = new DefaultNode('foobar');
+        $root->addChildNodes([$firstChild = new DefaultNode('first-child')]);
+        $firstChild->addChildNodes([$secondChild = new DefaultNode('second-child')]);
 
-        $isolatedNode = $root->copy(1);
+        $isolatedNode = $root->copyNode(1);
 
-        $this->assertTrue($isolatedNode->isRoot());
-        $this->assertCount(1, $isolatedNode->getChildren());
-        $this->assertCount(0, $isolatedNode->getChildren()->first()->getChildren());
+        $this->assertTrue($isolatedNode->isRootNode());
+        $this->assertCount(1, $isolatedNode->getChildNodes());
+        $this->assertCount(0, $isolatedNode->getChildNodes()->first()->getChildNodes());
     }
 
     /**

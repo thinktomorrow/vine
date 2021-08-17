@@ -1,6 +1,6 @@
 <?php
 
-namespace Vine;
+namespace Thinktomorrow\Vine;
 
 class NodeCollectionFactory
 {
@@ -61,8 +61,8 @@ class NodeCollectionFactory
         $parent_key = $source->nodeParentKeyIdentifier();
 
         foreach ($source->nodeEntries() as $i => $entry) {
-            $id = is_object($entry) ? $entry->{$id_key} : $entry[$id_key];
-            $parentId = is_object($entry) ? $entry->{$parent_key} : $entry[$parent_key];
+            $id = $entry instanceof Node ? $entry->getNodeId() : $entry[$id_key];
+            $parentId = $entry instanceof Node ? $entry->getParentNodeId() : $entry[$parent_key];
 
             $node = $source->createNode($entry);
 
@@ -85,7 +85,7 @@ class NodeCollectionFactory
         }
 
         if (isset($this->index[$parentId])) {
-            $this->index[$parentId]->addChildren([$entryNode]);
+            $this->index[$parentId]->addChildNodes([$entryNode]);
 
             return;
         }
@@ -121,7 +121,7 @@ class NodeCollectionFactory
                 continue;
             }
 
-            $this->index[$parentId]->addChildren($orphans->all());
+            $this->index[$parentId]->addChildNodes($orphans->all());
         }
 
         unset($this->orphans);
@@ -129,8 +129,9 @@ class NodeCollectionFactory
 
     private function identifyRootNodes()
     {
+        /** @var Node $node */
         foreach ($this->index as $node) {
-            if ($node->isRoot()) {
+            if ($node->isRootNode()) {
                 $this->nodeCollection[] = $node;
             }
         }
@@ -141,15 +142,16 @@ class NodeCollectionFactory
         // At this point we allow to alter each entry.
         // Useful to add values depending on the node structure
         if (method_exists($source, 'entry')) {
+            /** @var Node $node */
             foreach ($this->index as $node) {
-                $node->replaceEntry($source->entry($node));
+                $node->replaceNodeEntry($source->entry($node));
             }
         }
 
         // At this point we will sort all children should the source has set a key to sort on
         if (property_exists($source, 'sortChildrenBy')) {
             foreach ($this->index as $node) {
-                $node->sort($source->sortChildrenBy);
+                $node->sortChildNodes($source->sortChildrenBy);
             }
         }
     }

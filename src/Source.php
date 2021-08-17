@@ -1,6 +1,6 @@
 <?php
 
-namespace Vine;
+namespace Thinktomorrow\Vine;
 
 /**
  * Contract for converting a flat adjacent data set to

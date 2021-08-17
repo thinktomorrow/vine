@@ -1,8 +1,9 @@
 <?php
 
-namespace Vine\Commands;
+namespace Thinktomorrow\Vine\Commands;
 
-use Vine\NodeCollection;
+use Thinktomorrow\Vine\Node;
+use Thinktomorrow\Vine\NodeCollection;
 
 class Inflate
 {
@@ -19,8 +20,9 @@ class Inflate
     {
         $roots = new NodeCollection();
 
+        /** @var Node $node */
         foreach ($flatCollection as $k => $node) {
-            if ($node->isRoot()) {
+            if ($node->isRootNode()) {
                 $roots->add($node);
             }
         }

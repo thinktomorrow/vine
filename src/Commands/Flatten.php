@@ -1,8 +1,9 @@
 <?php
 
-namespace Vine\Commands;
+namespace Thinktomorrow\Vine\Commands;
 
-use Vine\NodeCollection;
+use Thinktomorrow\Vine\Node;
+use Thinktomorrow\Vine\NodeCollection;
 
 class Flatten
 {
@@ -17,11 +18,12 @@ class Flatten
     {
         $flattened = [];
 
+        /** @var Node $node */
         foreach ($nodeCollection as $k => $node) {
             $flattened[] = $node;
 
-            if (!$node->getChildren()->isEmpty()) {
-                $flattened = array_merge($flattened, $this->__invoke($node->getChildren())->all());
+            if ($node->hasChildNodes()) {
+                $flattened = array_merge($flattened, $this->__invoke($node->getChildNodes())->all());
             }
         }
 

@@ -1,6 +1,10 @@
 <?php
 
+namespace Thinktomorrow\Vine\Tests;
+
 use PHPUnit\Framework\TestCase;
+use Thinktomorrow\Vine\NodeCollection;
+use Thinktomorrow\Vine\DefaultNode;
 
 class ArrayableNodeCollectionTest extends TestCase
 {
@@ -17,7 +21,7 @@ class ArrayableNodeCollectionTest extends TestCase
     {
         $collection = $this->getCollection();
 
-        $this->assertInstanceOf(\Vine\Node::class, $collection[1]);
+        $this->assertInstanceOf(\Thinktomorrow\Vine\DefaultNode::class, $collection[1]);
     }
 
     /** @test */
@@ -64,13 +68,13 @@ class ArrayableNodeCollectionTest extends TestCase
     }
 
     /**
-     * @return \Vine\NodeCollection
+     * @return NodeCollection
      */
-    private function getCollection(): \Vine\NodeCollection
+    private function getCollection(): NodeCollection
     {
-        $collection = new \Vine\NodeCollection(
-            new \Vine\Node(null),
-            new \Vine\Node(null)
+        $collection = new NodeCollection(
+            new DefaultNode(null),
+            new DefaultNode(null)
         );
 
         return $collection;

@@ -1,22 +1,22 @@
 {
     "name": "thinktomorrow/vine",
-    "description": "Render a datatree structure",
+    "description": "Generate a tree from an adjacent database structure",
     "type": "library",
     "license": "MIT",
     "authors": [
         {
             "name": "Ben Cavens",
-            "email": "cavensben@gmail.com"
+            "email": "ben@thinktomorrow.e"
         }
     ],
     "autoload":{
         "psr-4":{
-            "Vine\\":"src/"
+            "Thinktomorrow\\Vine\\":"src/"
         }
     },
     "autoload-dev":{
         "psr-4":{
-            "Tests\\":"tests/"
+            "Thinktomorrow\\Vine\\Tests\\":"tests/"
         }
     },
     "minimum-stability": "stable",
@@ -26,6 +26,6 @@
         "phpstan/phpstan": "^0.10.5"
     },
     "require": {
-        "php": ">=7.0"
+        "php": ">=7.4"
     }
 }

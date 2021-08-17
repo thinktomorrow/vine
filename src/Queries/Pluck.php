@@ -1,26 +1,26 @@
 <?php
 
-namespace Vine\Queries;
+namespace Thinktomorrow\Vine\Queries;
 
-use Vine\Node;
+use Thinktomorrow\Vine\DefaultNode;
 
 class Pluck
 {
     /**
-     * @param Node $node
+     * @param DefaultNode $node
      * @param $key
      * @param null $value
      * @param bool $down  | down: pluck from children, up: pluck from ancestors
      *
      * @return array
      */
-    public function __invoke(Node $node, $key, $value = null, $down = true): array
+    public function __invoke(DefaultNode $node, $key, $value = null, $down = true): array
     {
         $values = $value
-            ? [$node->entry($key) => $node->entry($value)]
-            : [$node->entry($key)];
+            ? [$node->getNodeEntry($key) => $node->getNodeEntry($value)]
+            : [$node->getNodeEntry($key)];
 
-        $nodes = $down ? $node->getChildren() : [$node->parent()];
+        $nodes = $down ? $node->getChildNodes() : [$node->getParentNode()];
 
         foreach ($nodes as $node) {
             // If node entry is empty, which means there is no parent, we bail out

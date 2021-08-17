@@ -1,8 +1,10 @@
 <?php
 
+namespace Thinktomorrow\Vine\Tests;
+
 use PHPUnit\Framework\TestCase;
-use Vine\NodeCollection;
-use Vine\Sources\ArraySource;
+use Thinktomorrow\Vine\NodeCollection;
+use Thinktomorrow\Vine\Sources\ArraySource;
 
 class NodeCollectionFactoryTest extends TestCase
 {
@@ -20,7 +22,7 @@ class NodeCollectionFactoryTest extends TestCase
         $tree = $this->getTree();
         $node = $tree->find('id', 5);
 
-        $this->assertSame($node, $tree[0]->getChildren()[1]->getChildren()[0]);
+        $this->assertSame($node, $tree[0]->getChildNodes()[1]->getChildNodes()[0]);
     }
 
     /** @test */
@@ -41,6 +43,6 @@ class NodeCollectionFactoryTest extends TestCase
 
         $translator = new ArraySource($records);
 
-        return (new \Vine\NodeCollectionFactory())->fromSource($translator);
+        return (new \Thinktomorrow\Vine\NodeCollectionFactory())->fromSource($translator);
     }
 }
