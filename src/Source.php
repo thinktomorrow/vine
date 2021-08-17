@@ -12,9 +12,11 @@ interface Source
      * Full array of original data rows
      * These are the rows to be converted to the tree model.
      *
-     * @return array
+     * @return iterable
      */
-    public function nodeEntries(): array;
+    public function nodeEntries(): iterable;
+
+    public function createNode($entry): Node;
 
     /**
      * Attribute key of the primary identifier of each row. e.g. 'id'.

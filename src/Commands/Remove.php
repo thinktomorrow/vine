@@ -24,8 +24,8 @@ class Remove
                 }
             }
 
-            if (!$node->children()->isEmpty()) {
-                $this->__invoke($node->children(), ...$nodes);
+            if (!$node->getChildren()->isEmpty()) {
+                $this->__invoke($node->getChildren(), ...$nodes);
             }
         }
 

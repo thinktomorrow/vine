@@ -20,8 +20,8 @@ class Flatten
         foreach ($nodeCollection as $k => $node) {
             $flattened[] = $node;
 
-            if (!$node->children()->isEmpty()) {
-                $flattened = array_merge($flattened, $this->__invoke($node->children())->all());
+            if (!$node->getChildren()->isEmpty()) {
+                $flattened = array_merge($flattened, $this->__invoke($node->getChildren())->all());
             }
         }
 

@@ -12,15 +12,15 @@ class MoveTest extends \PHPUnit\Framework\TestCase
         $node->addChildren([$child = new Node(['id' => 3, 'name' => 'first-child'])]);
 
         // Assert defaults
-        $this->assertCount(1, $node->children());
-        $this->assertEmpty($node2->children());
+        $this->assertCount(1, $node->getChildren());
+        $this->assertEmpty($node2->getChildren());
 
         $child->move($node2);
 
         // Assert move
-        $this->assertEmpty($node->children());
-        $this->assertCount(1, $node2->children());
-        $this->assertSame($child, $node2->children()->first());
+        $this->assertEmpty($node->getChildren());
+        $this->assertCount(1, $node2->getChildren());
+        $this->assertSame($child, $node2->getChildren()->first());
         $this->assertSame($node2, $child->parent());
     }
 
@@ -40,10 +40,10 @@ class MoveTest extends \PHPUnit\Framework\TestCase
         $child3->move($main2);
 
         // Assert move
-        $this->assertEmpty($main1->children());
-        $this->assertCount(2, $main2->children());
+        $this->assertEmpty($main1->getChildren());
+        $this->assertCount(2, $main2->getChildren());
         $this->assertSame($main2, $child3->parent());
-        $this->assertSame($child4, $child3->children()->first());
+        $this->assertSame($child4, $child3->getChildren()->first());
     }
 
     /** @test */
@@ -58,6 +58,6 @@ class MoveTest extends \PHPUnit\Framework\TestCase
         // Assert move
         $this->assertNull($child1->parent());
         $this->assertTrue($child1->isRoot());
-        $this->assertCount(0, $main1->children());
+        $this->assertCount(0, $main1->getChildren());
     }
 }

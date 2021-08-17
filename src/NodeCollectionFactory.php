@@ -64,13 +64,13 @@ class NodeCollectionFactory
             $id = is_object($entry) ? $entry->{$id_key} : $entry[$id_key];
             $parentId = is_object($entry) ? $entry->{$parent_key} : $entry[$parent_key];
 
-            $entryNode = ($entry instanceof Node) ? $entry : new Node($entry);
+            $node = $source->createNode($entry);
 
             // Keep track of flattened list of all nodes
-            $this->index[$id] = $entryNode;
+            $this->index[$id] = $node;
 
             // Add node to tree
-            $this->addChild($parentId, $entryNode);
+            $this->addChild($parentId, $node);
         }
     }
 
@@ -146,7 +146,7 @@ class NodeCollectionFactory
             }
         }
 
-        // At this point we will sort all children should the transposer has set a key to sort on
+        // At this point we will sort all children should the source has set a key to sort on
         if (property_exists($source, 'sortChildrenBy')) {
             foreach ($this->index as $node) {
                 $node->sort($source->sortChildrenBy);

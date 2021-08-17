@@ -20,7 +20,7 @@ class Pluck
             ? [$node->entry($key) => $node->entry($value)]
             : [$node->entry($key)];
 
-        $nodes = $down ? $node->children() : [$node->parent()];
+        $nodes = $down ? $node->getChildren() : [$node->parent()];
 
         foreach ($nodes as $node) {
             // If node entry is empty, which means there is no parent, we bail out

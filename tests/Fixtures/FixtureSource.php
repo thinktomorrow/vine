@@ -2,6 +2,7 @@
 
 namespace Tests\Fixtures;
 
+use Vine\Node;
 use Vine\Source;
 
 /**
@@ -35,5 +36,10 @@ class FixtureSource implements Source
     public function nodeParentKeyIdentifier(): string
     {
         return 1;
+    }
+
+    public function createNode($entry): Node
+    {
+        return new Node($entry);
     }
 }

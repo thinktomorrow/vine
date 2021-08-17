@@ -20,12 +20,12 @@ class NodeTest extends TestCase
     public function it_can_add_children_to_a_node()
     {
         $node = new Node('foobar');
-        $this->assertEmpty($node->children());
+        $this->assertEmpty($node->getChildren());
 
         $this->assertCount(2, $node->addChildren([
             new Node('first-child'),
             new Node('second-child'),
-        ])->children());
+        ])->getChildren());
     }
 
     /** @test */
@@ -41,13 +41,13 @@ class NodeTest extends TestCase
     public function it_can_add_children_to_a_node_consecutively()
     {
         $node = new Node('foobar');
-        $this->assertEmpty($node->children());
+        $this->assertEmpty($node->getChildren());
 
         $node->addChildren([new Node('first-child')]);
 
         $this->assertCount(2, $node->addChildren([
             new Node('second-child'),
-        ])->children());
+        ])->getChildren());
     }
 
     /** @test */
@@ -121,8 +121,8 @@ class NodeTest extends TestCase
 
         $child->remove();
 
-        $this->assertCount(0, $node->children());
-        $this->assertCount(1, $child->children());
+        $this->assertCount(0, $node->getChildren());
+        $this->assertCount(1, $child->getChildren());
         $this->assertNull($child->parent());
 
         // Assert parent still exists

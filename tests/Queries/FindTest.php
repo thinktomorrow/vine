@@ -17,7 +17,7 @@ class FindTest extends TestCase
         $child->addChildren([$child3 = new Node(['id' => 4])]);
         $node->addChildren([$child4 = new Node(['id' => 5])]);
 
-        $nodes = $node->children()->findMany('id', [2, 3]);
+        $nodes = $node->getChildren()->findMany('id', [2, 3]);
 
         $this->assertInstanceOf(NodeCollection::class, $nodes);
         $this->assertCount(2, $nodes);
@@ -35,7 +35,7 @@ class FindTest extends TestCase
         $node->addChildren([$child = new Node(['id' => 2])]);
         $child->addChildren([$child2 = new Node(['id' => 3])]);
 
-        $result = $node->children()->find('id', 2);
+        $result = $node->getChildren()->find('id', 2);
 
         $this->assertInstanceOf(Node::class, $result);
         $this->assertSame($child, $result);
@@ -51,7 +51,7 @@ class FindTest extends TestCase
     //        $node->addChildren([$child = new Node('fooberry')]);
     //        $child->addChildren([$child2 = new Node('foobarry')]);
     //
-    //        $result = $node->children()->find('foobarry');
+    //        $result = $node->getChildren()->find('foobarry');
     //
     //        $this->assertInstanceOf(Node::class, $result);
     //        $this->assertSame($child2, $result);

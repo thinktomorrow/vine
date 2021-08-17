@@ -76,7 +76,7 @@ class NodeCollectionTest extends TestCase
         );
 
         $this->assertEquals(4, $collection->total());
-        $this->assertEquals(2, $collection->first()->children()->total());
+        $this->assertEquals(2, $collection->first()->getChildren()->total());
     }
 
     /** @test */
@@ -85,7 +85,7 @@ class NodeCollectionTest extends TestCase
         $original = new Node((object) ['id' => 2]);
         $original->addChildren([new Node(['id' => '23']), new Node(['id' => '22']), new Node(['id' => '21'])]);
 
-        $original->children()->map(function ($node) {
+        $original->getChildren()->map(function ($node) {
             $entry = $node->entry();
             $entry['title'] = 'new';
 
@@ -104,7 +104,7 @@ class NodeCollectionTest extends TestCase
         $original = new Node((object) ['id' => 2]);
         $original->addChildren([(new Node(['id' => '23']))->addChildren(new Node(['id' => '24'])), new Node(['id' => '22']), new Node(['id' => '21'])]);
 
-        $original->children()->mapRecursive(function ($node) {
+        $original->getChildren()->mapRecursive(function ($node) {
             $entry = $node->entry();
             $entry['title'] = 'new';
 

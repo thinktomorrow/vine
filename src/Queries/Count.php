@@ -27,7 +27,7 @@ class Count
     {
         $count = 0;
 
-        foreach ($node->children() as $child) {
+        foreach ($node->getChildren() as $child) {
             $count++; // Childnode itself
             $count += $this->recursiveCount($child); // Children of childnode
         }

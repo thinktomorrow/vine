@@ -2,6 +2,7 @@
 
 namespace Vine\Sources;
 
+use Vine\Node;
 use Vine\Source;
 
 class ArraySource implements Source
@@ -27,5 +28,10 @@ class ArraySource implements Source
     public function nodeParentKeyIdentifier(): string
     {
         return 'parent_id';
+    }
+
+    public function createNode($entry): Node
+    {
+        return ($entry instanceof Node) ? $entry : new Node($entry);
     }
 }

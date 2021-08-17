@@ -49,7 +49,7 @@ class Node
         return $this;
     }
 
-    public function children(): NodeCollection
+    public function getChildren(): NodeCollection
     {
         return $this->children;
     }
@@ -128,7 +128,7 @@ class Node
         }
 
         // remove node from node tree
-        return $this->children()->remove($node);
+        return $this->getChildren()->remove($node);
     }
 
     /**
@@ -173,7 +173,7 @@ class Node
             return 0;
         }
 
-        return $this->children()->count();
+        return $this->getChildren()->count();
     }
 
     /**
@@ -219,7 +219,7 @@ class Node
      */
     public function findMany($key, array $values): NodeCollection
     {
-        return $this->children()->findMany($key, $values);
+        return $this->getChildren()->findMany($key, $values);
     }
 
     /**
@@ -230,7 +230,7 @@ class Node
      */
     public function find($key, $value): self
     {
-        return $this->children()->find($key, $value);
+        return $this->getChildren()->find($key, $value);
     }
 
     /**
@@ -306,7 +306,7 @@ class Node
     {
         $node = $this->isolatedCopy();
 
-        return $this->isLeaf() ? $node : $node->addChildren($this->children()->shake($callback));
+        return $this->isLeaf() ? $node : $node->addChildren($this->getChildren()->shake($callback));
     }
 
     /**
@@ -320,7 +320,7 @@ class Node
     {
         $node = $this->isolatedCopy();
 
-        return $this->isLeaf() ? $node : $node->addChildren($this->children()->prune($callback));
+        return $this->isLeaf() ? $node : $node->addChildren($this->getChildren()->prune($callback));
     }
 
     /**
@@ -352,7 +352,7 @@ class Node
     public function __get($name)
     {
         if ($name == 'children') {
-            return $this->children();
+            return $this->getChildren();
         }
 
         return $this->entry($name);

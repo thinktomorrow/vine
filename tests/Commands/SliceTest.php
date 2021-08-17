@@ -14,7 +14,7 @@ class SliceTest extends \PHPUnit\Framework\TestCase
         $collection = (new \Vine\NodeCollection($node))->slice($child);
 
         // Child2 is now direct child of node
-        $newChild2 = $collection->first()->children()->first();
+        $newChild2 = $collection->first()->getChildren()->first();
 
         $this->assertEquals(2, $collection->total());
         $this->assertSame($node, $collection->first());
@@ -22,6 +22,6 @@ class SliceTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($node, $newChild2->parent());
 
         $this->assertEquals(1, $node->total());
-        $this->assertEmpty($newChild2->children());
+        $this->assertEmpty($newChild2->getChildren());
     }
 }

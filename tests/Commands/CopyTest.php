@@ -18,9 +18,9 @@ class CopyTest extends TestCase
         $cloned = $node->copy();
 
         $this->assertNotSame($node, $cloned);
-        $this->assertNotSame($node->children()->first(), $cloned->children()->first());
-        $this->assertNotSame($node->children()->first()->children()->first(), $cloned->children()->first()->children()->first());
-        $this->assertNotSame($node->children()->first()->children()[1], $cloned->children()->first()->children()[1]);
+        $this->assertNotSame($node->getChildren()->first(), $cloned->getChildren()->first());
+        $this->assertNotSame($node->getChildren()->first()->getChildren()->first(), $cloned->getChildren()->first()->getChildren()->first());
+        $this->assertNotSame($node->getChildren()->first()->getChildren()[1], $cloned->getChildren()->first()->getChildren()[1]);
     }
 
     /** @test */
@@ -28,13 +28,13 @@ class CopyTest extends TestCase
     {
         $tree = (new \Vine\NodeCollectionFactory())->fromSource($this->getTranslation());
 
-        $root = $tree->first()->children()->first();
+        $root = $tree->first()->getChildren()->first();
         $result = (new \Vine\Commands\Copy())->__invoke($root, 1);
 
         $this->assertNotSame($root, $result);
-        $this->assertCount(4, $result->children());
-        foreach ($result->children() as $child) {
-            $this->assertCount(0, $child->children());
+        $this->assertCount(4, $result->getChildren());
+        foreach ($result->getChildren() as $child) {
+            $this->assertCount(0, $child->getChildren());
         }
     }
 
@@ -76,8 +76,8 @@ class CopyTest extends TestCase
         $isolatedNode = $root->copy(1);
 
         $this->assertTrue($isolatedNode->isRoot());
-        $this->assertCount(1, $isolatedNode->children());
-        $this->assertCount(0, $isolatedNode->children()->first()->children());
+        $this->assertCount(1, $isolatedNode->getChildren());
+        $this->assertCount(0, $isolatedNode->getChildren()->first()->getChildren());
     }
 
     /**

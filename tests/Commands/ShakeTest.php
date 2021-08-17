@@ -15,12 +15,12 @@ class ShakeTest extends TestCase
         });
 
         // Original is preserved
-        $this->assertEquals(1, $node->children()->count());
-        $this->assertEquals(2, $node->children()->first()->children()->count());
+        $this->assertEquals(1, $node->getChildren()->count());
+        $this->assertEquals(2, $node->getChildren()->first()->getChildren()->count());
 
         $this->assertEquals($node, $shakedNode);
-        $this->assertNotSame($node->children(), $shakedNode->children());
-        $this->assertEquals($node->children(), $shakedNode->children());
+        $this->assertNotSame($node->getChildren(), $shakedNode->getChildren());
+        $this->assertEquals($node->getChildren(), $shakedNode->getChildren());
         $this->assertEquals(3, $shakedNode->total());
         $this->assertEquals(1, $shakedNode->count());
     }
@@ -59,7 +59,7 @@ class ShakeTest extends TestCase
     /** @test */
     public function it_can_shake_a_node_collection()
     {
-        $nodeCollection = $this->getNode()->children();
+        $nodeCollection = $this->getNode()->getChildren();
 
         $shakedNodeCollection = $nodeCollection->shake(function (Node $node) {
             return $node->id == 3;

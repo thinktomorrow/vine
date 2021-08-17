@@ -13,8 +13,8 @@ class RemoveTest extends \PHPUnit\Framework\TestCase
 
         $child->remove();
 
-        $this->assertCount(0, $node->children());
-        $this->assertCount(1, $child->children());
+        $this->assertCount(0, $node->getChildren());
+        $this->assertCount(1, $child->getChildren());
         $this->assertNull($child->parent());
 
         // Assert parent still exists
@@ -51,10 +51,10 @@ class RemoveTest extends \PHPUnit\Framework\TestCase
         $root->remove($child3);
 
         $this->assertEquals(2, $root->total());
-        $this->assertSame($child2, $root->children()->find('id', 2));
-        $this->assertSame($child4, $root->children()->find('id', 4));
-        $this->assertNull($root->children()->find('id', 3));
-        $this->assertNull($root->children()->find('id', 5));
+        $this->assertSame($child2, $root->getChildren()->find('id', 2));
+        $this->assertSame($child4, $root->getChildren()->find('id', 4));
+        $this->assertNull($root->getChildren()->find('id', 3));
+        $this->assertNull($root->getChildren()->find('id', 5));
     }
 
     /** @test */
@@ -72,7 +72,7 @@ class RemoveTest extends \PHPUnit\Framework\TestCase
         $collection->remove($child3);
 
         $this->assertEquals(3, $collection->total());
-        $this->assertCount(0, $node2->children());
+        $this->assertCount(0, $node2->getChildren());
         $this->assertNotNull($child3->parent());
     }
 }

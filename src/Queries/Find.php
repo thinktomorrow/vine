@@ -23,7 +23,7 @@ class Find
             }
 
             if ($node->hasChildren()) {
-                $nodes->merge($this->__invoke($node->children(), $key, $values));
+                $nodes->merge($this->__invoke($node->getChildren(), $key, $values));
             }
         }
 

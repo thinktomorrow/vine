@@ -44,7 +44,7 @@ abstract class BasePresenter
             $output .= $this->template($node, $level);
 
             if (!$node->isLeaf()) {
-                $output .= $this->renderRecursiveToString($node->children(), $level + 1);
+                $output .= $this->renderRecursiveToString($node->getChildren(), $level + 1);
             }
         }
 

@@ -20,7 +20,7 @@ class Copy
     {
         $copy = $node->isolatedCopy();
 
-        return $copy->addChildren($this->recursiveDepth($node->children(), $depth));
+        return $copy->addChildren($this->recursiveDepth($node->getChildren(), $depth));
     }
 
     /**
@@ -42,7 +42,7 @@ class Copy
         foreach ($nodeCollection as $node) {
             $copyCollection->add($subNode = $node->isolatedCopy());
 
-            $subNode->addChildren($this->recursiveDepth($node->children(), $depth, $currentDepth));
+            $subNode->addChildren($this->recursiveDepth($node->getChildren(), $depth, $currentDepth));
         }
 
         return $copyCollection;

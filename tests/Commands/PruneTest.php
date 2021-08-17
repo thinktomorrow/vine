@@ -15,12 +15,12 @@ class PruneTest extends TestCase
         });
 
         // Original is preserved
-        $this->assertEquals(1, $node->children()->count());
-        $this->assertEquals(2, $node->children()->first()->children()->count());
+        $this->assertEquals(1, $node->getChildren()->count());
+        $this->assertEquals(2, $node->getChildren()->first()->getChildren()->count());
 
         $this->assertEquals($node, $prunedNode);
-        $this->assertNotSame($node->children(), $prunedNode->children());
-        $this->assertEquals($node->children(), $prunedNode->children());
+        $this->assertNotSame($node->getChildren(), $prunedNode->getChildren());
+        $this->assertEquals($node->getChildren(), $prunedNode->getChildren());
         $this->assertEquals(3, $prunedNode->total());
         $this->assertEquals(1, $prunedNode->count());
     }
@@ -70,7 +70,7 @@ class PruneTest extends TestCase
     /** @test */
     public function it_can_prune_a_node_collection()
     {
-        $nodeCollection = $this->getNode()->children();
+        $nodeCollection = $this->getNode()->getChildren();
 
         $prunedNodeCollection = $nodeCollection->prune(function (Node $node) {
             return $node->id == 3;

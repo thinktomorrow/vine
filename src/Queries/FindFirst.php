@@ -23,7 +23,7 @@ class FindFirst
 
             if ($node->hasChildren())
             {
-                if($childNode = $this->__invoke($node->children(), $key, $values)){
+                if($childNode = $this->__invoke($node->getChildren(), $key, $values)){
                     return $childNode;
                 }
             }

@@ -20,7 +20,7 @@ class NodeCollectionFactoryTest extends TestCase
         $tree = $this->getTree();
         $node = $tree->find('id', 5);
 
-        $this->assertSame($node, $tree[0]->children()[1]->children()[0]);
+        $this->assertSame($node, $tree[0]->getChildren()[1]->getChildren()[0]);
     }
 
     /** @test */

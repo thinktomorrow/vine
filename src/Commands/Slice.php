@@ -23,7 +23,7 @@ class Slice
         foreach ($sliceNodes as $node) {
 
             // Add children to parent of this node
-            foreach ($node->children() as $child) {
+            foreach ($node->getChildren() as $child) {
                 if (($node->isRoot())) {
                     $child->moveToRoot();
                     $nodeCollection->add($child);
