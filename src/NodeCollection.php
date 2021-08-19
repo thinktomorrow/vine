@@ -129,7 +129,7 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
         });
 
         // Now delegate the sorting to the children
-        $collection = (new static(array_values($nodes)))->map(function ($node) use ($key) {
+        $collection = (new self(array_values($nodes)))->map(function ($node) use ($key) {
             return $node->sortChildNodes($key);
         });
 
@@ -174,7 +174,7 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
     {
         $nodesToBeRemoved = (new Find())($this, $callback);
 
-        $nodeCollection = new static($this->all());
+        $nodeCollection = new self($this->all());
 
         foreach($nodesToBeRemoved as $nodeToBeRemoved){
             $nodeCollection = (new Remove())($nodeCollection, $nodeToBeRemoved);
