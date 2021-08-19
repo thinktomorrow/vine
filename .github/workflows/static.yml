@@ -1,9 +1,6 @@
 name: Static Analysis
 
-on:
-  push:
-    paths:
-      - 'src/'
+on: [push, pull_request]
 
 jobs:
   analysis:
