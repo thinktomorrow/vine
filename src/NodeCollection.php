@@ -24,7 +24,7 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
 
     public function __construct(array $nodes = [])
     {
-        array_map(fn(Node $node) => $node, $nodes);
+        array_map(fn (Node $node) => $node, $nodes);
 
         $this->nodes = $nodes;
     }
@@ -176,7 +176,7 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
 
         $nodeCollection = new self($this->all());
 
-        foreach($nodesToBeRemoved as $nodeToBeRemoved){
+        foreach ($nodesToBeRemoved as $nodeToBeRemoved) {
             $nodeCollection = (new Remove())($nodeCollection, $nodeToBeRemoved);
         }
 

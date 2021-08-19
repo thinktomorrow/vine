@@ -31,7 +31,7 @@ class RemoveTest extends \PHPUnit\Framework\TestCase
         $collection = new \Thinktomorrow\Vine\NodeCollection([
             $child = new DefaultNode(['id' => 1, 'name' => 'foobar']),
             $child2 = new DefaultNode(['id' => 2, 'name' => 'foobar-2']),
-            $child3 = new DefaultNode(['id' => 3, 'name' => 'foobar-3'])
+            $child3 = new DefaultNode(['id' => 3, 'name' => 'foobar-3']),
         ]);
 
         $collection->removeNode($child);
@@ -86,7 +86,7 @@ class RemoveTest extends \PHPUnit\Framework\TestCase
 
         $collection = new \Thinktomorrow\Vine\NodeCollection([
             $node,
-            $node2
+            $node2,
         ]);
 
         $collection->removeNode($child3);

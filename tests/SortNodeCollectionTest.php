@@ -14,13 +14,13 @@ class SortNodeCollectionTest extends TestCase
         $collection = new NodeCollection([
             new DefaultNode(['id' => 2]),
             new DefaultNode(['id' => 4]),
-            new DefaultNode(['id' => 1])
+            new DefaultNode(['id' => 1]),
         ]);
 
         $this->assertEquals(new NodeCollection([
             new DefaultNode(['id' => 1]),
             new DefaultNode(['id' => 2]),
-            new DefaultNode(['id' => 4])
+            new DefaultNode(['id' => 4]),
         ]), $collection->sort('id'));
     }
 
@@ -30,13 +30,13 @@ class SortNodeCollectionTest extends TestCase
         $collection = new NodeCollection([
             new DefaultNode((object) ['id' => 2]),
             new DefaultNode((object) ['id' => 4]),
-            new DefaultNode((object) ['id' => 1])
+            new DefaultNode((object) ['id' => 1]),
         ]);
 
         $this->assertEquals(new NodeCollection([
             new DefaultNode((object) ['id' => 1]),
             new DefaultNode((object) ['id' => 2]),
-            new DefaultNode((object) ['id' => 4])
+            new DefaultNode((object) ['id' => 4]),
         ]), $collection->sort('id'));
     }
 
@@ -58,7 +58,7 @@ class SortNodeCollectionTest extends TestCase
         $collection = new NodeCollection([
             $parent = new DefaultNode((object) ['id' => 2]),
             new DefaultNode((object) ['id' => 4]),
-            new DefaultNode((object) ['id' => 1])
+            new DefaultNode((object) ['id' => 1]),
         ]);
 
         $parent->addChildNodes([new DefaultNode(['id' => '23']), new DefaultNode(['id' => '22']), new DefaultNode(['id' => '21'])]);
@@ -69,7 +69,7 @@ class SortNodeCollectionTest extends TestCase
         $this->assertEquals(new NodeCollection([
             new DefaultNode((object) ['id' => 1]),
             $parent2,
-            new DefaultNode((object) ['id' => 4])
+            new DefaultNode((object) ['id' => 4]),
         ]), $collection->sort('id'));
     }
 
