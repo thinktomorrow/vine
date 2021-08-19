@@ -72,11 +72,9 @@ class ArrayableNodeCollectionTest extends TestCase
      */
     private function getCollection(): NodeCollection
     {
-        $collection = new NodeCollection(
+        return new NodeCollection([
             new DefaultNode(null),
             new DefaultNode(null)
-        );
-
-        return $collection;
+        ]);
     }
 }

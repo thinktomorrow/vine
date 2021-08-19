@@ -27,6 +27,6 @@ class Flatten
             }
         }
 
-        return new NodeCollection(...$flattened);
+        return new NodeCollection($flattened);
     }
 }

@@ -80,7 +80,7 @@ class PruneTest extends TestCase
         });
 
         $this->assertEquals(
-            new \Thinktomorrow\Vine\NodeCollection(new DefaultNode(['id' => 3, 'name' => 'second-child'])),
+            new \Thinktomorrow\Vine\NodeCollection([new DefaultNode(['id' => 3, 'name' => 'second-child'])]),
             $prunedNodeCollection
         );
     }

@@ -14,7 +14,7 @@ class InflateTest extends TestCase
         $node->addChildNodes([$child = new DefaultNode(['id' => 2, 'name' => 'first-child'])]);
         $child->addChildNodes([$child2 = new DefaultNode(['id' => 3, 'name' => 'second-child'])]);
 
-        $flatNodes = (new \Thinktomorrow\Vine\NodeCollection($node))->flatten();
+        $flatNodes = (new \Thinktomorrow\Vine\NodeCollection([$node]))->flatten();
         $this->assertEquals(3, $flatNodes->count());
 
         $inflatedNodes = $flatNodes->inflate();
@@ -30,7 +30,7 @@ class InflateTest extends TestCase
         $node->addChildNodes([$child = new DefaultNode(['id' => 2, 'name' => 'first-child'])]);
         $child->addChildNodes([$child2 = new DefaultNode(['id' => 3, 'name' => 'second-child'])]);
 
-        $collection = new \Thinktomorrow\Vine\NodeCollection($node);
+        $collection = new \Thinktomorrow\Vine\NodeCollection([$node]);
 
         $this->assertEquals(1, $collection->inflate()->count());
         $this->assertSame($node, $collection->inflate()->first());

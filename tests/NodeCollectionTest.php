@@ -21,10 +21,10 @@ class NodeCollectionTest extends TestCase
     /** @test */
     public function it_accepts_variadic_array_of_nodes()
     {
-        $collection = new NodeCollection(
+        $collection = new NodeCollection([
             new DefaultNode('foobar'),
             new DefaultNode('foobar-2')
-        );
+        ]);
 
         $this->assertCount(2, $collection->all());
     }
@@ -54,9 +54,9 @@ class NodeCollectionTest extends TestCase
     /** @test */
     public function it_can_add_array_of_nodes()
     {
-        $collection = new NodeCollection(
+        $collection = new NodeCollection([
             new DefaultNode(['id' => 1])
-        );
+        ]);
 
         $collection->add(
             new DefaultNode(['id' => 2]),
@@ -69,14 +69,14 @@ class NodeCollectionTest extends TestCase
     /** @test */
     public function it_can_get_total_count_of_all_nodes_and_children()
     {
-        $collection = new NodeCollection(
+        $collection = new NodeCollection([
             (new DefaultNode(['id' => 1]))
                 ->addChildNodes(
                     (new DefaultNode(['id' => 2]))
                 ->addChildNodes(new DefaultNode(['id' => 3]))
                 ),
             new DefaultNode(['id' => 4])
-        );
+        ]);
 
         $this->assertEquals(4, $collection->total());
         $this->assertEquals(2, $collection->first()->getChildNodes()->total());

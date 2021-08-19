@@ -28,6 +28,6 @@ class Ancestors
             $ancestors->add($parent);
         }
 
-        return new NodeCollection(...array_reverse($ancestors->all()));
+        return new NodeCollection(array_reverse($ancestors->all()));
     }
 }

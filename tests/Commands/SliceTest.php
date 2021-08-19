@@ -14,7 +14,7 @@ class SliceTest extends \PHPUnit\Framework\TestCase
         $node->addChildNodes([$child = new DefaultNode(['id' => 2, 'name' => 'first-child'])]);
         $child->addChildNodes([$child2 = new DefaultNode(['id' => 3, 'name' => 'second-child'])]);
 
-        $collection = (new NodeCollection($node))->slice($child);
+        $collection = (new NodeCollection([$node]))->slice($child);
 
         // Child2 is now direct child of node
         $newChild2 = $collection->first()->getChildNodes()->first();

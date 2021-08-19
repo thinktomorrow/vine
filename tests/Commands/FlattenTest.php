@@ -14,7 +14,7 @@ class FlattenTest extends TestCase
         $node->addChildNodes([$child = new DefaultNode(['id' => 2, 'name' => 'first-child'])]);
         $child->addChildNodes([$child2 = new DefaultNode(['id' => 3, 'name' => 'second-child'])]);
 
-        $flatNodes = (new \Thinktomorrow\Vine\NodeCollection($node))->flatten();
+        $flatNodes = (new \Thinktomorrow\Vine\NodeCollection([$node]))->flatten();
 
         $this->assertEquals(3, $flatNodes->count());
         $this->assertSame($node, $flatNodes[0]);

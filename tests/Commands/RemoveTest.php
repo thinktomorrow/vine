@@ -27,13 +27,13 @@ class RemoveTest extends \PHPUnit\Framework\TestCase
     /** @test */
     public function it_can_remove_nodes()
     {
-        $collection = new \Thinktomorrow\Vine\NodeCollection(
+        $collection = new \Thinktomorrow\Vine\NodeCollection([
             $child = new DefaultNode(['id' => 1, 'name' => 'foobar']),
             $child2 = new DefaultNode(['id' => 2, 'name' => 'foobar-2']),
             $child3 = new DefaultNode(['id' => 3, 'name' => 'foobar-3'])
-        );
+        ]);
 
-        $collection->remove($child);
+        $collection->removeNode($child);
 
         $this->assertCount(2, $collection->all());
         $this->assertSame($child2, $collection->find('id', 2));
@@ -68,12 +68,12 @@ class RemoveTest extends \PHPUnit\Framework\TestCase
         $node->addChildNodes([$child = new DefaultNode(3)]);
         $node2->addChildNodes([$child3 = new DefaultNode(4)]);
 
-        $collection = new \Thinktomorrow\Vine\NodeCollection(
+        $collection = new \Thinktomorrow\Vine\NodeCollection([
             $node,
             $node2
-        );
+        ]);
 
-        $collection->remove($child3);
+        $collection->removeNode($child3);
 
         $this->assertEquals(3, $collection->total());
         $this->assertCount(0, $node2->getChildNodes());

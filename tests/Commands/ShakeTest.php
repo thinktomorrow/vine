@@ -70,10 +70,10 @@ class ShakeTest extends TestCase
         });
 
         $this->assertEquals(
-            new NodeCollection(
+            new NodeCollection([
                 (new DefaultNode(['id' => 2, 'name' => 'first-child']))
                 ->addChildNodes(new DefaultNode(['id' => 3, 'name' => 'second-child']))
-            ),
+            ]),
             $shakedNodeCollection
         );
     }

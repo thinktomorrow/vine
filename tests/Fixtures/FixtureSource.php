@@ -6,9 +6,6 @@ use Thinktomorrow\Vine\DefaultNode;
 use Thinktomorrow\Vine\Node;
 use Thinktomorrow\Vine\Source;
 
-/**
- * User: bencavens.
- */
 class FixtureSource implements Source
 {
     private $flatten;

@@ -107,7 +107,7 @@ class DefaultNode implements Node
     public function removeNode(Node $node): Node
     {
         $node->removeParentNode();
-        $this->getChildNodes()->remove($node);
+        $this->getChildNodes()->removeNode($node);
 
         return $this;
     }
@@ -331,9 +331,9 @@ class DefaultNode implements Node
     private function transformToNodeCollection($children): NodeCollection
     {
         if (is_array($children)) {
-            $children = new NodeCollection(...$children);
-        } elseif ($children instanceof self) {
             $children = new NodeCollection($children);
+        } elseif ($children instanceof self) {
+            $children = new NodeCollection([$children]);
         } elseif (! $children instanceof NodeCollection) {
             throw new \InvalidArgumentException('Invalid children parameter. Accepted types are array or NodeCollection.');
         }

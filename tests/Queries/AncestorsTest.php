@@ -3,10 +3,10 @@
 namespace Thinktomorrow\Vine\Tests\Queries;
 
 use PHPUnit\Framework\TestCase;
-use Tests\Fixtures\FixtureSource;
 use Thinktomorrow\Vine\DefaultNode;
 use Thinktomorrow\Vine\NodeCollection;
 use Thinktomorrow\Vine\Source;
+use Thinktomorrow\Vine\Tests\Fixtures\FixtureSource;
 
 class AncestorsTest extends TestCase
 {
@@ -20,7 +20,7 @@ class AncestorsTest extends TestCase
         $ancestors = (new \Thinktomorrow\Vine\Queries\Ancestors())->__invoke($secondChild);
 
         $this->assertCount(2, $ancestors);
-        $this->assertEquals(new NodeCollection(...[$root, $firstChild]), $ancestors);
+        $this->assertEquals(new NodeCollection([$root, $firstChild]), $ancestors);
     }
 
     /** @test */
@@ -33,7 +33,7 @@ class AncestorsTest extends TestCase
         $ancestors = (new \Thinktomorrow\Vine\Queries\Ancestors())->__invoke($secondChild, 1);
 
         $this->assertCount(1, $ancestors);
-        $this->assertEquals(new NodeCollection(...[$firstChild]), $ancestors);
+        $this->assertEquals(new NodeCollection([$firstChild]), $ancestors);
     }
 
     /** @test */
@@ -46,12 +46,9 @@ class AncestorsTest extends TestCase
         $ancestors = $secondChild->getAncestorNodes();
 
         $this->assertCount(2, $ancestors);
-        $this->assertEquals(new NodeCollection(...[$root, $firstChild]), $ancestors);
+        $this->assertEquals(new NodeCollection([$root, $firstChild]), $ancestors);
     }
 
-    /**
-     * @return \Thinktomorrow\Vine\Source
-     */
     private function getTranslation(): Source
     {
         return new FixtureSource('default');

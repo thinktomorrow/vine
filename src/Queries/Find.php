@@ -14,7 +14,7 @@ class Find
      * @param array $values
      * @return NodeCollection
      */
-    public function __invoke(NodeCollection $nodeCollection, $key, array $values): NodeCollection
+    public function __invoke(NodeCollection $nodeCollection, $key, array $values = null): NodeCollection
     {
         $nodes = new NodeCollection();
 

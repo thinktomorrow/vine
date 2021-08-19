@@ -60,7 +60,7 @@ class CopyTest extends TestCase
         $root2 = new DefaultNode('first-child');
         $root2->addChildNodes([new DefaultNode('second-child')]);
 
-        $collection = new \Thinktomorrow\Vine\NodeCollection($root, $root2);
+        $collection = new \Thinktomorrow\Vine\NodeCollection([$root, $root2]);
 
         $copy = $collection->copy();
 

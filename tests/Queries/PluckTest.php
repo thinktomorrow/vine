@@ -63,11 +63,11 @@ class PluckTest extends TestCase
     /** @test */
     public function it_can_pluck_specific_values_of_collection()
     {
-        $collection = new NodeCollection(
+        $collection = new NodeCollection([
             new DefaultNode(['id' => 1]),
             new DefaultNode(['id' => 2]),
             new DefaultNode(['id' => 3])
-        );
+        ]);
 
         $this->assertEquals([
             1, 2, 3,
@@ -77,11 +77,11 @@ class PluckTest extends TestCase
     /** @test */
     public function it_can_pluck_key_value_pairs_of_collection()
     {
-        $collection = new NodeCollection(
+        $collection = new NodeCollection([
             new DefaultNode(['id' => 1, 'label' => 'foobar-1']),
             new DefaultNode(['id' => 3, 'label' => 'foobar-3']),
             new DefaultNode(['id' => 2, 'label' => 'foobar-2'])
-        );
+        ]);
 
         $this->assertEquals([
             1 => 'foobar-1',
