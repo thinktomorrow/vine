@@ -1,63 +1,65 @@
 <?php
 
-use Vine\Node;
+namespace Thinktomorrow\Vine\Tests\Commands;
+
+use Thinktomorrow\Vine\DefaultNode;
 
 class MoveTest extends \PHPUnit\Framework\TestCase
 {
     /** @test */
     public function a_node_can_be_moved_to_different_parent()
     {
-        $node = new Node(['id' => 1, 'name' => 'root-1']);
-        $node2 = new Node(['id' => 2, 'name' => 'root-2']);
-        $node->addChildren([$child = new Node(['id' => 3, 'name' => 'first-child'])]);
+        $node = new DefaultNode(['id' => 1, 'name' => 'root-1']);
+        $node2 = new DefaultNode(['id' => 2, 'name' => 'root-2']);
+        $node->addChildNodes([$child = new DefaultNode(['id' => 3, 'name' => 'first-child'])]);
 
         // Assert defaults
-        $this->assertCount(1, $node->children());
-        $this->assertEmpty($node2->children());
+        $this->assertCount(1, $node->getChildNodes());
+        $this->assertEmpty($node2->getChildNodes());
 
-        $child->move($node2);
+        $child->moveToParentNode($node2);
 
         // Assert move
-        $this->assertEmpty($node->children());
-        $this->assertCount(1, $node2->children());
-        $this->assertSame($child, $node2->children()->first());
-        $this->assertSame($node2, $child->parent());
+        $this->assertEmpty($node->getChildNodes());
+        $this->assertCount(1, $node2->getChildNodes());
+        $this->assertSame($child, $node2->getChildNodes()->first());
+        $this->assertSame($node2, $child->getParentNode());
     }
 
     /** @test */
     public function a_node_is_moved_along_with_its_children()
     {
-        $root = new Node(['id' => 1, 'name' => 'root-1']);
-        $root->addChildren([$main1 = new Node(['id' => 2, 'name' => 'child-1'])]);
-        $main1->addChildren([$child3 = new Node(['id' => 4, 'name' => 'child-3'])]);
-        $child3->addChildren([$child4 = new Node(['id' => 5, 'name' => 'child-4'])]);
-        $root->addChildren([$main2 = new Node(['id' => 3, 'name' => 'child-2'])]);
-        $main2->addChildren([$child5 = new Node(['id' => 6, 'name' => 'child-5'])]);
+        $root = new DefaultNode(['id' => 1, 'name' => 'root-1']);
+        $root->addChildNodes([$main1 = new DefaultNode(['id' => 2, 'name' => 'child-1'])]);
+        $main1->addChildNodes([$child3 = new DefaultNode(['id' => 4, 'name' => 'child-3'])]);
+        $child3->addChildNodes([$child4 = new DefaultNode(['id' => 5, 'name' => 'child-4'])]);
+        $root->addChildNodes([$main2 = new DefaultNode(['id' => 3, 'name' => 'child-2'])]);
+        $main2->addChildNodes([$child5 = new DefaultNode(['id' => 6, 'name' => 'child-5'])]);
 
         // Assert defaults
-        $this->assertSame($main1, $child3->parent());
+        $this->assertSame($main1, $child3->getParentNode());
 
-        $child3->move($main2);
+        $child3->moveToParentNode($main2);
 
         // Assert move
-        $this->assertEmpty($main1->children());
-        $this->assertCount(2, $main2->children());
-        $this->assertSame($main2, $child3->parent());
-        $this->assertSame($child4, $child3->children()->first());
+        $this->assertEmpty($main1->getChildNodes());
+        $this->assertCount(2, $main2->getChildNodes());
+        $this->assertSame($main2, $child3->getParentNode());
+        $this->assertSame($child4, $child3->getChildNodes()->first());
     }
 
     /** @test */
     public function a_node_can_be_moved_to_root()
     {
-        $root = new Node(['id' => 1, 'name' => 'root-1']);
-        $root->addChildren([$main1 = new Node(['id' => 2, 'name' => 'child-1'])]);
-        $main1->addChildren([$child1 = new Node(['id' => 4, 'name' => 'child-3'])]);
+        $root = new DefaultNode(['id' => 1, 'name' => 'root-1']);
+        $root->addChildNodes([$main1 = new DefaultNode(['id' => 2, 'name' => 'child-1'])]);
+        $main1->addChildNodes([$child1 = new DefaultNode(['id' => 4, 'name' => 'child-3'])]);
 
-        $child1->moveToRoot();
+        $child1->moveNodeToRoot();
 
         // Assert move
-        $this->assertNull($child1->parent());
-        $this->assertTrue($child1->isRoot());
-        $this->assertCount(0, $main1->children());
+        $this->assertNull($child1->getParentNode());
+        $this->assertTrue($child1->isRootNode());
+        $this->assertCount(0, $main1->getChildNodes());
     }
 }

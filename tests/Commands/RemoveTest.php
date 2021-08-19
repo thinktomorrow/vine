@@ -1,21 +1,24 @@
 <?php
 
-use Vine\Node;
+namespace Thinktomorrow\Vine\Tests\Commands;
+
+use Thinktomorrow\Vine\Node;
+use Thinktomorrow\Vine\DefaultNode;
 
 class RemoveTest extends \PHPUnit\Framework\TestCase
 {
     /** @test */
     public function it_can_remove_self_from_parent()
     {
-        $node = new Node(null);
-        $node->addChildren([$child = new Node(null)]);
-        $child->addChildren([$child2 = new Node(null)]);
+        $node = new DefaultNode(null);
+        $node->addChildNodes([$child = new DefaultNode(null)]);
+        $child->addChildNodes([$child2 = new DefaultNode(null)]);
 
-        $child->remove();
+        $child->getParentNode()->removeNode($child);
 
-        $this->assertCount(0, $node->children());
-        $this->assertCount(1, $child->children());
-        $this->assertNull($child->parent());
+        $this->assertCount(0, $node->getChildNodes());
+        $this->assertCount(1, $child->getChildNodes());
+        $this->assertNull($child->getParentNode());
 
         // Assert parent still exists
         $this->assertInstanceOf(Node::class, $node);
@@ -24,10 +27,10 @@ class RemoveTest extends \PHPUnit\Framework\TestCase
     /** @test */
     public function it_can_remove_nodes()
     {
-        $collection = new \Vine\NodeCollection(
-            $child = new Node(['id' => 1, 'name' => 'foobar']),
-            $child2 = new Node(['id' => 2, 'name' => 'foobar-2']),
-            $child3 = new Node(['id' => 3, 'name' => 'foobar-3'])
+        $collection = new \Thinktomorrow\Vine\NodeCollection(
+            $child = new DefaultNode(['id' => 1, 'name' => 'foobar']),
+            $child2 = new DefaultNode(['id' => 2, 'name' => 'foobar-2']),
+            $child3 = new DefaultNode(['id' => 3, 'name' => 'foobar-3'])
         );
 
         $collection->remove($child);
@@ -41,39 +44,38 @@ class RemoveTest extends \PHPUnit\Framework\TestCase
     /** @test */
     public function it_can_remove_nested_nodes()
     {
-        $root = new Node(['id' => 1, 'name' => 'foobar']);
-        $root->addChildren($child2 = new Node(['id' => 2, 'name' => 'foobar-2']));
-        $child2->addChildren($child4 = new Node(['id' => 4, 'name' => 'foobar-4']));
+        $root = new DefaultNode(['id' => 1, 'name' => 'foobar']);
+        $root->addChildNodes($child2 = new DefaultNode(['id' => 2, 'name' => 'foobar-2']));
+        $child2->addChildNodes($child4 = new DefaultNode(['id' => 4, 'name' => 'foobar-4']));
 
-        $child2->addChildren($child3 = new Node(['id' => 3, 'name' => 'foobar-3']));
-        $child3->addChildren($child5 = new Node(['id' => 5, 'name' => 'foobar-5']));
+        $child2->addChildNodes($child3 = new DefaultNode(['id' => 3, 'name' => 'foobar-3']));
+        $child3->addChildNodes($child5 = new DefaultNode(['id' => 5, 'name' => 'foobar-5']));
 
-        $root->remove($child3);
+        $root->removeNode($child3);
 
-        $this->assertEquals(2, $root->total());
-        $this->assertSame($child2, $root->children()->find('id', 2));
-        $this->assertSame($child4, $root->children()->find('id', 4));
-        $this->assertNull($root->children()->find('id', 3));
-        $this->assertNull($root->children()->find('id', 5));
+        $this->assertEquals(2, $root->getTotalChildNodesCount());
+        $this->assertSame($child2, $root->getChildNodes()->find('id', 2));
+        $this->assertSame($child4, $root->getChildNodes()->find('id', 4));
+        $this->assertNull($root->getChildNodes()->find('id', 3));
+        $this->assertNull($root->getChildNodes()->find('id', 5));
     }
 
     /** @test */
     public function node_can_be_removed_from_collection()
     {
-        $node = new Node(1);
-        $node2 = new Node(2);
-        $node->addChildren([$child = new Node(3)]);
-        $node2->addChildren([$child3 = new Node(4)]);
+        $node = new DefaultNode(1);
+        $node2 = new DefaultNode(2);
+        $node->addChildNodes([$child = new DefaultNode(3)]);
+        $node2->addChildNodes([$child3 = new DefaultNode(4)]);
 
-        $collection = new \Vine\NodeCollection(
-            $node,
-            $node2
+        $collection = new \Thinktomorrow\Vine\NodeCollection(
+            $node, $node2
         );
 
         $collection->remove($child3);
 
         $this->assertEquals(3, $collection->total());
-        $this->assertCount(0, $node2->children());
-        $this->assertNotNull($child3->parent());
+        $this->assertCount(0, $node2->getChildNodes());
+        $this->assertNotNull($child3->getParentNode());
     }
 }

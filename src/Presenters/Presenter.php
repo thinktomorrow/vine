@@ -1,8 +1,8 @@
 <?php
 
-namespace Vine\Presenters;
+namespace Thinktomorrow\Vine\Presenters;
 
-use Vine\NodeCollection;
+use Thinktomorrow\Vine\NodeCollection;
 
 interface Presenter
 {

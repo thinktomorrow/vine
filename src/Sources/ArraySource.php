@@ -1,8 +1,10 @@
 <?php
 
-namespace Vine\Sources;
+namespace Thinktomorrow\Vine\Sources;
 
-use Vine\Source;
+use Thinktomorrow\Vine\Node;
+use Thinktomorrow\Vine\DefaultNode;
+use Thinktomorrow\Vine\Source;
 
 class ArraySource implements Source
 {
@@ -27,5 +29,10 @@ class ArraySource implements Source
     public function nodeParentKeyIdentifier(): string
     {
         return 'parent_id';
+    }
+
+    public function createNode($entry): Node
+    {
+        return new DefaultNode($entry);
     }
 }

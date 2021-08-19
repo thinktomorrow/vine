@@ -1,9 +1,9 @@
 <?php
 
-namespace Vine\Presenters;
+namespace Thinktomorrow\Vine\Presenters;
 
-use Vine\Node;
-use Vine\NodeCollection;
+use Thinktomorrow\Vine\Node;
+use Thinktomorrow\Vine\NodeCollection;
 
 abstract class BasePresenter
 {
@@ -43,8 +43,8 @@ abstract class BasePresenter
         foreach ($nodeCollection as $node) {
             $output .= $this->template($node, $level);
 
-            if (!$node->isLeaf()) {
-                $output .= $this->renderRecursiveToString($node->children(), $level + 1);
+            if (!$node->isLeafNode()) {
+                $output .= $this->renderRecursiveToString($node->getChildNodes(), $level + 1);
             }
         }
 

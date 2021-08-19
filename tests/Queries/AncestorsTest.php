@@ -1,21 +1,24 @@
 <?php
 
+namespace Thinktomorrow\Vine\Tests\Queries;
+
 use PHPUnit\Framework\TestCase;
 use Tests\Fixtures\FixtureSource;
-use Vine\Node;
-use Vine\NodeCollection;
-use Vine\Source;
+use Thinktomorrow\Vine\Node;
+use Thinktomorrow\Vine\DefaultNode;
+use Thinktomorrow\Vine\NodeCollection;
+use Thinktomorrow\Vine\Source;
 
 class AncestorsTest extends TestCase
 {
     /** @test */
     public function it_can_get_ancestors()
     {
-        $root = new Node('foobar');
-        $root->addChildren([$firstChild = new Node('first-child')]);
-        $firstChild->addChildren([$secondChild = new Node('second-child')]);
+        $root = new DefaultNode('foobar');
+        $root->addChildNodes([$firstChild = new DefaultNode('first-child')]);
+        $firstChild->addChildNodes([$secondChild = new DefaultNode('second-child')]);
 
-        $ancestors = (new \Vine\Queries\Ancestors())->__invoke($secondChild);
+        $ancestors = (new \Thinktomorrow\Vine\Queries\Ancestors())->__invoke($secondChild);
 
         $this->assertCount(2, $ancestors);
         $this->assertEquals(new NodeCollection(...[$root, $firstChild]), $ancestors);
@@ -24,11 +27,11 @@ class AncestorsTest extends TestCase
     /** @test */
     public function it_can_get_ancestors_at_certain_depth()
     {
-        $root = new Node('foobar');
-        $root->addChildren([$firstChild = new Node('first-child')]);
-        $firstChild->addChildren([$secondChild = new Node('second-child')]);
+        $root = new DefaultNode('foobar');
+        $root->addChildNodes([$firstChild = new DefaultNode('first-child')]);
+        $firstChild->addChildNodes([$secondChild = new DefaultNode('second-child')]);
 
-        $ancestors = (new \Vine\Queries\Ancestors())->__invoke($secondChild, 1);
+        $ancestors = (new \Thinktomorrow\Vine\Queries\Ancestors())->__invoke($secondChild, 1);
 
         $this->assertCount(1, $ancestors);
         $this->assertEquals(new NodeCollection(...[$firstChild]), $ancestors);
@@ -37,18 +40,18 @@ class AncestorsTest extends TestCase
     /** @test */
     public function node_can_get_the_ancestor_tree()
     {
-        $root = new Node('foobar');
-        $root->addChildren([$firstChild = new Node('first-child')]);
-        $firstChild->addChildren([$secondChild = new Node('second-child')]);
+        $root = new DefaultNode('foobar');
+        $root->addChildNodes([$firstChild = new DefaultNode('first-child')]);
+        $firstChild->addChildNodes([$secondChild = new DefaultNode('second-child')]);
 
-        $ancestors = $secondChild->ancestors();
+        $ancestors = $secondChild->getAncestorNodes();
 
         $this->assertCount(2, $ancestors);
         $this->assertEquals(new NodeCollection(...[$root, $firstChild]), $ancestors);
     }
 
     /**
-     * @return \Vine\Source
+     * @return \Thinktomorrow\Vine\Source
      */
     private function getTranslation(): Source
     {

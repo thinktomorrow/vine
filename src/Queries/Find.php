@@ -1,8 +1,9 @@
 <?php
 
-namespace Vine\Queries;
+namespace Thinktomorrow\Vine\Queries;
 
-use Vine\NodeCollection;
+use Thinktomorrow\Vine\Node;
+use Thinktomorrow\Vine\NodeCollection;
 
 class Find
 {
@@ -17,13 +18,14 @@ class Find
     {
         $nodes = new NodeCollection();
 
+        /** @var Node $node */
         foreach ($nodeCollection as $node) {
-            if ($node->has($key, $values)) {
+            if ($node->hasNodeEntryValue($key, $values)) {
                 $nodes->add($node);
             }
 
-            if ($node->hasChildren()) {
-                $nodes->merge($this->__invoke($node->children(), $key, $values));
+            if ($node->hasChildNodes()) {
+                $nodes->merge($this->__invoke($node->getChildNodes(), $key, $values));
             }
         }
 

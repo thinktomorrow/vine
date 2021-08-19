@@ -1,9 +1,9 @@
 <?php
 
-namespace Vine\Commands;
+namespace Thinktomorrow\Vine\Commands;
 
-use Vine\Node;
-use Vine\NodeCollection;
+use Thinktomorrow\Vine\Node;
+use Thinktomorrow\Vine\NodeCollection;
 
 class Prune
 {

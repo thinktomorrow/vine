@@ -1,6 +1,6 @@
 <?php
 
-namespace Vine\Presenters;
+namespace Thinktomorrow\Vine\Presenters;
 
 use RecursiveArrayIterator;
 use RecursiveTreeIterator;

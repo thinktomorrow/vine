@@ -1,9 +1,9 @@
 <?php
 
-namespace Vine\Commands;
+namespace Thinktomorrow\Vine\Commands;
 
-use Vine\Node;
-use Vine\NodeCollection;
+use Thinktomorrow\Vine\Node;
+use Thinktomorrow\Vine\NodeCollection;
 
 class Shake
 {
@@ -22,9 +22,7 @@ class Shake
     {
         $copiedNodeCollection = $nodeCollection->copy();
 
-        $shakedChildren = (new Slice())($copiedNodeCollection, ...$this->getBlacklistedNodes($copiedNodeCollection, $callback));
-
-        return $shakedChildren;
+        return (new Slice())($copiedNodeCollection, ...$this->getBlacklistedNodes($copiedNodeCollection, $callback));
     }
 
     /**
@@ -39,16 +37,19 @@ class Shake
     {
         $flatten = (new Flatten())($copiedNodeCollection);
 
-        $whitelistedNodes = new NodeCollection(...array_filter($flatten->all(), $callback));
+        $whitelistedNodes = array_filter($flatten->all(), $callback);
 
+        /** @var Node $node */
         foreach ($whitelistedNodes as $node) {
-            $whitelistedNodes->merge($node->ancestors());
+            $whitelistedNodes = array_merge($whitelistedNodes, $node->getAncestorNodes()->all());
         }
 
         return array_filter($flatten->all(), function (Node $node) use ($whitelistedNodes) {
             // Todo we should make this check optimized for performance
+
+            /** @var Node $node */
             foreach ($whitelistedNodes as $whitelistedNode) {
-                if ($node->equals($whitelistedNode)) {
+                if ($node->equalsNode($whitelistedNode)) {
                     return false;
                 }
             }

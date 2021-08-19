@@ -1,70 +1,72 @@
 <?php
 
+namespace Thinktomorrow\Vine\Tests\Queries;
+
 use PHPUnit\Framework\TestCase;
-use Vine\Node;
-use Vine\NodeCollection;
+use Thinktomorrow\Vine\DefaultNode;
+use Thinktomorrow\Vine\NodeCollection;
 
 class PluckTest extends TestCase
 {
     /** @test */
     public function it_can_pluck_specific_values_of_all_children()
     {
-        $node = new Node(['id' => 1, 'name' => 'foobar']);
-        $node->addChildren([$child = new Node(['id' => 2, 'name' => 'first-child'])]);
-        $child->addChildren([$child2 = new Node(['id' => 3, 'name' => 'second-child'])]);
+        $node = new DefaultNode(['id' => 1, 'name' => 'foobar']);
+        $node->addChildNodes([$child = new DefaultNode(['id' => 2, 'name' => 'first-child'])]);
+        $child->addChildNodes([$child2 = new DefaultNode(['id' => 3, 'name' => 'second-child'])]);
 
         $this->assertEquals([
             1, 2, 3,
-        ], $node->pluck('id'));
+        ], $node->pluckChildNodes('id'));
     }
 
     /** @test */
     public function it_can_pluck_key_value_pairs_of_all_children()
     {
-        $node = new Node(['id' => 'one', 'name' => 'foobar']);
-        $node->addChildren([$child = new Node(['id' => 'two', 'name' => 'first-child'])]);
-        $child->addChildren([$child2 = new Node(['id' => 'three', 'name' => 'second-child'])]);
+        $node = new DefaultNode(['id' => 'one', 'name' => 'foobar']);
+        $node->addChildNodes([$child = new DefaultNode(['id' => 'two', 'name' => 'first-child'])]);
+        $child->addChildNodes([$child2 = new DefaultNode(['id' => 'three', 'name' => 'second-child'])]);
 
         $this->assertEquals([
             'one'   => 'foobar',
             'two'   => 'first-child',
             'three' => 'second-child',
-        ], $node->pluck('id', 'name'));
+        ], $node->pluckChildNodes('id', 'name'));
     }
 
     /** @test */
     public function it_can_pluck_key_value_pairs_of_all_children_with_numeric_keys()
     {
-        $node = new Node(['id' => 1, 'name' => 'foobar']);
-        $node->addChildren([$child = new Node(['id' => 2, 'name' => 'first-child'])]);
-        $child->addChildren([$child2 = new Node(['id' => 3, 'name' => 'second-child'])]);
+        $node = new DefaultNode(['id' => 1, 'name' => 'foobar']);
+        $node->addChildNodes([$child = new DefaultNode(['id' => 2, 'name' => 'first-child'])]);
+        $child->addChildNodes([$child2 = new DefaultNode(['id' => 3, 'name' => 'second-child'])]);
 
         $this->assertEquals([
             1 => 'foobar',
             2 => 'first-child',
             3 => 'second-child',
-        ], $node->pluck('id', 'name'));
+        ], $node->pluckChildNodes('id', 'name'));
     }
 
     /** @test */
     public function it_can_pluck_from_ancestors()
     {
-        $node = new Node(['id' => 1, 'name' => 'foobar']);
-        $node->addChildren([$child = new Node(['id' => 2, 'name' => 'first-child'])]);
-        $child->addChildren([$child2 = new Node(['id' => 3, 'name' => 'second-child'])]);
+        $node = new DefaultNode(['id' => 1, 'name' => 'foobar']);
+        $node->addChildNodes([$child = new DefaultNode(['id' => 2, 'name' => 'first-child'])]);
+        $child->addChildNodes([$child2 = new DefaultNode(['id' => 3, 'name' => 'second-child'])]);
 
         $this->assertEquals([
             3, 2, 1,
-        ], $child2->pluckAncestors('id'));
+        ], $child2->pluckAncestorNodes('id'));
     }
 
     /** @test */
     public function it_can_pluck_specific_values_of_collection()
     {
         $collection = new NodeCollection(
-            new Node(['id' => 1]),
-            new Node(['id' => 2]),
-            new Node(['id' => 3])
+            new DefaultNode(['id' => 1]),
+            new DefaultNode(['id' => 2]),
+            new DefaultNode(['id' => 3])
         );
 
         $this->assertEquals([
@@ -76,9 +78,9 @@ class PluckTest extends TestCase
     public function it_can_pluck_key_value_pairs_of_collection()
     {
         $collection = new NodeCollection(
-            new Node(['id' => 1, 'label' => 'foobar-1']),
-            new Node(['id' => 3, 'label' => 'foobar-3']),
-            new Node(['id' => 2, 'label' => 'foobar-2'])
+            new DefaultNode(['id' => 1, 'label' => 'foobar-1']),
+            new DefaultNode(['id' => 3, 'label' => 'foobar-3']),
+            new DefaultNode(['id' => 2, 'label' => 'foobar-2'])
         );
 
         $this->assertEquals([

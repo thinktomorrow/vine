@@ -1,24 +1,24 @@
 <?php
 
-namespace Vine\Queries;
+namespace Thinktomorrow\Vine\Queries;
 
-use Vine\Node;
-use Vine\NodeCollection;
+use Thinktomorrow\Vine\Node;
+use Thinktomorrow\Vine\NodeCollection;
 
 class Ancestors
 {
     /**
      * @param Node $node
-     * @param null $depth
+     * @param int|null $depth
      *
      * @return NodeCollection
      */
-    public function __invoke(Node $node, $depth = null): NodeCollection
+    public function __invoke(Node $node, ?int $depth = null): NodeCollection
     {
         $ancestors = new NodeCollection();
         $currentDepth = 0;
 
-        while ($parent = $node->parent()) {
+        while ($parent = $node->getParentNode()) {
             if (!is_null($depth) && $currentDepth >= $depth) {
                 break;
             }

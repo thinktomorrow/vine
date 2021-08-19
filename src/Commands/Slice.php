@@ -1,9 +1,9 @@
 <?php
 
-namespace Vine\Commands;
+namespace Thinktomorrow\Vine\Commands;
 
-use Vine\Node;
-use Vine\NodeCollection;
+use Thinktomorrow\Vine\Node;
+use Thinktomorrow\Vine\NodeCollection;
 
 class Slice
 {
@@ -23,16 +23,17 @@ class Slice
         foreach ($sliceNodes as $node) {
 
             // Add children to parent of this node
-            foreach ($node->children() as $child) {
-                if (($node->isRoot())) {
-                    $child->moveToRoot();
+            /** @var Node $child */
+            foreach ($node->getChildNodes() as $child) {
+                if (($node->isRootNode())) {
+                    $child->moveNodeToRoot();
                     $nodeCollection->add($child);
                 } else {
-                    $child->move($node->parent());
+                    $child->moveToParentNode($node->getParentNode());
                 }
             }
 
-            $node->remove();
+            if($node->hasParentNode()) $node->getParentNode()->removeNode($node);
         }
 
         $this->removeCollectionChildren($nodeCollection, $sliceNodes);
@@ -53,7 +54,7 @@ class Slice
         // Remove nodes that reside on the root after all the slicing occurred
         foreach ($nodeCollection->all() as $k => $rootChild) {
             foreach ($sliceNodes as $node) {
-                if ($rootChild->equals($node)) {
+                if ($rootChild->equalsNode($node)) {
                     unset($nodeCollection[$k]);
                 }
             }

@@ -1,6 +1,6 @@
 <?php
 
-namespace Vine;
+namespace Thinktomorrow\Vine;
 
 /**
  * Contract for converting a flat adjacent data set to
@@ -12,21 +12,9 @@ interface Source
      * Full array of original data rows
      * These are the rows to be converted to the tree model.
      *
-     * @return array
+     * @return iterable
      */
-    public function nodeEntries(): array;
+    public function nodeEntries(): iterable;
 
-    /**
-     * Attribute key of the primary identifier of each row. e.g. 'id'.
-     *
-     * @return string
-     */
-    public function nodeKeyIdentifier(): string;
-
-    /**
-     * Attribute key of the parent foreign identifier of each row. e.g. 'parent_id'.
-     *
-     * @return string
-     */
-    public function nodeParentKeyIdentifier(): string;
+    public function createNode($entry): Node;
 }

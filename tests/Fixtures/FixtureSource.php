@@ -1,8 +1,10 @@
 <?php
 
-namespace Tests\Fixtures;
+namespace Thinktomorrow\Vine\Tests\Fixtures;
 
-use Vine\Source;
+use Thinktomorrow\Vine\Node;
+use Thinktomorrow\Vine\Source;
+use Thinktomorrow\Vine\DefaultNode;
 
 /**
  * User: bencavens.
@@ -35,5 +37,10 @@ class FixtureSource implements Source
     public function nodeParentKeyIdentifier(): string
     {
         return 1;
+    }
+
+    public function createNode($entry): Node
+    {
+        return new DefaultNode($entry);
     }
 }

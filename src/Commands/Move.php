@@ -1,8 +1,8 @@
 <?php
 
-namespace Vine\Commands;
+namespace Thinktomorrow\Vine\Commands;
 
-use Vine\Node;
+use Thinktomorrow\Vine\Node;
 
 class Move
 {
@@ -16,11 +16,11 @@ class Move
      */
     public function __invoke(Node $node, Node $parent): Node
     {
-        if (!$node->isRoot()) {
-            $node->parent()->remove($node);
+        if (!$node->isRootNode()) {
+            $node->getParentNode()->removeNode($node);
         }
 
-        $parent->addChildren($node);
+        $parent->addChildNodes($node);
 
         return $node;
     }

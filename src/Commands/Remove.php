@@ -1,9 +1,9 @@
 <?php
 
-namespace Vine\Commands;
+namespace Thinktomorrow\Vine\Commands;
 
-use Vine\Node;
-use Vine\NodeCollection;
+use Thinktomorrow\Vine\Node;
+use Thinktomorrow\Vine\NodeCollection;
 
 class Remove
 {
@@ -17,15 +17,16 @@ class Remove
      */
     public function __invoke(NodeCollection $nodeCollection, Node ...$nodes): NodeCollection
     {
+        /** @var Node $node */
         foreach ($nodeCollection as $k => $node) {
-            foreach ($nodes as $removeNode) {
-                if ($node->equals($removeNode)) {
+            foreach ($nodes as $nodeToBeRemoved) {
+                if ($node->equalsNode($nodeToBeRemoved)) {
                     unset($nodeCollection[$k]);
                 }
             }
 
-            if (!$node->children()->isEmpty()) {
-                $this->__invoke($node->children(), ...$nodes);
+            if ($node->hasChildNodes()) {
+                $this->__invoke($node->getChildNodes(), ...$nodes);
             }
         }
 

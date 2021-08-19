@@ -1,18 +1,20 @@
 <?php
 
+namespace Thinktomorrow\Vine\Tests\Commands;
+
 use PHPUnit\Framework\TestCase;
-use Vine\Node;
+use Thinktomorrow\Vine\DefaultNode;
 
 class InflateTest extends TestCase
 {
     /** @test */
     public function it_can_inflate_a_flattened_node_collection_back_to_its_original_structure()
     {
-        $node = new Node(['id' => 1, 'name' => 'foobar']);
-        $node->addChildren([$child = new Node(['id' => 2, 'name' => 'first-child'])]);
-        $child->addChildren([$child2 = new Node(['id' => 3, 'name' => 'second-child'])]);
+        $node = new DefaultNode(['id' => 1, 'name' => 'foobar']);
+        $node->addChildNodes([$child = new DefaultNode(['id' => 2, 'name' => 'first-child'])]);
+        $child->addChildNodes([$child2 = new DefaultNode(['id' => 3, 'name' => 'second-child'])]);
 
-        $flatNodes = (new \Vine\NodeCollection($node))->flatten();
+        $flatNodes = (new \Thinktomorrow\Vine\NodeCollection($node))->flatten();
         $this->assertEquals(3, $flatNodes->count());
 
         $inflatedNodes = $flatNodes->inflate();
@@ -24,11 +26,11 @@ class InflateTest extends TestCase
     /** @test */
     public function inflating_a_non_flattened_collection_remains_the_same()
     {
-        $node = new Node(['id' => 1, 'name' => 'foobar']);
-        $node->addChildren([$child = new Node(['id' => 2, 'name' => 'first-child'])]);
-        $child->addChildren([$child2 = new Node(['id' => 3, 'name' => 'second-child'])]);
+        $node = new DefaultNode(['id' => 1, 'name' => 'foobar']);
+        $node->addChildNodes([$child = new DefaultNode(['id' => 2, 'name' => 'first-child'])]);
+        $child->addChildNodes([$child2 = new DefaultNode(['id' => 3, 'name' => 'second-child'])]);
 
-        $collection = new \Vine\NodeCollection($node);
+        $collection = new \Thinktomorrow\Vine\NodeCollection($node);
 
         $this->assertEquals(1, $collection->inflate()->count());
         $this->assertSame($node, $collection->inflate()->first());

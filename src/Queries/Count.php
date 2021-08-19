@@ -1,8 +1,8 @@
 <?php
 
-namespace Vine\Queries;
+namespace Thinktomorrow\Vine\Queries;
 
-use Vine\Node;
+use Thinktomorrow\Vine\Node;
 
 class Count
 {
@@ -27,7 +27,7 @@ class Count
     {
         $count = 0;
 
-        foreach ($node->children() as $child) {
+        foreach ($node->getChildNodes() as $child) {
             $count++; // Childnode itself
             $count += $this->recursiveCount($child); // Children of childnode
         }
