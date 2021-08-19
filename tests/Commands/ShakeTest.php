@@ -2,9 +2,9 @@
 
 namespace Thinktomorrow\Vine\Tests\Commands;
 
-use Thinktomorrow\Vine\Node;
 use PHPUnit\Framework\TestCase;
 use Thinktomorrow\Vine\DefaultNode;
+use Thinktomorrow\Vine\Node;
 use Thinktomorrow\Vine\NodeCollection;
 
 class ShakeTest extends TestCase
@@ -70,7 +70,8 @@ class ShakeTest extends TestCase
         });
 
         $this->assertEquals(
-            new NodeCollection((new DefaultNode(['id' => 2, 'name' => 'first-child']))
+            new NodeCollection(
+                (new DefaultNode(['id' => 2, 'name' => 'first-child']))
                 ->addChildNodes(new DefaultNode(['id' => 3, 'name' => 'second-child']))
             ),
             $shakedNodeCollection

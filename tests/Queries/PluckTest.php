@@ -28,8 +28,8 @@ class PluckTest extends TestCase
         $child->addChildNodes([$child2 = new DefaultNode(['id' => 'three', 'name' => 'second-child'])]);
 
         $this->assertEquals([
-            'one'   => 'foobar',
-            'two'   => 'first-child',
+            'one' => 'foobar',
+            'two' => 'first-child',
             'three' => 'second-child',
         ], $node->pluckChildNodes('id', 'name'));
     }

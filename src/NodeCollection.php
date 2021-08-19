@@ -193,7 +193,7 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
 
         foreach ($this->all() as $child) {
             // Keep key identifier in case this is explicitly given
-            $plucks = (!($value === null))
+            $plucks = (! ($value === null))
                         ? $plucks + (new Pluck())($child, $key, $value, $down)
                         : array_merge($plucks, (new Pluck())($child, $key, $value, $down));
         }
@@ -288,7 +288,7 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
 
     public function offsetExists($offset)
     {
-        if (!is_string($offset) && !is_int($offset)) {
+        if (! is_string($offset) && ! is_int($offset)) {
             return false;
         }
 

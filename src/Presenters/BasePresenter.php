@@ -43,7 +43,7 @@ abstract class BasePresenter
         foreach ($nodeCollection as $node) {
             $output .= $this->template($node, $level);
 
-            if (!$node->isLeafNode()) {
+            if (! $node->isLeafNode()) {
                 $output .= $this->renderRecursiveToString($node->getChildNodes(), $level + 1);
             }
         }

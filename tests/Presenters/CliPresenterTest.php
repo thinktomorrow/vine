@@ -4,9 +4,9 @@ namespace Thinktomorrow\Vine\Tests\Presenters;
 
 use PHPUnit\Framework\TestCase;
 use Thinktomorrow\Vine\NodeCollectionFactory;
-use Thinktomorrow\Vine\Tests\Fixtures\FixtureSource;
 use Thinktomorrow\Vine\Presenters\CliPresenter;
 use Thinktomorrow\Vine\Source;
+use Thinktomorrow\Vine\Tests\Fixtures\FixtureSource;
 
 class CliPresenterTest extends TestCase
 {

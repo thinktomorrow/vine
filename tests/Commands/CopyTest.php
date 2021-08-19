@@ -3,8 +3,8 @@
 namespace Thinktomorrow\Vine\Tests\Commands;
 
 use PHPUnit\Framework\TestCase;
-use Thinktomorrow\Vine\Source;
 use Thinktomorrow\Vine\DefaultNode;
+use Thinktomorrow\Vine\Source;
 use Thinktomorrow\Vine\Tests\Fixtures\FixtureSource;
 
 class CopyTest extends TestCase

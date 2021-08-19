@@ -19,7 +19,7 @@ class Ancestors
         $currentDepth = 0;
 
         while ($parent = $node->getParentNode()) {
-            if (!is_null($depth) && $currentDepth >= $depth) {
+            if (! is_null($depth) && $currentDepth >= $depth) {
                 break;
             }
             $currentDepth++;

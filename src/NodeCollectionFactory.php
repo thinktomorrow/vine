@@ -80,7 +80,7 @@ class NodeCollectionFactory
      */
     private function addChild($parentId, $entryNode)
     {
-        if (!$parentId) {
+        if (! $parentId) {
             return;
         }
 
@@ -99,7 +99,7 @@ class NodeCollectionFactory
      */
     private function catchOrphan($parentId, $entryNode)
     {
-        if (!isset($this->orphans[$parentId])) {
+        if (! isset($this->orphans[$parentId])) {
             $this->orphans[$parentId] = new NodeCollection();
         }
         $this->orphans[$parentId][] = $entryNode;
@@ -111,7 +111,7 @@ class NodeCollectionFactory
     private function addOrphans()
     {
         foreach ($this->orphans as $parentId => $orphans) {
-            if (!isset($this->index[$parentId])) {
+            if (! isset($this->index[$parentId])) {
 
                 // Strict check which means there is a node assigned to an non-existing parent
                 if ($this->strict) {

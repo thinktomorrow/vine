@@ -35,7 +35,7 @@ class ArrayPresenter extends BasePresenter implements Presenter
         foreach ($nodeCollection as $node) {
             $output[] = $this->template($node, $level);
 
-            if (!$node->isLeafNode()) {
+            if (! $node->isLeafNode()) {
                 $output[] = $this->renderRecursiveToArray($node->getChildNodes(), $level + 1);
             }
         }

@@ -3,7 +3,6 @@
 namespace Thinktomorrow\Vine\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Thinktomorrow\Vine\Node;
 use Thinktomorrow\Vine\DefaultNode;
 use Thinktomorrow\Vine\NodeCollection;
 use Thinktomorrow\Vine\Sources\ArraySource;
@@ -72,9 +71,10 @@ class NodeCollectionTest extends TestCase
     {
         $collection = new NodeCollection(
             (new DefaultNode(['id' => 1]))
-                ->addChildNodes((new DefaultNode(['id' => 2]))
+                ->addChildNodes(
+                    (new DefaultNode(['id' => 2]))
                 ->addChildNodes(new DefaultNode(['id' => 3]))
-            ),
+                ),
             new DefaultNode(['id' => 4])
         );
 

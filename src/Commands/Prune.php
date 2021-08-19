@@ -43,7 +43,7 @@ class Prune
         $flatten = (new Flatten())($copiedNodeCollection);
 
         return array_filter($flatten->all(), function (Node $node) use ($callback) {
-            return !$callback($node);
+            return ! $callback($node);
         });
     }
 }

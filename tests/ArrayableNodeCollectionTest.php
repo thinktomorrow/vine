@@ -3,8 +3,8 @@
 namespace Thinktomorrow\Vine\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Thinktomorrow\Vine\NodeCollection;
 use Thinktomorrow\Vine\DefaultNode;
+use Thinktomorrow\Vine\NodeCollection;
 
 class ArrayableNodeCollectionTest extends TestCase
 {
