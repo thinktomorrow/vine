@@ -4,6 +4,7 @@ namespace Thinktomorrow\Vine\Tests\Commands;
 
 use Thinktomorrow\Vine\DefaultNode;
 use Thinktomorrow\Vine\Node;
+use Thinktomorrow\Vine\NodeCollection;
 
 class RemoveTest extends \PHPUnit\Framework\TestCase
 {
@@ -58,6 +59,21 @@ class RemoveTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($child4, $root->getChildNodes()->find('id', 4));
         $this->assertNull($root->getChildNodes()->find('id', 3));
         $this->assertNull($root->getChildNodes()->find('id', 5));
+    }
+
+    /** @test */
+    public function when_node_is_removed_all_children_are_removed_as_well()
+    {
+        $root = new DefaultNode(['id' => 1, 'name' => 'foobar']);
+        $root->addChildNodes($child1 = new DefaultNode(['id' => 2, 'name' => 'foobar-2']));
+        $child1->addChildNodes($child2 = new DefaultNode(['id' => 3, 'name' => 'foobar-4']));
+        $child2->addChildNodes($child3 = new DefaultNode(['id' => 3, 'name' => 'foobar-4']));
+
+        $collection = new NodeCollection([$root]);
+        $cleanCollection = $collection->removeNode($child1);
+
+        $this->assertEquals(1, $cleanCollection->total());
+        $this->assertCount(0, $root->getChildNodes());
     }
 
     /** @test */
