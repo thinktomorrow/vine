@@ -15,11 +15,16 @@ class FindFirst
      *
      * @return DefaultNode
      */
-    public function __invoke(NodeCollection $nodeCollection, $key, array $values): ?DefaultNode
+    public function __invoke(NodeCollection $nodeCollection, $key, array $values = null): ?DefaultNode
     {
         /** @var Node $node */
         foreach ($nodeCollection as $node) {
-            if ($node->hasNodeEntryValue($key, $values)) {
+
+            if($key instanceof \Closure) {
+                if(true === call_user_func($key, $node)) {
+                    return $node;
+                }
+            } else if (!is_null($values) && $node->hasNodeEntryValue($key, $values)) {
                 return $node;
             }
 

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace Thinktomorrow\Vine;
 
@@ -23,12 +24,12 @@ class DefaultNode implements Node
 
     public function getNodeId(): string
     {
-        return $this->getNodeEntry('id');
+        return (string) $this->getNodeEntry('id');
     }
 
     public function getParentNodeId(): ?string
     {
-        return $this->getNodeEntry('parent_id');
+        return (string) $this->getNodeEntry('parent_id');
     }
 
     public function equalsNode(Node $other): bool
@@ -269,7 +270,7 @@ class DefaultNode implements Node
     public function copyNode($depth = null): Node
     {
         return $depth === 0
-                ? new static($this->getNodeEntry())
+                ? $this->copyIsolatedNode()
                 : (new Copy())($this, $depth);
     }
 
@@ -280,7 +281,11 @@ class DefaultNode implements Node
      */
     public function copyIsolatedNode(): Node
     {
-        return $this->copyNode(0);
+        $copy = clone $this;
+        $copy->children = new NodeCollection();
+        $copy->parentNode = null;
+
+        return $copy;
     }
 
     /**

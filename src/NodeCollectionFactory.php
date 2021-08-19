@@ -57,8 +57,8 @@ class NodeCollectionFactory
 
     private function hydrate(Source $source)
     {
-        $id_key = $source->nodeKeyIdentifier();
-        $parent_key = $source->nodeParentKeyIdentifier();
+        $id_key = method_exists($source, 'nodeKeyIdentifier') ? $source->nodeKeyIdentifier() : 'id';
+        $parent_key = method_exists($source, 'nodeParentKeyIdentifier') ? $source->nodeParentKeyIdentifier() : 'parent_id';
 
         foreach ($source->nodeEntries() as $i => $entry) {
             $id = $entry instanceof Node ? $entry->getNodeId() : $entry[$id_key];

@@ -17,18 +17,4 @@ interface Source
     public function nodeEntries(): iterable;
 
     public function createNode($entry): Node;
-
-    /**
-     * Attribute key of the primary identifier of each row. e.g. 'id'.
-     *
-     * @return string
-     */
-    public function nodeKeyIdentifier(): string;
-
-    /**
-     * Attribute key of the parent foreign identifier of each row. e.g. 'parent_id'.
-     *
-     * @return string
-     */
-    public function nodeParentKeyIdentifier(): string;
 }
