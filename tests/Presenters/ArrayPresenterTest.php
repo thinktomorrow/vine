@@ -2,13 +2,13 @@
 
 namespace Thinktomorrow\Vine\Tests\Presenters;
 
-use Thinktomorrow\Vine\NodeCollection;
 use PHPUnit\Framework\TestCase;
-use Thinktomorrow\Vine\NodeCollectionFactory;
-use Thinktomorrow\Vine\Tests\Fixtures\FixtureSource;
 use Thinktomorrow\Vine\DefaultNode;
+use Thinktomorrow\Vine\NodeCollection;
+use Thinktomorrow\Vine\NodeCollectionFactory;
 use Thinktomorrow\Vine\Presenters\ArrayPresenter;
 use Thinktomorrow\Vine\Source;
+use Thinktomorrow\Vine\Tests\Fixtures\FixtureSource;
 
 class ArrayPresenterTest extends TestCase
 {

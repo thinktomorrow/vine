@@ -2,8 +2,8 @@
 
 namespace Thinktomorrow\Vine\Queries;
 
-use Thinktomorrow\Vine\Node;
 use Thinktomorrow\Vine\DefaultNode;
+use Thinktomorrow\Vine\Node;
 use Thinktomorrow\Vine\NodeCollection;
 
 class FindFirst
@@ -19,17 +19,16 @@ class FindFirst
     {
         /** @var Node $node */
         foreach ($nodeCollection as $node) {
-
-            if($key instanceof \Closure) {
-                if(true === call_user_func($key, $node)) {
+            if ($key instanceof \Closure) {
+                if (true === call_user_func($key, $node)) {
                     return $node;
                 }
-            } else if (!is_null($values) && $node->hasNodeEntryValue($key, $values)) {
+            } elseif (! is_null($values) && $node->hasNodeEntryValue($key, $values)) {
                 return $node;
             }
 
             if ($node->hasChildNodes()) {
-                if($childNode = $this->__invoke($node->getChildNodes(), $key, $values)){
+                if ($childNode = $this->__invoke($node->getChildNodes(), $key, $values)) {
                     return $childNode;
                 }
             }

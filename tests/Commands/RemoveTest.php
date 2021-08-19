@@ -2,8 +2,8 @@
 
 namespace Thinktomorrow\Vine\Tests\Commands;
 
-use Thinktomorrow\Vine\Node;
 use Thinktomorrow\Vine\DefaultNode;
+use Thinktomorrow\Vine\Node;
 
 class RemoveTest extends \PHPUnit\Framework\TestCase
 {
@@ -69,7 +69,8 @@ class RemoveTest extends \PHPUnit\Framework\TestCase
         $node2->addChildNodes([$child3 = new DefaultNode(4)]);
 
         $collection = new \Thinktomorrow\Vine\NodeCollection(
-            $node, $node2
+            $node,
+            $node2
         );
 
         $collection->remove($child3);

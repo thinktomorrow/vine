@@ -24,7 +24,7 @@ class Pluck
 
         foreach ($nodes as $node) {
             // If node entry is empty, which means there is no parent, we bail out
-            if (!$node) {
+            if (! $node) {
                 break;
             }
 

@@ -4,7 +4,6 @@ namespace Thinktomorrow\Vine\Tests\Queries;
 
 use PHPUnit\Framework\TestCase;
 use Tests\Fixtures\FixtureSource;
-use Thinktomorrow\Vine\Node;
 use Thinktomorrow\Vine\DefaultNode;
 use Thinktomorrow\Vine\NodeCollection;
 use Thinktomorrow\Vine\Source;

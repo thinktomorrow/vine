@@ -2,9 +2,9 @@
 
 namespace Thinktomorrow\Vine\Tests\Commands;
 
-use Thinktomorrow\Vine\Node;
 use PHPUnit\Framework\TestCase;
 use Thinktomorrow\Vine\DefaultNode;
+use Thinktomorrow\Vine\Node;
 
 class PruneTest extends TestCase
 {

@@ -2,8 +2,8 @@
 
 namespace Thinktomorrow\Vine\Tests\Commands;
 
-use Thinktomorrow\Vine\NodeCollection;
 use Thinktomorrow\Vine\DefaultNode;
+use Thinktomorrow\Vine\NodeCollection;
 
 class SliceTest extends \PHPUnit\Framework\TestCase
 {

@@ -57,7 +57,7 @@ class DefaultNode implements Node
 
     public function hasChildNodes(): bool
     {
-        return !$this->children->isEmpty();
+        return ! $this->children->isEmpty();
     }
 
     public function sortChildNodes($key): Node
@@ -83,14 +83,13 @@ class DefaultNode implements Node
 
     public function hasParentNode(): bool
     {
-        return !!$this->parentNode;
+        return ! ! $this->parentNode;
     }
 
     public function getNodeEntry($key = null, $default = null)
     {
-        if (!($key === null)) {
-
-            if(is_array($this->entry)) {
+        if (! ($key === null)) {
+            if (is_array($this->entry)) {
                 return isset($this->entry[$key]) ? $this->entry[$key] : $default;
             }
 
@@ -127,7 +126,7 @@ class DefaultNode implements Node
 
     public function moveNodeToRoot()
     {
-        if (!$this->isRootNode()) {
+        if (! $this->isRootNode()) {
             $this->getParentNode()->removeNode($this);
             $this->parentNode = null;
         }
@@ -188,7 +187,7 @@ class DefaultNode implements Node
      */
     public function isRootNode(): bool
     {
-        return !$this->hasParentNode();
+        return ! $this->hasParentNode();
     }
 
     public function hasNodeEntryValue($key, $value): bool
@@ -328,7 +327,7 @@ class DefaultNode implements Node
             $children = new NodeCollection(...$children);
         } elseif ($children instanceof self) {
             $children = new NodeCollection($children);
-        } elseif (!$children instanceof NodeCollection) {
+        } elseif (! $children instanceof NodeCollection) {
             throw new \InvalidArgumentException('Invalid children parameter. Accepted types are array or NodeCollection.');
         }
 

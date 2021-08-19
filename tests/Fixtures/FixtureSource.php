@@ -2,9 +2,9 @@
 
 namespace Thinktomorrow\Vine\Tests\Fixtures;
 
+use Thinktomorrow\Vine\DefaultNode;
 use Thinktomorrow\Vine\Node;
 use Thinktomorrow\Vine\Source;
-use Thinktomorrow\Vine\DefaultNode;
 
 /**
  * User: bencavens.

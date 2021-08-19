@@ -33,7 +33,9 @@ class Slice
                 }
             }
 
-            if($node->hasParentNode()) $node->getParentNode()->removeNode($node);
+            if ($node->hasParentNode()) {
+                $node->getParentNode()->removeNode($node);
+            }
         }
 
         $this->removeCollectionChildren($nodeCollection, $sliceNodes);

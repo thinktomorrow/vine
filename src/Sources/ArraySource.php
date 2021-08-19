@@ -2,8 +2,8 @@
 
 namespace Thinktomorrow\Vine\Sources;
 
-use Thinktomorrow\Vine\Node;
 use Thinktomorrow\Vine\DefaultNode;
+use Thinktomorrow\Vine\Node;
 use Thinktomorrow\Vine\Source;
 
 class ArraySource implements Source

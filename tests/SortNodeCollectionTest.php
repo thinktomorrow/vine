@@ -3,7 +3,6 @@
 namespace Thinktomorrow\Vine\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Thinktomorrow\Vine\Node;
 use Thinktomorrow\Vine\DefaultNode;
 use Thinktomorrow\Vine\NodeCollection;
 
