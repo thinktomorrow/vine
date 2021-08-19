@@ -74,7 +74,7 @@ class ArrayableNodeCollectionTest extends TestCase
     {
         return new NodeCollection([
             new DefaultNode(null),
-            new DefaultNode(null)
+            new DefaultNode(null),
         ]);
     }
 }

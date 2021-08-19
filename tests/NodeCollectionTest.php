@@ -23,7 +23,7 @@ class NodeCollectionTest extends TestCase
     {
         $collection = new NodeCollection([
             new DefaultNode('foobar'),
-            new DefaultNode('foobar-2')
+            new DefaultNode('foobar-2'),
         ]);
 
         $this->assertCount(2, $collection->all());
@@ -55,7 +55,7 @@ class NodeCollectionTest extends TestCase
     public function it_can_add_array_of_nodes()
     {
         $collection = new NodeCollection([
-            new DefaultNode(['id' => 1])
+            new DefaultNode(['id' => 1]),
         ]);
 
         $collection->add(
@@ -75,7 +75,7 @@ class NodeCollectionTest extends TestCase
                     (new DefaultNode(['id' => 2]))
                 ->addChildNodes(new DefaultNode(['id' => 3]))
                 ),
-            new DefaultNode(['id' => 4])
+            new DefaultNode(['id' => 4]),
         ]);
 
         $this->assertEquals(4, $collection->total());
