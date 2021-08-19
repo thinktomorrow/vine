@@ -2,7 +2,7 @@
 
 namespace Thinktomorrow\Vine\Queries;
 
-use Thinktomorrow\Vine\DefaultNode;
+use Closure;
 use Thinktomorrow\Vine\Node;
 use Thinktomorrow\Vine\NodeCollection;
 
@@ -10,16 +10,15 @@ class FindFirst
 {
     /**
      * @param NodeCollection $nodeCollection
-     * @param $key
-     * @param array $values
-     *
-     * @return DefaultNode
+     * @param string|Closure $key
+     * @param array|null $values
+     * @return Node|null
      */
-    public function __invoke(NodeCollection $nodeCollection, $key, array $values = null): ?DefaultNode
+    public function __invoke(NodeCollection $nodeCollection, $key, array $values = null): ?Node
     {
         /** @var Node $node */
         foreach ($nodeCollection as $node) {
-            if ($key instanceof \Closure) {
+            if ($key instanceof Closure) {
                 if (true === call_user_func($key, $node)) {
                     return $node;
                 }

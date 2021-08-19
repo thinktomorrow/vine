@@ -56,6 +56,8 @@ interface Node
 
     public function setParentNode(Node $parent): Node;
 
+    public function removeParentNode(): Node;
+
     public function hasParentNode(): bool;
 
     public function getNodeEntry($key = null, $default = null);
@@ -107,12 +109,12 @@ interface Node
     /**
      * Get flat array of plucked values from child nodes.
      *
-     * @param $key
+     * @param string $key
      * @param null $value
      *
      * @return array
      */
-    public function pluckAncestorNodes($key, $value = null): array;
+    public function pluckAncestorNodes(string $key, $value = null): array;
 
     /**
      * Get a copy of this node.

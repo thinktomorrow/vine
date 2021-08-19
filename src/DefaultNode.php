@@ -106,8 +106,15 @@ class DefaultNode implements Node
 
     public function removeNode(Node $node): Node
     {
+        $node->removeParentNode();
         $this->getChildNodes()->remove($node);
-        $node->parentNode = null; // Removes parent relation
+
+        return $this;
+    }
+
+    public function removeParentNode(): Node
+    {
+        $this->parentNode = null;
 
         return $this;
     }
@@ -244,12 +251,12 @@ class DefaultNode implements Node
     /**
      * Get flat array of plucked values from child nodes.
      *
-     * @param $key
+     * @param string $key
      * @param null $value
      *
      * @return array
      */
-    public function pluckAncestorNodes($key, $value = null): array
+    public function pluckAncestorNodes(string $key, $value = null): array
     {
         return $this->pluck($key, $value, false);
     }
@@ -317,7 +324,7 @@ class DefaultNode implements Node
     }
 
     /**
-     * @param $children
+     * @param array|Node|NodeCollection $children
      *
      * @return NodeCollection
      */

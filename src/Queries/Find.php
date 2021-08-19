@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Vine\Queries;
 
+use Closure;
 use Thinktomorrow\Vine\Node;
 use Thinktomorrow\Vine\NodeCollection;
 
@@ -9,9 +10,8 @@ class Find
 {
     /**
      * @param NodeCollection $nodeCollection
-     * @param $key
+     * @param string|Closure $key
      * @param array $values
-     *
      * @return NodeCollection
      */
     public function __invoke(NodeCollection $nodeCollection, $key, array $values): NodeCollection
@@ -20,7 +20,11 @@ class Find
 
         /** @var Node $node */
         foreach ($nodeCollection as $node) {
-            if ($node->hasNodeEntryValue($key, $values)) {
+            if ($key instanceof Closure) {
+                if (true === call_user_func($key, $node)) {
+                    $nodes->add($node);
+                }
+            } elseif (! is_null($values) && $node->hasNodeEntryValue($key, $values)) {
                 $nodes->add($node);
             }
 

@@ -28,7 +28,7 @@ class Shake
     /**
      * Blacklist of allowed nodes - we reverse the callback so we get the nodes that we do not want included.
      *
-     * @param $copiedNodeCollection
+     * @param NodeCollection $copiedNodeCollection
      * @param callable $callback
      *
      * @return array
@@ -47,7 +47,7 @@ class Shake
         return array_filter($flatten->all(), function (Node $node) use ($whitelistedNodes) {
             // Todo we should make this check optimized for performance
 
-            /** @var Node $node */
+            /** @var Node $whitelistedNode */
             foreach ($whitelistedNodes as $whitelistedNode) {
                 if ($node->equalsNode($whitelistedNode)) {
                     return false;

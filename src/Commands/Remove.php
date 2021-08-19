@@ -11,8 +11,7 @@ class Remove
      * Return collection of removed nodes.
      *
      * @param NodeCollection $nodeCollection
-     * @param Node[]         $nodes
-     *
+     * @param Node ...$nodes
      * @return NodeCollection
      */
     public function __invoke(NodeCollection $nodeCollection, Node ...$nodes): NodeCollection

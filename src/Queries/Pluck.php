@@ -2,19 +2,19 @@
 
 namespace Thinktomorrow\Vine\Queries;
 
-use Thinktomorrow\Vine\DefaultNode;
+use Thinktomorrow\Vine\Node;
 
 class Pluck
 {
     /**
-     * @param DefaultNode $node
-     * @param $key
+     * @param Node $node
+     * @param string $key
      * @param null $value
      * @param bool $down  | down: pluck from children, up: pluck from ancestors
      *
      * @return array
      */
-    public function __invoke(DefaultNode $node, $key, $value = null, $down = true): array
+    public function __invoke(Node $node, string $key, $value = null, $down = true): array
     {
         $values = $value
             ? [$node->getNodeEntry($key) => $node->getNodeEntry($value)]

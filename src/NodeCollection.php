@@ -2,6 +2,7 @@
 
 namespace Thinktomorrow\Vine;
 
+use Closure;
 use Thinktomorrow\Vine\Commands\Flatten;
 use Thinktomorrow\Vine\Commands\Inflate;
 use Thinktomorrow\Vine\Commands\Prune;
@@ -58,8 +59,7 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Add one / many nodes to this collection.
      *
-     * @param Node[] $nodes
-     *
+     * @param Node ...$nodes
      * @return $this
      */
     public function add(Node ...$nodes)
@@ -118,7 +118,7 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
     {
         $nodes = $this->nodes;
 
-        uasort($nodes, function (Node $a, DefaultNode $b) use ($key) {
+        uasort($nodes, function (Node $a, Node $b) use ($key) {
             if ($a->getNodeEntry($key) == $b->getNodeEntry($key)) {
                 return 0;
             }
@@ -159,11 +159,11 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
      * remove the parent / child relations of the removed node. For this
      * the node->remove() should be called instead.
      *
-     * @param DefaultNode $child
+     * @param Node $child
      *
      * @return $this
      */
-    public function remove(DefaultNode $child)
+    public function remove(Node $child)
     {
         return (new Remove())($this, $child);
     }
@@ -214,11 +214,11 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Slice one or more nodes out of the collection.
      *
-     * @param DefaultNode[] ...$nodes
+     * @param Node[] ...$nodes
      *
      * @return mixed
      */
-    public function slice(DefaultNode ...$nodes)
+    public function slice(Node ...$nodes)
     {
         return (new Slice())($this, ...$nodes);
     }
@@ -251,7 +251,7 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Find many nodes by attribute value.
      *
-     * @param $key
+     * @param string|Closure $key
      * @param array $values
      *
      * @return NodeCollection
@@ -264,8 +264,8 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Find specific node by attribute value.
      *
-     * @param $key
-     * @param $value
+     * @param string|Closure $key
+     * @param mixed|null $value
      *
      * @return Node|null
      */
@@ -281,7 +281,7 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     public function total(): int
     {
-        return array_reduce($this->all(), function ($carry, DefaultNode $node) {
+        return array_reduce($this->all(), function ($carry, Node $node) {
             return $carry + (new Count())($node);
         }, $this->count());
     }
