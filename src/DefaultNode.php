@@ -258,7 +258,12 @@ class DefaultNode implements Node
      */
     public function pluckAncestorNodes(string $key, $value = null): array
     {
-        return $this->pluck($key, $value, false);
+        $output = $this->pluck($key, $value, false);
+
+        // Remove value of this node
+        array_pop($output);
+        
+        return $output;
     }
 
     private function pluck($key, $value = null, $down = true): array
