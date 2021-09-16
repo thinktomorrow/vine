@@ -226,7 +226,9 @@ class DefaultNode implements Node
 
     public function getRootNode(): Node
     {
-        if($this->isRootNode()) return $this;
+        if ($this->isRootNode()) {
+            return $this;
+        }
 
         return $this->getAncestorNodes()->first();
     }
