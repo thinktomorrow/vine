@@ -267,11 +267,11 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
      * Find many nodes by attribute value.
      *
      * @param string|Closure $key
-     * @param array $values
+     * @param array|null $values
      *
      * @return NodeCollection
      */
-    public function findMany($key, array $values): self
+    public function findMany($key, ?array $values = null): self
     {
         return (new Find())($this, $key, $values);
     }
