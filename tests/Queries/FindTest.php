@@ -37,7 +37,7 @@ class FindTest extends TestCase
         $node->addChildNodes([$child = new DefaultNode(['id' => 2])]);
         $child->addChildNodes([$child2 = new DefaultNode(['id' => 3])]);
 
-        $nodes = $node->getChildNodes()->findMany(function($node) {
+        $nodes = $node->getChildNodes()->findMany(function ($node) {
             return in_array($node->getNodeId(), [2,3]);
         });
 
