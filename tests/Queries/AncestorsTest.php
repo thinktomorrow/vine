@@ -49,6 +49,18 @@ class AncestorsTest extends TestCase
         $this->assertEquals(new NodeCollection([$root, $firstChild]), $ancestors);
     }
 
+    /** @test */
+    public function it_can_get_root_node()
+    {
+        $root = new DefaultNode('foobar');
+        $root->addChildNodes([$firstChild = new DefaultNode('first-child')]);
+        $firstChild->addChildNodes([$secondChild = new DefaultNode('second-child')]);
+
+        $this->assertEquals($root, $firstChild->getRootNode());
+        $this->assertEquals($root, $secondChild->getRootNode());
+        $this->assertEquals($root, $root->getRootNode());
+    }
+
     private function getTranslation(): Source
     {
         return new FixtureSource('default');

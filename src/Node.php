@@ -52,6 +52,12 @@ interface Node
 
     public function findChildNode($key, $value): Node;
 
+    /**
+     * Get Root node of this node tree.
+     * In case this node is a root, this node will be returned as well
+     */
+    public function getRootNode(): Node;
+
     public function getParentNode(): ?Node;
 
     public function setParentNode(Node $parent): Node;

@@ -224,6 +224,13 @@ class DefaultNode implements Node
         return $this->getChildNodes()->find($key, $value);
     }
 
+    public function getRootNode(): Node
+    {
+        if($this->isRootNode()) return $this;
+
+        return $this->getAncestorNodes()->first();
+    }
+
     /**
      * @param int $depth
      *
@@ -262,7 +269,7 @@ class DefaultNode implements Node
 
         // Remove value of this node
         array_pop($output);
-        
+
         return $output;
     }
 
