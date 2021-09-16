@@ -270,7 +270,7 @@ class DefaultNode implements Node
         $output = $this->pluck($key, $value, false);
 
         // Remove value of this node
-        array_pop($output);
+        array_shift($output);
 
         return $output;
     }
