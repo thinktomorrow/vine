@@ -301,7 +301,7 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
         }, $this->count());
     }
 
-    public function offsetExists($offset)
+    public function offsetExists($offset): bool
     {
         if (! is_string($offset) && ! is_int($offset)) {
             return false;
@@ -310,12 +310,12 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
         return array_key_exists($offset, $this->nodes);
     }
 
-    public function offsetGet($offset)
+    public function offsetGet($offset): mixed
     {
         return $this->nodes[$offset];
     }
 
-    public function offsetSet($offset, $value)
+    public function offsetSet($offset, $value): void
     {
         if (null === $offset) {
             $this->nodes[] = $value;
@@ -324,17 +324,17 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
         }
     }
 
-    public function offsetUnset($offset)
+    public function offsetUnset($offset): void
     {
         unset($this->nodes[$offset]);
     }
 
-    public function count()
+    public function count(): int
     {
         return count($this->nodes);
     }
 
-    public function getIterator()
+    public function getIterator(): \Traversable
     {
         return new \ArrayIterator($this->nodes);
     }
