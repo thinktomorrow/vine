@@ -60,9 +60,9 @@ class NodeCollectionFactory
         $id_key = method_exists($source, 'nodeKeyIdentifier') ? $source->nodeKeyIdentifier() : 'id';
         $parent_key = method_exists($source, 'nodeParentKeyIdentifier') ? $source->nodeParentKeyIdentifier() : 'parent_id';
 
-        foreach ($source->nodeEntries() as $i => $entry) {
-            $id = $entry instanceof Node ? $entry->getNodeId() : $entry[$id_key];
-            $parentId = $entry instanceof Node ? $entry->getParentNodeId() : $entry[$parent_key];
+        foreach ($source->nodeEntries() as $entry) {
+            $id = $entry instanceof NodeSource ? $entry->getNodeId() : $entry[$id_key];
+            $parentId = $entry instanceof NodeSource ? $entry->getParentNodeId() : $entry[$parent_key];
 
             $node = $source->createNode($entry);
 
