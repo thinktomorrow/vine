@@ -29,12 +29,12 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
         $this->nodes = $nodes;
     }
 
-    public static function fromArray(array $entries): self
+    public static function fromArray(array $entries): static
     {
         return static::fromSource(new ArraySource($entries));
     }
 
-    public static function fromSource(Source $source): self
+    public static function fromSource(Source $source): static
     {
         return (new NodeCollectionFactory())->fromSource($source);
     }
@@ -73,12 +73,8 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
 
     /**
      * Merge a collection into current one.
-     *
-     * @param NodeCollection $nodeCollection
-     *
-     * @return $this
      */
-    public function merge(self $nodeCollection)
+    public function merge(NodeCollection $nodeCollection)
     {
         $this->nodes = array_merge($this->nodes, $nodeCollection->all());
 
@@ -129,7 +125,7 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
         });
 
         // Now delegate the sorting to the children
-        $collection = (new self(array_values($nodes)))->map(function ($node) use ($key) {
+        $collection = (new static(array_values($nodes)))->map(function ($node) use ($key) {
             return $node->sortChildNodes($key);
         });
 
@@ -143,9 +139,9 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
      *
      * @return NodeCollection
      */
-    public function copy($depth = null): self
+    public function copy($depth = null): static
     {
-        $collection = new self();
+        $collection = new static();
 
         foreach ($this->all() as $child) {
             $collection->add($child->copyNode($depth));
@@ -165,16 +161,16 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
      *
      * @return $this
      */
-    public function removeNode(Node $child): self
+    public function removeNode(Node $child): static
     {
         return (new Remove())($this, $child);
     }
 
-    public function remove(\Closure $callback): self
+    public function remove(\Closure $callback): static
     {
         $nodesToBeRemoved = (new Find())($this, $callback);
 
-        $nodeCollection = new self($this->all());
+        $nodeCollection = new static($this->all());
 
         foreach ($nodesToBeRemoved as $nodeToBeRemoved) {
             $nodeCollection = (new Remove())($nodeCollection, $nodeToBeRemoved);
@@ -241,24 +237,16 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Reduce collection to the nodes that pass the callback
      * Shaking a collection will keep the ancestor structure.
-     *
-     * @param callable $callback
-     *
-     * @return self
      */
-    public function shake(callable $callback): self
+    public function shake(callable $callback): static
     {
         return (new Shake())($this, $callback);
     }
 
     /**
      * Same as shaking except that it will not keep the ancestor structure.
-     *
-     * @param callable $callback
-     *
-     * @return self
      */
-    public function prune(callable $callback): self
+    public function prune(callable $callback): static
     {
         return (new Prune())($this, $callback);
     }
@@ -271,7 +259,7 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
      *
      * @return NodeCollection
      */
-    public function findMany($key, ?array $values = null): self
+    public function findMany($key, ?array $values = null): static
     {
         return (new Find())($this, $key, $values);
     }

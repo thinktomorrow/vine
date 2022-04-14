@@ -8,6 +8,7 @@ use Thinktomorrow\Vine\Commands\Move;
 use Thinktomorrow\Vine\Queries\Ancestors;
 use Thinktomorrow\Vine\Queries\Count;
 use Thinktomorrow\Vine\Queries\Pluck;
+use phpDocumentor\Reflection\Types\Static_;
 
 class DefaultNode implements Node
 {
@@ -313,8 +314,6 @@ class DefaultNode implements Node
      * Shaking a collection will keep the ancestor structure.
      *
      * @param callable $callback
-     *
-     * @return self
      */
     public function shakeChildNodes(callable $callback): Node
     {
@@ -325,10 +324,6 @@ class DefaultNode implements Node
 
     /**
      * Same as shaking except that it will not keep the ancestor structure.
-     *
-     * @param callable $callback
-     *
-     * @return self
      */
     public function pruneChildNodes(callable $callback): Node
     {
@@ -346,7 +341,7 @@ class DefaultNode implements Node
     {
         if (is_array($children)) {
             $children = new NodeCollection($children);
-        } elseif ($children instanceof self) {
+        } elseif ($children instanceof Node) {
             $children = new NodeCollection([$children]);
         } elseif (! $children instanceof NodeCollection) {
             throw new \InvalidArgumentException('Invalid children parameter. Accepted types are array or NodeCollection.');
