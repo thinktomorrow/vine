@@ -8,7 +8,6 @@ use Thinktomorrow\Vine\Commands\Move;
 use Thinktomorrow\Vine\Queries\Ancestors;
 use Thinktomorrow\Vine\Queries\Count;
 use Thinktomorrow\Vine\Queries\Pluck;
-use phpDocumentor\Reflection\Types\Static_;
 
 class DefaultNode implements Node
 {
