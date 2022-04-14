@@ -22,7 +22,7 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
      */
     protected array $nodes;
 
-    public function __construct(array $nodes = [])
+    final public function __construct(array $nodes = [])
     {
         array_map(fn (Node $node) => $node, $nodes);
 
