@@ -134,12 +134,8 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
 
     /**
      * Get a copy of this node collection.
-     *
-     * @param null|int $depth
-     *
-     * @return NodeCollection
      */
-    public function copy($depth = null): static
+    public function copy(?int $depth = null): static
     {
         $collection = new static();
 
@@ -253,13 +249,8 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
 
     /**
      * Find many nodes by attribute value.
-     *
-     * @param string|Closure $key
-     * @param array|null $values
-     *
-     * @return NodeCollection
      */
-    public function findMany($key, ?array $values = null): static
+    public function findMany(string|Closure $key, ?array $values = null): static
     {
         return (new Find())($this, $key, $values);
     }
