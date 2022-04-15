@@ -40,7 +40,8 @@ class Slice
         $this->removeCollectionChildren($nodeCollection, $sliceNodes);
 
         // reset keys
-        $collection = new NodeCollection();
+        $className = get_class($nodeCollection);
+        $collection = new $className();
         $collection->add(...$nodeCollection->all());
 
         return $collection;
