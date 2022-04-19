@@ -18,7 +18,8 @@ class Inflate
      */
     public function __invoke(NodeCollection $flatCollection): NodeCollection
     {
-        $roots = new NodeCollection();
+        $className = get_class($flatCollection);
+        $roots = new $className;
 
         /** @var Node $node */
         foreach ($flatCollection as $k => $node) {

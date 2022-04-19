@@ -32,11 +32,13 @@ class Copy
      */
     private function recursiveDepth(NodeCollection $nodeCollection, $depth = null, $currentDepth = 0)
     {
+        $className = get_class($nodeCollection);
+
         if (! is_null($depth) && $depth <= $currentDepth) {
-            return new NodeCollection();
+            return new $className();
         }
 
-        $copyCollection = new NodeCollection();
+        $copyCollection = new $className();
         $currentDepth++;
 
         /** @var Node $node */

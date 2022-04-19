@@ -16,7 +16,8 @@ class Find
      */
     public function __invoke(NodeCollection $nodeCollection, $key, array $values = null): NodeCollection
     {
-        $nodes = new NodeCollection();
+        $className = get_class($nodeCollection);
+        $nodes = new $className();
 
         /** @var Node $node */
         foreach ($nodeCollection as $node) {
