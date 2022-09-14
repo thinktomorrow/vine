@@ -112,7 +112,6 @@ class NodeCollectionFactory
     {
         foreach ($this->orphans as $parentId => $orphans) {
             if (! isset($this->index[$parentId])) {
-
                 // Strict check which means there is a node assigned to an non-existing parent
                 if ($this->strict) {
                     throw new \LogicException('Parent reference to a non-existing node via identifier ['.$parentId.']');

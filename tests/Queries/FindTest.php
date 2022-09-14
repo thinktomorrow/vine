@@ -58,7 +58,7 @@ class FindTest extends TestCase
         $child2->addChildNodes($child3 = new DefaultNode(['id' => 4, 'name' => 'foobar-4']));
 
         $collection = new NodeCollection([$root]);
-        $cleanCollection = $collection->findMany(fn($node) => $node->getNodeEntry('id') == 2);
+        $cleanCollection = $collection->findMany(fn ($node) => $node->getNodeEntry('id') == 2);
 
         $this->assertEquals($child1, $cleanCollection->first());
     }

@@ -20,7 +20,6 @@ class Slice
     {
         // Check if current node is one of the passed nodes to be sliced out
         foreach ($sliceNodes as $node) {
-
             // Add children to parent of this node
             /** @var Node $child */
             foreach ($node->getChildNodes() as $child) {

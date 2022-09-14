@@ -85,7 +85,7 @@ class RemoveTest extends \PHPUnit\Framework\TestCase
         $child2->addChildNodes($child3 = new DefaultNode(['id' => 4, 'name' => 'foobar-4']));
 
         $collection = new NodeCollection([$root]);
-        $cleanCollection = $collection->remove(fn($node) => $node->getNodeEntry('id') == 2);
+        $cleanCollection = $collection->remove(fn ($node) => $node->getNodeEntry('id') == 2);
 
         $this->assertEquals(1, $cleanCollection->total());
         $this->assertCount(0, $root->getChildNodes());
