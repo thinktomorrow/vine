@@ -50,6 +50,19 @@ class FindTest extends TestCase
         $this->assertEquals($nodes, $node->findChildNodes('id', [2, 3]));
     }
 
+    public function test_it_can_find_nested_nodes()
+    {
+        $root = new DefaultNode(['id' => 1, 'name' => 'foobar']);
+        $root->addChildNodes($child1 = new DefaultNode(['id' => 2, 'name' => 'foobar-2']));
+        $child1->addChildNodes($child2 = new DefaultNode(['id' => 3, 'name' => 'foobar-3']));
+        $child2->addChildNodes($child3 = new DefaultNode(['id' => 4, 'name' => 'foobar-4']));
+
+        $collection = new NodeCollection([$root]);
+        $cleanCollection = $collection->findMany(fn($node) => $node->getNodeEntry('id') == 2);
+
+        $this->assertEquals($child1, $cleanCollection->first());
+    }
+
     /** @test */
     public function it_can_find_a_node_by_its_primary_identifier()
     {

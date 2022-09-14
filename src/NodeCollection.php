@@ -165,7 +165,6 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
     public function remove(\Closure $callback): static
     {
         $nodesToBeRemoved = (new Find())($this, $callback);
-
         $nodeCollection = new static($this->all());
 
         foreach ($nodesToBeRemoved as $nodeToBeRemoved) {

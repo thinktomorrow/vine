@@ -66,11 +66,26 @@ class RemoveTest extends \PHPUnit\Framework\TestCase
     {
         $root = new DefaultNode(['id' => 1, 'name' => 'foobar']);
         $root->addChildNodes($child1 = new DefaultNode(['id' => 2, 'name' => 'foobar-2']));
-        $child1->addChildNodes($child2 = new DefaultNode(['id' => 3, 'name' => 'foobar-4']));
-        $child2->addChildNodes($child3 = new DefaultNode(['id' => 3, 'name' => 'foobar-4']));
+        $child1->addChildNodes($child2 = new DefaultNode(['id' => 3, 'name' => 'foobar-3']));
+        $child2->addChildNodes($child3 = new DefaultNode(['id' => 4, 'name' => 'foobar-4']));
 
         $collection = new NodeCollection([$root]);
         $cleanCollection = $collection->removeNode($child1);
+
+        $this->assertEquals(1, $cleanCollection->total());
+        $this->assertCount(0, $root->getChildNodes());
+    }
+
+    /** @test */
+    public function when_a_node_is_removed_via_callback_all_children_are_removed_as_well()
+    {
+        $root = new DefaultNode(['id' => 1, 'name' => 'foobar']);
+        $root->addChildNodes($child1 = new DefaultNode(['id' => 2, 'name' => 'foobar-2']));
+        $child1->addChildNodes($child2 = new DefaultNode(['id' => 3, 'name' => 'foobar-3']));
+        $child2->addChildNodes($child3 = new DefaultNode(['id' => 4, 'name' => 'foobar-4']));
+
+        $collection = new NodeCollection([$root]);
+        $cleanCollection = $collection->remove(fn($node) => $node->getNodeEntry('id') == 2);
 
         $this->assertEquals(1, $cleanCollection->total());
         $this->assertCount(0, $root->getChildNodes());
