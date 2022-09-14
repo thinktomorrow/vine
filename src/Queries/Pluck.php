@@ -16,9 +16,14 @@ class Pluck
      */
     public function __invoke(Node $node, string $key, $value = null, $down = true): array
     {
-        $values = $value
-            ? [$node->getNodeEntry($key) => $node->getNodeEntry($value)]
-            : [$node->getNodeEntry($key)];
+        $keyResult = method_exists($node, $key) ? $node->{$key}() : $node->getNodeEntry($key);
+
+        $values = [$keyResult];
+
+        if($value) {
+            $valueResult = method_exists($node, $value) ? $node->{$value}() : $node->getNodeEntry($value);
+            $values = [$keyResult => $valueResult];
+        }
 
         $nodes = $down ? $node->getChildNodes() : [$node->getParentNode()];
 

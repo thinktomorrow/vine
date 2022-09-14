@@ -89,4 +89,18 @@ class PluckTest extends TestCase
             2 => 'foobar-2',
         ], $collection->pluck('id', 'label'));
     }
+
+    /** @test */
+    public function it_can_pluck_properties()
+    {
+        $collection = new NodeCollection([
+            new DefaultNode(['id' => 1]),
+            new DefaultNode(['id' => 2]),
+            new DefaultNode(['id' => 3]),
+        ]);
+
+        $this->assertEquals([
+            1, 2, 3,
+        ], $collection->pluck('getNodeId'));
+    }
 }
