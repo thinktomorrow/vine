@@ -20,7 +20,7 @@ class Pluck
 
         $values = [$keyResult];
 
-        if($value) {
+        if ($value) {
             $valueResult = method_exists($node, $value) ? $node->{$value}() : $node->getNodeEntry($value);
             $values = [$keyResult => $valueResult];
         }
