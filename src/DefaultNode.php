@@ -255,8 +255,8 @@ class DefaultNode implements Node
     {
         $output = $this->pluck($key, $value);
 
-        if(!$includeSelf) {
-            if(array_is_list($output)) {
+        if (! $includeSelf) {
+            if (array_is_list($output)) {
                 array_shift($output);
             } else {
                 unset($output[array_key_first($output)]);
@@ -278,8 +278,8 @@ class DefaultNode implements Node
     {
         $output = $this->pluck($key, $value, false);
 
-        if(!$includeSelf) {
-            if(array_is_list($output)) {
+        if (! $includeSelf) {
+            if (array_is_list($output)) {
                 array_shift($output);
             } else {
                 unset($output[array_key_first($output)]);

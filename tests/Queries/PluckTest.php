@@ -70,7 +70,7 @@ class PluckTest extends TestCase
         $child->addChildNodes([$child2 = new DefaultNode(['id' => 3, 'name' => 'second-child'])]);
 
         $this->assertEquals([
-            2, 1
+            2, 1,
         ], $child2->pluckAncestorNodes('id'));
 
         $this->assertEquals([
