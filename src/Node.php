@@ -102,11 +102,11 @@ interface Node extends NodeSource
      *
      * @param string|int $key
      * @param string|int|null $value
-     * @param bool $down
+     * @param bool $includeSelf
      *
      * @return array
      */
-    public function pluckChildNodes($key, $value = null, $down = true): array;
+    public function pluckChildNodes($key, $value = null, bool $includeSelf = false): array;
 
     /**
      * Get flat array of plucked values from child nodes.
@@ -116,7 +116,7 @@ interface Node extends NodeSource
      *
      * @return array
      */
-    public function pluckAncestorNodes(string $key, $value = null): array;
+    public function pluckAncestorNodes(string $key, $value = null, bool $includeSelf = false): array;
 
     /**
      * Get a copy of this node.

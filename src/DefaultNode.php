@@ -248,13 +248,22 @@ class DefaultNode implements Node
      *
      * @param string|int      $key
      * @param string|int|null $value
-     * @param bool            $down
      *
      * @return array
      */
-    public function pluckChildNodes($key, $value = null, $down = true): array
+    public function pluckChildNodes($key, $value = null, bool $includeSelf = false): array
     {
-        return $this->pluck($key, $value);
+        $output = $this->pluck($key, $value);
+
+        if(!$includeSelf) {
+            if(array_is_list($output)) {
+                array_shift($output);
+            } else {
+                unset($output[array_key_first($output)]);
+            }
+        }
+
+        return $output;
     }
 
     /**
@@ -265,17 +274,22 @@ class DefaultNode implements Node
      *
      * @return array
      */
-    public function pluckAncestorNodes(string $key, $value = null): array
+    public function pluckAncestorNodes(string $key, $value = null, bool $includeSelf = false): array
     {
         $output = $this->pluck($key, $value, false);
 
-        // Remove value of this node
-        array_shift($output);
+        if(!$includeSelf) {
+            if(array_is_list($output)) {
+                array_shift($output);
+            } else {
+                unset($output[array_key_first($output)]);
+            }
+        }
 
         return $output;
     }
 
-    private function pluck($key, $value = null, $down = true): array
+    private function pluck($key, $value = null, bool $down = true): array
     {
         return (new Pluck())($this, $key, $value, $down);
     }

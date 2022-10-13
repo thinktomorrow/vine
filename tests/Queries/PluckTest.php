@@ -16,8 +16,12 @@ class PluckTest extends TestCase
         $child->addChildNodes([$child2 = new DefaultNode(['id' => 3, 'name' => 'second-child'])]);
 
         $this->assertEquals([
-            1, 2, 3,
+            2, 3,
         ], $node->pluckChildNodes('id'));
+
+        $this->assertEquals([
+            1, 2, 3,
+        ], $node->pluckChildNodes('id', null, true));
     }
 
     /** @test */
@@ -28,10 +32,15 @@ class PluckTest extends TestCase
         $child->addChildNodes([$child2 = new DefaultNode(['id' => 'three', 'name' => 'second-child'])]);
 
         $this->assertEquals([
-            'one' => 'foobar',
             'two' => 'first-child',
             'three' => 'second-child',
         ], $node->pluckChildNodes('id', 'name'));
+
+        $this->assertEquals([
+            'one' => 'foobar',
+            'two' => 'first-child',
+            'three' => 'second-child',
+        ], $node->pluckChildNodes('id', 'name', true));
     }
 
     /** @test */
@@ -42,10 +51,15 @@ class PluckTest extends TestCase
         $child->addChildNodes([$child2 = new DefaultNode(['id' => 3, 'name' => 'second-child'])]);
 
         $this->assertEquals([
-            1 => 'foobar',
             2 => 'first-child',
             3 => 'second-child',
         ], $node->pluckChildNodes('id', 'name'));
+
+        $this->assertEquals([
+            1 => 'foobar',
+            2 => 'first-child',
+            3 => 'second-child',
+        ], $node->pluckChildNodes('id', 'name', true));
     }
 
     /** @test */
@@ -56,8 +70,12 @@ class PluckTest extends TestCase
         $child->addChildNodes([$child2 = new DefaultNode(['id' => 3, 'name' => 'second-child'])]);
 
         $this->assertEquals([
-            2, 1,
+            2, 1
         ], $child2->pluckAncestorNodes('id'));
+
+        $this->assertEquals([
+            3, 2, 1,
+        ], $child2->pluckAncestorNodes('id', null, true));
     }
 
     /** @test */
