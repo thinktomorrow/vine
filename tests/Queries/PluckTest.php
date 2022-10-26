@@ -133,6 +133,6 @@ class PluckTest extends TestCase
 
         $this->assertEquals([
             1, 2, 3,
-        ], $collection->pluck(fn($node) => $node->getNodeId()));
+        ], $collection->pluck(fn ($node) => $node->getNodeId()));
     }
 }
