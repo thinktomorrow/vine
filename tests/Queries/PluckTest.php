@@ -109,7 +109,7 @@ class PluckTest extends TestCase
     }
 
     /** @test */
-    public function it_can_pluck_properties()
+    public function it_can_pluck_methods()
     {
         $collection = new NodeCollection([
             new DefaultNode(['id' => 1]),
@@ -120,5 +120,19 @@ class PluckTest extends TestCase
         $this->assertEquals([
             1, 2, 3,
         ], $collection->pluck('getNodeId'));
+    }
+
+    /** @test */
+    public function it_can_pluck_with_closure()
+    {
+        $collection = new NodeCollection([
+            new DefaultNode(['id' => 1]),
+            new DefaultNode(['id' => 2]),
+            new DefaultNode(['id' => 3]),
+        ]);
+
+        $this->assertEquals([
+            1, 2, 3,
+        ], $collection->pluck(fn($node) => $node->getNodeId()));
     }
 }

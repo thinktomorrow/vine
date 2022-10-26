@@ -200,8 +200,8 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Get flat array of plucked values from child nodes.
      *
-     * @param string|int      $key
-     * @param string|int|null $value
+     * @param string|int|Closure      $key
+     * @param string|int|Closure|null $value
      * @param bool            $down
      *
      * @return array

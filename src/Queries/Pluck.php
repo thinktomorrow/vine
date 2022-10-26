@@ -14,14 +14,14 @@ class Pluck
      *
      * @return array
      */
-    public function __invoke(Node $node, string $key, $value = null, $down = true): array
+    public function __invoke(Node $node, string|int|\Closure $key, $value = null, $down = true): array
     {
-        $keyResult = method_exists($node, $key) ? $node->{$key}() : $node->getNodeEntry($key);
+        $keyResult = $this->retrieveValueFromNode($node, $key);
 
         $values = [$keyResult];
 
         if ($value) {
-            $valueResult = method_exists($node, $value) ? $node->{$value}() : $node->getNodeEntry($value);
+            $valueResult = $this->retrieveValueFromNode($node, $value);
             $values = [$keyResult => $valueResult];
         }
 
@@ -39,5 +39,14 @@ class Pluck
         }
 
         return $values;
+    }
+
+    private function retrieveValueFromNode(Node $node, $key)
+    {
+        if (is_callable($key)) {
+            return call_user_func($key, $node);
+        }
+
+        return method_exists($node, $key) ? $node->{$key}() : $node->getNodeEntry($key);
     }
 }
