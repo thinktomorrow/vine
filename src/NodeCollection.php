@@ -112,6 +112,19 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
         return $this;
     }
 
+    public function eachRecursive(callable $callback)
+    {
+        $this->each($callback);
+
+        foreach ($this->nodes as $k => $node) {
+            if ($node->hasChildNodes()) {
+                $node->getChildNodes()->eachRecursive($callback);
+            }
+        }
+
+        return $this;
+    }
+
     public function sort($key)
     {
         $nodes = $this->nodes;

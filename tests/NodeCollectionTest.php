@@ -119,4 +119,42 @@ class NodeCollectionTest extends TestCase
 
         $this->assertEquals($expected, $original);
     }
+
+    /** @test */
+    public function it_can_loop_each_direct_child_node_with_a_callback()
+    {
+        $original = new DefaultNode((object) ['id' => 2]);
+        $original->addChildNodes([new DefaultNode(['id' => '23']), new DefaultNode(['id' => '22']), new DefaultNode(['id' => '21'])]);
+
+        $original->getChildNodes()->each(function ($node) {
+            $entry = $node->getNodeEntry();
+            $entry['title'] = 'new';
+
+            $node->replaceNodeEntry($entry);
+        });
+
+        $expected = new DefaultNode((object) ['id' => 2]);
+        $expected->addChildNodes([new DefaultNode(['id' => '23', 'title' => 'new']), new DefaultNode(['id' => '22', 'title' => 'new']), new DefaultNode(['id' => '21', 'title' => 'new'])]);
+
+        $this->assertEquals($expected, $original);
+    }
+
+    /** @test */
+    public function it_can_loop_all_child_nodes_recursively()
+    {
+        $original = new DefaultNode((object) ['id' => 2]);
+        $original->addChildNodes([(new DefaultNode(['id' => '23']))->addChildNodes(new DefaultNode(['id' => '24'])), new DefaultNode(['id' => '22']), new DefaultNode(['id' => '21'])]);
+
+        $original->getChildNodes()->eachRecursive(function ($node) {
+            $entry = $node->getNodeEntry();
+            $entry['title'] = 'new';
+
+            $node->replaceNodeEntry($entry);
+        });
+
+        $expected = new DefaultNode((object) ['id' => 2]);
+        $expected->addChildNodes([(new DefaultNode(['id' => '23', 'title' => 'new']))->addChildNodes(new DefaultNode(['id' => '24', 'title' => 'new'])), new DefaultNode(['id' => '22', 'title' => 'new']), new DefaultNode(['id' => '21', 'title' => 'new'])]);
+
+        $this->assertEquals($expected, $original);
+    }
 }
