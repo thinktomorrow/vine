@@ -4,5 +4,5 @@ principles.
 
 ## unreleased
 
-## 0.4.7 - 2022-10-26
+## 0.4.8 - 2022-10-26
 - Added: allow a Closure on the nodeCollection::pluck method for both key and value. e.g. $collection->pluck(fn($node) => $node->getNodeId())
