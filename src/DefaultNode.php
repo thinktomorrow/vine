@@ -104,7 +104,9 @@ class DefaultNode implements Node
 
     public function getLeftSiblingNode(): ?Node
     {
-        if($this->isRootNode()) return null;
+        if ($this->isRootNode()) {
+            return null;
+        }
 
         $childNodes = $this->getParentNode()->getChildNodes();
 
@@ -119,7 +121,9 @@ class DefaultNode implements Node
 
     public function getRightSiblingNode(): ?Node
     {
-        if($this->isRootNode()) return null;
+        if ($this->isRootNode()) {
+            return null;
+        }
 
         $childNodes = $this->getParentNode()->getChildNodes();
 
