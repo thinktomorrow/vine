@@ -62,6 +62,10 @@ interface Node extends NodeSource
 
     public function hasParentNode(): bool;
 
+    public function getSiblingNodes(): NodeCollection;
+
+    public function hasSiblingNodes(): bool;
+
     public function getNodeEntry($key = null, $default = null);
 
     public function replaceNodeEntry($entry): void;

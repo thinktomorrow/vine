@@ -169,4 +169,41 @@ class NodeTest extends TestCase
         $this->assertTrue($node->hasChildNodes());
         $this->assertFalse($child2->hasChildNodes());
     }
+
+    public function test_it_can_get_siblings()
+    {
+        $node = new DefaultNode(1);
+        $node->addChildNodes([$child = new DefaultNode(2)]);
+        $node->addChildNodes([$child2 = new DefaultNode(3)]);
+
+        $this->assertCount(0, $node->getSiblingNodes());
+        $this->assertCount(1, $child->getSiblingNodes());
+        $this->assertCount(1, $child2->getSiblingNodes());
+        $this->assertEquals($child2, $child->getSiblingNodes()->first());
+        $this->assertEquals($child, $child2->getSiblingNodes()->first());
+    }
+
+    public function test_siblings_of_root_do_not_exist()
+    {
+        $nodes = new NodeCollection([
+            $root = new DefaultNode(1),
+            $root2 = new DefaultNode(2)
+        ]);
+
+        $this->assertCount(2, $nodes);
+        $this->assertCount(0, $root->getSiblingNodes());
+        $this->assertCount(0, $root2->getSiblingNodes());
+    }
+
+    /** @test */
+    public function it_can_check_if_it_has_siblings()
+    {
+        $node = new DefaultNode(1);
+        $node->addChildNodes([$child = new DefaultNode(2)]);
+        $node->addChildNodes([$child2 = new DefaultNode(3)]);
+
+        $this->assertFalse($node->hasSiblingNodes());
+        $this->assertTrue($child->hasSiblingNodes());
+        $this->assertTrue($child2->hasSiblingNodes());
+    }
 }

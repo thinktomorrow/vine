@@ -86,6 +86,22 @@ class DefaultNode implements Node
         return ! ! $this->parentNode;
     }
 
+    public function getSiblingNodes(): NodeCollection
+    {
+        if($this->isRootNode()) {
+            return new NodeCollection();
+        }
+
+        return $this->getParentNode()
+            ->getChildNodes()
+            ->remove(fn(Node $node) => $node->equalsNode($this));
+    }
+
+    public function hasSiblingNodes(): bool
+    {
+        return ! $this->getSiblingNodes()->isEmpty();
+    }
+
     public function getNodeEntry($key = null, $default = null)
     {
         if (! ($key === null)) {
