@@ -106,9 +106,9 @@ class DefaultNode implements Node
     {
         $childNodes = $this->getParentNode()->getChildNodes();
 
-        foreach($childNodes as $i => $siblingNode) {
-            if($siblingNode->equalsNode($this) && isset($childNodes[$i-1])) {
-                return $childNodes[$i-1];
+        foreach ($childNodes as $i => $siblingNode) {
+            if ($siblingNode->equalsNode($this) && isset($childNodes[$i - 1])) {
+                return $childNodes[$i - 1];
             };
         }
 
@@ -119,9 +119,9 @@ class DefaultNode implements Node
     {
         $childNodes = $this->getParentNode()->getChildNodes();
 
-        foreach($childNodes as $i => $siblingNode) {
-            if($siblingNode->equalsNode($this) && isset($childNodes[$i+1])) {
-                return $childNodes[$i+1];
+        foreach ($childNodes as $i => $siblingNode) {
+            if ($siblingNode->equalsNode($this) && isset($childNodes[$i + 1])) {
+                return $childNodes[$i + 1];
             };
         }
 
