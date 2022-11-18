@@ -89,7 +89,7 @@ class DefaultNode implements Node
     public function getSiblingNodes(): NodeCollection
     {
         if ($this->isRootNode()) {
-            return new NodeCollection();
+            return $this->emptyNodeCollection();
         }
 
         return $this->getParentNode()
@@ -362,6 +362,19 @@ class DefaultNode implements Node
     }
 
     /**
+     * If the user has given a custom node collection, we'll want to
+     * honour this and keep this class as the node collection class
+     *
+     * @return NodeCollection
+     */
+    protected function emptyNodeCollection(array $children = []): NodeCollection
+    {
+        $className = get_class($this->getChildNodes());
+
+        return new $className($children);
+    }
+
+    /**
      * @param array|Node|NodeCollection $children
      *
      * @return NodeCollection
@@ -369,9 +382,9 @@ class DefaultNode implements Node
     private function transformToNodeCollection($children): NodeCollection
     {
         if (is_array($children)) {
-            $children = new NodeCollection($children);
+            $children = $this->emptyNodeCollection($children);
         } elseif ($children instanceof Node) {
-            $children = new NodeCollection([$children]);
+            $children = $this->emptyNodeCollection([$children]);
         } elseif (! $children instanceof NodeCollection) {
             throw new \InvalidArgumentException('Invalid children parameter. Accepted types are array or NodeCollection.');
         }
