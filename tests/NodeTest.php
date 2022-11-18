@@ -206,4 +206,17 @@ class NodeTest extends TestCase
         $this->assertTrue($child->hasSiblingNodes());
         $this->assertTrue($child2->hasSiblingNodes());
     }
+
+    public function test_it_can_get_left_and_right_sibling()
+    {
+        $node = new DefaultNode(1);
+        $node->addChildNodes([$child = new DefaultNode(2)]);
+        $node->addChildNodes([$child2 = new DefaultNode(3)]);
+
+        $this->assertNull($child->getLeftSiblingNode());
+        $this->assertEquals($child2, $child->getRightSiblingNode());
+
+        $this->assertEquals($child, $child2->getLeftSiblingNode());
+        $this->assertNull($child2->getRightSiblingNode());
+    }
 }

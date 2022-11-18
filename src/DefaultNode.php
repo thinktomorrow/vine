@@ -102,6 +102,32 @@ class DefaultNode implements Node
         return ! $this->getSiblingNodes()->isEmpty();
     }
 
+    public function getLeftSiblingNode(): ?Node
+    {
+        $childNodes = $this->getParentNode()->getChildNodes();
+
+        foreach($childNodes as $i => $siblingNode) {
+            if($siblingNode->equalsNode($this) && isset($childNodes[$i-1])) {
+                return $childNodes[$i-1];
+            };
+        }
+
+        return null;
+    }
+
+    public function getRightSiblingNode(): ?Node
+    {
+        $childNodes = $this->getParentNode()->getChildNodes();
+
+        foreach($childNodes as $i => $siblingNode) {
+            if($siblingNode->equalsNode($this) && isset($childNodes[$i+1])) {
+                return $childNodes[$i+1];
+            };
+        }
+
+        return null;
+    }
+
     public function getNodeEntry($key = null, $default = null)
     {
         if (! ($key === null)) {

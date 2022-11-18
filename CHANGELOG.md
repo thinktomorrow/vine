@@ -6,6 +6,7 @@ principles.
 
 ## 0.4.9 - 2022-11-18
 - Added: Node::getSiblingNodes() and Node::hasSiblingNodes(). This returns the nodes that share the parent of current node. Please note that you cannot collect root nodes via this method.
+- Added: Node::getLeftSiblingNode() and Node::getRightSiblingNode(). This will return the node left or right to the current one. Ideal for returning previous / next models.
 - Fixed: Honour custom node collection class when transforming to an empty nodeCollection.
 
 ## 0.4.8 - 2022-10-26

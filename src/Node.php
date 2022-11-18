@@ -63,8 +63,9 @@ interface Node extends NodeSource
     public function hasParentNode(): bool;
 
     public function getSiblingNodes(): NodeCollection;
-
     public function hasSiblingNodes(): bool;
+    public function getLeftSiblingNode(): ?Node;
+    public function getRightSiblingNode(): ?Node;
 
     public function getNodeEntry($key = null, $default = null);
 
