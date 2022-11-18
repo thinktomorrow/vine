@@ -187,7 +187,7 @@ class NodeTest extends TestCase
     {
         $nodes = new NodeCollection([
             $root = new DefaultNode(1),
-            $root2 = new DefaultNode(2)
+            $root2 = new DefaultNode(2),
         ]);
 
         $this->assertCount(2, $nodes);

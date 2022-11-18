@@ -88,13 +88,13 @@ class DefaultNode implements Node
 
     public function getSiblingNodes(): NodeCollection
     {
-        if($this->isRootNode()) {
+        if ($this->isRootNode()) {
             return new NodeCollection();
         }
 
         return $this->getParentNode()
             ->getChildNodes()
-            ->remove(fn(Node $node) => $node->equalsNode($this));
+            ->remove(fn (Node $node) => $node->equalsNode($this));
     }
 
     public function hasSiblingNodes(): bool
