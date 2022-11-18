@@ -219,4 +219,15 @@ class NodeTest extends TestCase
         $this->assertEquals($child, $child2->getLeftSiblingNode());
         $this->assertNull($child2->getRightSiblingNode());
     }
+
+    public function test_root_has_no_siblings()
+    {
+        $nodes = new NodeCollection([
+            $root = new DefaultNode(1),
+            new DefaultNode(2),
+        ]);
+
+        $this->assertNull($root->getLeftSiblingNode());
+        $this->assertNull($root->getRightSiblingNode());
+    }
 }
