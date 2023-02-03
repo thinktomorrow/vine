@@ -29,7 +29,7 @@ class DefaultNode implements Node
 
     public function getParentNodeId(): ?string
     {
-        if($parentId = $this->getNodeEntry('parent_id')) {
+        if ($parentId = $this->getNodeEntry('parent_id')) {
             return (string) $parentId;
         }
 
