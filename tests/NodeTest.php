@@ -31,6 +31,20 @@ class NodeTest extends TestCase
     }
 
     /** @test */
+    public function it_can_get_parent_id()
+    {
+        $node = new DefaultNode('foobar');
+
+        $this->assertNull($node->getParentNodeId());
+
+        $node->addChildNodes([
+            $child = new DefaultNode('first-child'),
+        ]);
+
+        $this->assertEquals($node->getNodeId(), $child->getParentNodeId());
+    }
+
+    /** @test */
     public function an_added_child_must_be_node_or_collection()
     {
         $this->expectException(\InvalidArgumentException::class);

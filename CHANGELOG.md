@@ -4,6 +4,9 @@ principles.
 
 ## unreleased
 
+## 0.4.10 - 2023-02-03
+- Fixed: when parent id was null, an empty string was returned by getParentNodeId() instead of expected null.
+
 ## 0.4.9 - 2022-11-18
 - Added: Node::getSiblingNodes() and Node::hasSiblingNodes(). This returns the nodes that share the parent of current node. Please note that you cannot collect root nodes via this method.
 - Added: Node::getLeftSiblingNode() and Node::getRightSiblingNode(). This will return the node left or right to the current one. Ideal for returning previous / next models.
