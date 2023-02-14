@@ -98,8 +98,10 @@ class DefaultNode implements Node
             return $siblingNodes;
         }
 
-        foreach($this->getParentNode()->getChildNodes() as $childNode) {
-            if($childNode->equalsNode($this)) continue;
+        foreach ($this->getParentNode()->getChildNodes() as $childNode) {
+            if ($childNode->equalsNode($this)) {
+                continue;
+            }
             $siblingNodes->add($childNode);
         }
 
