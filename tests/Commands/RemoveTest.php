@@ -87,8 +87,12 @@ class RemoveTest extends \PHPUnit\Framework\TestCase
         $collection = new NodeCollection([$root]);
         $cleanCollection = $collection->remove(fn ($node) => $node->getNodeEntry('id') == 2);
 
+        // Original tree remains intact
+        $this->assertEquals(4, $collection->total());
+        $this->assertCount(1, $root->getChildNodes());
+
         $this->assertEquals(1, $cleanCollection->total());
-        $this->assertCount(0, $root->getChildNodes());
+        $this->assertCount(0, $cleanCollection->first()->getChildNodes());
     }
 
     /** @test */
@@ -109,5 +113,21 @@ class RemoveTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(3, $collection->total());
         $this->assertCount(0, $node2->getChildNodes());
         $this->assertNotNull($child3->getParentNode());
+    }
+
+    /** @test */
+    public function individual_node_removal_is_not_immutable()
+    {
+        $node = new DefaultNode(1);
+        $node->addChildNodes([$child = new DefaultNode(3)]);
+
+        $collection = new \Thinktomorrow\Vine\NodeCollection([
+            $node,
+        ]);
+
+        $removedCollection = $collection->removeNode($child);
+
+        $this->assertEquals($collection, $removedCollection);
+        $this->assertEquals($collection->first(), $removedCollection->first());
     }
 }

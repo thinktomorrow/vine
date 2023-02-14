@@ -92,13 +92,18 @@ class DefaultNode implements Node
 
     public function getSiblingNodes(): NodeCollection
     {
+        $siblingNodes = $this->emptyNodeCollection();
+
         if ($this->isRootNode()) {
-            return $this->emptyNodeCollection();
+            return $siblingNodes;
         }
 
-        return $this->getParentNode()
-            ->getChildNodes()
-            ->remove(fn (Node $node) => $node->equalsNode($this));
+        foreach($this->getParentNode()->getChildNodes() as $childNode) {
+            if($childNode->equalsNode($this)) continue;
+            $siblingNodes->add($childNode);
+        }
+
+        return $siblingNodes;
     }
 
     public function hasSiblingNodes(): bool
