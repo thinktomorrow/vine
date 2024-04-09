@@ -13,7 +13,6 @@ use Thinktomorrow\Vine\Queries\Count;
 use Thinktomorrow\Vine\Queries\Find;
 use Thinktomorrow\Vine\Queries\FindFirst;
 use Thinktomorrow\Vine\Queries\Pluck;
-use Thinktomorrow\Vine\Sources\ArraySource;
 
 class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
 {
@@ -33,7 +32,7 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
     {
         return (new NodeCollectionFactory())->fromIterable(
             $entries,
-            $createNode ?? fn($entry) => $entry instanceof Node ? $entry : new DefaultNode($entry)
+            $createNode ?? fn ($entry) => $entry instanceof Node ? $entry : new DefaultNode($entry)
         );
     }
 
