@@ -6,7 +6,6 @@ use PHPUnit\Framework\TestCase;
 use Thinktomorrow\Vine\DefaultNode;
 use Thinktomorrow\Vine\NodeCollection;
 use Thinktomorrow\Vine\NodeCollectionFactory;
-use Thinktomorrow\Vine\Sources\ArraySource;
 
 class NodeCollectionTest extends TestCase
 {
@@ -157,7 +156,7 @@ class NodeCollectionTest extends TestCase
             ['id' => 4, 'name' => 'foobar4', 'parent_id' => 0],
         ];
 
-        return (new NodeCollectionFactory())->fromIterable($records, function($record) {
+        return (new NodeCollectionFactory())->fromIterable($records, function ($record) {
             return new DefaultNode($record);
         });
     }

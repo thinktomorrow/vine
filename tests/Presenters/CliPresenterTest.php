@@ -4,9 +4,7 @@ namespace Thinktomorrow\Vine\Tests\Presenters;
 
 use PHPUnit\Framework\TestCase;
 use Thinktomorrow\Vine\NodeCollection;
-use Thinktomorrow\Vine\NodeCollectionFactory;
 use Thinktomorrow\Vine\Presenters\CliPresenter;
-use Thinktomorrow\Vine\Source;
 use Thinktomorrow\Vine\Tests\Fixtures\FixtureSource;
 
 class CliPresenterTest extends TestCase
@@ -17,7 +15,7 @@ class CliPresenterTest extends TestCase
         $tree = NodeCollection::fromIterable($this->getTranslation());
 
         $output = (new CliPresenter())->collection($tree)->render();
-die(var_dump($output));
+        die(var_dump($output));
         $this->assertIsString($output);
         $this->assertStringStartsWith('|-root-1', trim($output, PHP_EOL));
     }

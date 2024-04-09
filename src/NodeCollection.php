@@ -32,7 +32,7 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
     {
         return (new NodeCollectionFactory())->fromIterable(
             $entries,
-            $createNode ?? fn($entry) => $entry instanceof Node ? $entry : new DefaultNode($entry)
+            $createNode ?? fn ($entry) => $entry instanceof Node ? $entry : new DefaultNode($entry)
         );
     }
 

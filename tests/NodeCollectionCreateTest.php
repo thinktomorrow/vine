@@ -5,7 +5,6 @@ namespace Thinktomorrow\Vine\Tests;
 use PHPUnit\Framework\TestCase;
 use Thinktomorrow\Vine\DefaultNode;
 use Thinktomorrow\Vine\NodeCollection;
-use Thinktomorrow\Vine\Sources\ArraySource;
 
 class NodeCollectionCreateTest extends TestCase
 {

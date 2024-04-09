@@ -4,7 +4,6 @@ namespace Thinktomorrow\Vine\Tests\Fixtures;
 
 use Thinktomorrow\Vine\DefaultNode;
 use Thinktomorrow\Vine\Node;
-use Thinktomorrow\Vine\Source;
 
 class FixtureSource
 {
@@ -25,19 +24,19 @@ class FixtureSource
     {
         return $this->flatten;
     }
-//
-//    public function nodeKeyIdentifier(): string
-//    {
-//        return 0;
-//    }
-//
-//    public function nodeParentKeyIdentifier(): string
-//    {
-//        return 1;
-//    }
-//
-//    public function createNode($entry): Node
-//    {
-//        return new DefaultNode($entry);
-//    }
+    //
+    //    public function nodeKeyIdentifier(): string
+    //    {
+    //        return 0;
+    //    }
+    //
+    //    public function nodeParentKeyIdentifier(): string
+    //    {
+    //        return 1;
+    //    }
+    //
+    //    public function createNode($entry): Node
+    //    {
+    //        return new DefaultNode($entry);
+    //    }
 }
