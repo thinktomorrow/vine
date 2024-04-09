@@ -26,6 +26,7 @@ return NodeCollection::fromArray(self::all()->toArray());
   - factory: structure collection can be replaced by just calls in the own method
   - toArray() tests
   - better debugging experience with the array / cli helper: visualize the tree. 
+  - documentation.
 
 ## 0.4.10 - 2023-02-03
 - Fixed: when parent id was null, an empty string was returned by getParentNodeId() instead of expected null.

@@ -13,7 +13,6 @@ use Thinktomorrow\Vine\Queries\Count;
 use Thinktomorrow\Vine\Queries\Find;
 use Thinktomorrow\Vine\Queries\FindFirst;
 use Thinktomorrow\Vine\Queries\Pluck;
-use Thinktomorrow\Vine\Sources\ArraySource;
 
 class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
 {

@@ -2,8 +2,12 @@
 
 namespace Thinktomorrow\Vine;
 
-interface Node extends NodeSource
+interface Node
 {
+    public function getNodeId(): string;
+
+    public function getParentNodeId(): ?string;
+
     public function equalsNode(Node $other): bool;
 
     /**
