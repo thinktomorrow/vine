@@ -8,24 +8,21 @@ use Thinktomorrow\Vine\NodeCollection;
 
 class ArrayableNodeCollectionTest extends TestCase
 {
-    /** @test */
-    public function it_can_count_the_values()
+    public function test_it_can_count_the_values()
     {
         $collection = $this->getCollection();
 
         $this->assertCount(2, $collection);
     }
 
-    /** @test */
-    public function it_can_get_value_by_key()
+    public function test_it_can_get_value_by_key()
     {
         $collection = $this->getCollection();
 
         $this->assertInstanceOf(\Thinktomorrow\Vine\DefaultNode::class, $collection[1]);
     }
 
-    /** @test */
-    public function it_can_set_value_by_key()
+    public function test_it_can_set_value_by_key()
     {
         $collection = $this->getCollection();
         $collection[2] = 'foobar';
@@ -34,8 +31,7 @@ class ArrayableNodeCollectionTest extends TestCase
         $this->assertEquals('foobar', $collection[2]);
     }
 
-    /** @test */
-    public function it_can_unset_a_value()
+    public function test_it_can_unset_a_value()
     {
         $collection = $this->getCollection();
 
@@ -45,8 +41,7 @@ class ArrayableNodeCollectionTest extends TestCase
         $this->assertCount(1, $collection);
     }
 
-    /** @test */
-    public function it_can_check_if_key_exists()
+    public function test_it_can_check_if_key_exists()
     {
         $collection = $this->getCollection();
 
@@ -54,8 +49,7 @@ class ArrayableNodeCollectionTest extends TestCase
         $this->assertFalse(isset($collection[2]));
     }
 
-    /** @test */
-    public function it_can_loop_over_collection()
+    public function test_it_can_loop_over_collection()
     {
         $collection = $this->getCollection();
 
@@ -67,14 +61,26 @@ class ArrayableNodeCollectionTest extends TestCase
         $this->assertEquals(2, $flag);
     }
 
+    public function test_it_can_export_to_array()
+    {
+        $collection = $this->getCollection();
+
+        $array = $collection->toArray();
+
+        $this->assertIsArray($array);
+
+        // TODO: test to array of node as well
+    }
+
     /**
      * @return NodeCollection
      */
     private function getCollection(): NodeCollection
     {
-        return new NodeCollection([
-            new DefaultNode(null),
-            new DefaultNode(null),
+        return NodeCollection::fromArray([
+            new DefaultNode(['id' => 1]),
+            new DefaultNode(['id' => 2]),
+            new DefaultNode(['id' => 3, 'parent_id' => 2]),
         ]);
     }
 }

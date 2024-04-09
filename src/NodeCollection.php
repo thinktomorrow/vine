@@ -29,14 +29,27 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
         $this->nodes = $nodes;
     }
 
-    public static function fromArray(array $entries): static
+    public static function fromIterable(iterable $entries, callable $createNode = null): static
     {
-        return static::fromSource(new ArraySource($entries));
+        return (new NodeCollectionFactory())->fromIterable(
+            $entries,
+            $createNode ?? fn($entry) => $entry instanceof Node ? $entry : new DefaultNode($entry)
+        );
+    }
+
+    public static function fromArray(array $entries, callable $createNode = null): static
+    {
+        return static::fromIterable($entries, $createNode);
     }
 
     public static function fromSource(Source $source): static
     {
-        return (new NodeCollectionFactory())->fromSource($source);
+        throw new \Exception('NodeCollection::fromSource is removed. Use NodeCollection::fromIterable instead.');
+    }
+
+    public function toArray(): array
+    {
+        return array_map(fn (Node $node) => $node->toArray(), $this->nodes);
     }
 
     public function all(): array
@@ -94,7 +107,7 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
     {
         $this->map($callback);
 
-        foreach ($this->nodes as $k => $node) {
+        foreach ($this->nodes as $node) {
             if ($node->hasChildNodes()) {
                 $node->getChildNodes()->mapRecursive($callback);
             }
@@ -116,7 +129,7 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
     {
         $this->each($callback);
 
-        foreach ($this->nodes as $k => $node) {
+        foreach ($this->nodes as $node) {
             if ($node->hasChildNodes()) {
                 $node->getChildNodes()->eachRecursive($callback);
             }
@@ -278,6 +291,24 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
     public function find($key, $value = null): ?Node
     {
         return (new FindFirst())($this, $key, $value ? [$value] : null);
+    }
+
+    public function findById($value): ?Node
+    {
+        foreach ($this->nodes as $node) {
+
+            if($node->getNodeId() == $value) {
+                return $node;
+            }
+
+            if ($node->hasChildNodes()) {
+                if($result = $node->getChildNodes()->findById($value)) {
+                    return $result;
+                }
+            }
+        }
+
+        return null;
     }
 
     /**

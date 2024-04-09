@@ -4,6 +4,7 @@ namespace Thinktomorrow\Vine\Tests\Commands;
 
 use PHPUnit\Framework\TestCase;
 use Thinktomorrow\Vine\DefaultNode;
+use Thinktomorrow\Vine\NodeCollection;
 use Thinktomorrow\Vine\Source;
 use Thinktomorrow\Vine\Tests\Fixtures\FixtureSource;
 
@@ -28,7 +29,7 @@ class CopyTest extends TestCase
     /** @test */
     public function it_can_get_new_node_with_specific_depth_of_childnodes()
     {
-        $tree = (new \Thinktomorrow\Vine\NodeCollectionFactory())->fromSource($this->getTranslation());
+        $tree = NodeCollection::fromIterable($this->getTranslation(), fn($entry) => new DefaultNode($entry, '0', '1'));
 
         $root = $tree->first()->getChildNodes()->first();
         $result = (new \Thinktomorrow\Vine\Commands\Copy())->__invoke($root, 1);
@@ -82,11 +83,8 @@ class CopyTest extends TestCase
         $this->assertCount(0, $isolatedNode->getChildNodes()->first()->getChildNodes());
     }
 
-    /**
-     * @return Source
-     */
-    private function getTranslation(): Source
+    private function getTranslation(): iterable
     {
-        return new FixtureSource('default');
+        return (new FixtureSource('default'))->get();
     }
 }

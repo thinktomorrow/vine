@@ -157,4 +157,6 @@ interface Node extends NodeSource
      * @return Node
      */
     public function pruneChildNodes(callable $callback): Node;
+
+    public function toArray(): array;
 }

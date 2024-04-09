@@ -3,6 +3,29 @@ All Notable changes to the `vine` package will be documented in this file. Updat
 principles.
 
 ## unreleased
+**Warning: this release contains breaking changes. Please read the following upgrade guide before updating.**
+- Removed: `NodeCollection::fromSource` method. Use `NodeCollection::fromArray` or `NodeCollection::fromIterable` instead.
+- Removed: `Source` interface and `NodeSource` in line with Source removal. 
+- Added: `NodeCollection::fromIterable()` method. This allows to easily use the NodeCollection in different places in your project. Also the creation of a Node is done via a callable as optional second parameter. This way you can customize the creation of the Node.
+```
+public static function filterTree(): NodeCollection {
+return NodeCollection::fromArray(self::all()->toArray());
+
+    return NodeCollection::fromIterable(self::where('active', true)->get());
+    
+    // or
+    
+    RETURN NodeCollection::fromSource(new ArraySource(self::all()->toArray()));
+}
+```
+- Changed: It is no longer advised to directly use the `NodeCollectionFactory` class for composing a tree. This is an internals class. Instead, use the `NodeCollection::fromArray` or `NodeCollection::fromIterable` methods.
+- e.g. 
+
+## TODO:
+- resolve all todo's in files
+  - factory: structure collection can be replaced by just calls in the own method
+  - toArray() tests
+  - better debugging experience with the array / cli helper: visualize the tree. 
 
 ## 0.4.10 - 2023-02-03
 - Fixed: when parent id was null, an empty string was returned by getParentNodeId() instead of expected null.

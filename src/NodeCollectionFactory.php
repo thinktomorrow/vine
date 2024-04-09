@@ -42,23 +42,88 @@ class NodeCollectionFactory
         return $this;
     }
 
-    public function fromSource(Source $source)
+//    public function fromSource(Source $source)
+    public function fromIterable(iterable $items, callable $createNode)
     {
-        $this->hydrate($source);
+        $nodes = $this->mapIterable($items, $createNode);
 
-        $this->addOrphans();
+        $nodeCollection = new NodeCollection();
 
-        $this->identifyRootNodes();
+        /** @var Node $node */
+        foreach($nodes as $node) {
+            if($node->getParentNodeId()) {
+                $node->moveToParentNode(
+                    $this->findById($nodes, $node->getParentNodeId())
+                );
+            } else {
+                $nodeCollection->add($node);
+            }
+        }
 
-        $this->structureCollection($source);
-
-        return $this->nodeCollection;
+        return $nodeCollection;
+//
+//
+//        dd($nodes);
+//
+//        // Keep an index reference of all nodes - since these are objects, the
+//        // index points to the same object as the node in the nodeCollection
+//        $nodes = $this->mapIterable($nodes, function(Node $node, $key) {
+//        });
+//
+//        // generate iterable to array map
+//
+//        //
+//
+////        $nodes = iterator_to_array($source, function ($entry) use ($id_key, $parent_key) {
+////            return $entry instanceof NodeSource ? $entry->toArray() : $entry;
+////        });
+//        // Create nodes of each entry
+//
+//        // if child node, add as child to parent node
+//
+//        // only return the root items
+//
+//        $this->hydrate($source);
+//
+//        $this->addOrphans();
+//
+//        $this->identifyRootNodes();
+//
+//        $this->structureCollection($source);
+//
+//        return $this->nodeCollection;
     }
 
-    private function hydrate(Source $source)
+    private function findById($nodes, $id): ?Node
     {
-        $id_key = method_exists($source, 'nodeKeyIdentifier') ? $source->nodeKeyIdentifier() : 'id';
-        $parent_key = method_exists($source, 'nodeParentKeyIdentifier') ? $source->nodeParentKeyIdentifier() : 'parent_id';
+        foreach($nodes as $node) {
+            if($node->getNodeId() == $id) {
+                return $node;
+            }
+        }
+    }
+
+    /** @return Node[] */
+    private function mapIterable(iterable $items, callable $callback): array
+    {
+        $result = [];
+
+        foreach ($items as $key => $item) {
+            $result[$key] = $callback($item, $key);
+
+            if (! $result[$key] instanceof Node) {
+                throw new \InvalidArgumentException('The create callback must return a Node instance.');
+            }
+        }
+
+        return $result;
+    }
+
+//    private function hydrate(Source $source)
+    private function hydrate(iterable $entries, string $id_key = 'id', string $parent_key = 'parent_id')
+    {
+//        $id_key = method_exists($source, 'nodeKeyIdentifier') ? $source->nodeKeyIdentifier() : 'id';
+//        $parent_key = method_exists($source, 'nodeParentKeyIdentifier') ? $source->nodeParentKeyIdentifier() : 'parent_id';
 
         foreach ($source->nodeEntries() as $entry) {
             $id = $entry instanceof NodeSource ? $entry->getNodeId() : $entry[$id_key];
@@ -148,6 +213,7 @@ class NodeCollectionFactory
         }
 
         // At this point we will sort all children should the source has set a key to sort on
+        // TODO: this can be done via sort method on tree itself
         if (property_exists($source, 'sortChildrenBy')) {
             foreach ($this->index as $node) {
                 $node->sortChildNodes($source->sortChildrenBy);

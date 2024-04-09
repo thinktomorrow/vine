@@ -14,9 +14,14 @@ class DefaultNode implements Node
     protected ?Node $parentNode = null;
     protected NodeCollection $children;
     protected $entry;
+    protected string $idKey;
+    protected string $parentKey;
 
-    public function __construct($entry)
+    public function __construct($entry, string $idKey = 'id', string $parentKey = 'parent_id')
     {
+        $this->idKey = $idKey;
+        $this->parentKey = $parentKey;
+
         $this->replaceNodeEntry($entry);
 
         $this->children = new NodeCollection();
@@ -24,12 +29,12 @@ class DefaultNode implements Node
 
     public function getNodeId(): string
     {
-        return (string) $this->getNodeEntry('id');
+        return (string) $this->getNodeEntry($this->idKey);
     }
 
     public function getParentNodeId(): ?string
     {
-        if ($parentId = $this->getNodeEntry('parent_id')) {
+        if ($parentId = $this->getNodeEntry($this->parentKey)) {
             return (string) $parentId;
         }
 
@@ -435,5 +440,15 @@ class DefaultNode implements Node
         }
 
         return $children;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->getNodeId(),
+            'parent_id' => $this->getParentNodeId(),
+            'entry' => $this->getNodeEntry(),
+            'children' => $this->getChildNodes()->toArray(),
+        ];
     }
 }

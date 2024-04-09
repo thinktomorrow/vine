@@ -23,18 +23,15 @@ class ArrayPresenterTest extends TestCase
     /** @test */
     public function it_can_use_tree_as_source()
     {
-        $tree = (new NodeCollectionFactory())->fromSource($this->getTranslation());
+        $tree = NodeCollection::fromIterable($this->getTranslation());
 
         $result = (new ArrayPresenter())->collection($tree)->render();
 
         $this->assertIsArray($result);
     }
 
-    /**
-     * @return Source
-     */
-    private function getTranslation(): Source
+    private function getTranslation(): iterable
     {
-        return new FixtureSource('default');
+        return (new FixtureSource('default'))->get();
     }
 }

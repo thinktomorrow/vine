@@ -5,12 +5,12 @@ namespace Thinktomorrow\Vine\Tests;
 use PHPUnit\Framework\TestCase;
 use Thinktomorrow\Vine\DefaultNode;
 use Thinktomorrow\Vine\NodeCollection;
+use Thinktomorrow\Vine\NodeCollectionFactory;
 use Thinktomorrow\Vine\Sources\ArraySource;
 
 class NodeCollectionTest extends TestCase
 {
-    /** @test */
-    public function it_contains_array_of_nodes()
+    public function test_it_contains_array_of_nodes()
     {
         $collection = new NodeCollection();
 
@@ -18,41 +18,35 @@ class NodeCollectionTest extends TestCase
         $this->assertCount(0, $collection->all());
     }
 
-    /** @test */
-    public function it_accepts_variadic_array_of_nodes()
+    public function test_it_can_find_many_nodes_by_their_primary_identifiers()
     {
-        $collection = new NodeCollection([
-            new DefaultNode('foobar'),
-            new DefaultNode('foobar-2'),
-        ]);
+        $nodes = $this->getTree()->findMany('id', [5, 2]);
 
-        $this->assertCount(2, $collection->all());
+        $this->assertInstanceOf(NodeCollection::class, $nodes);
     }
 
-    /** @test */
-    public function it_accepts_an_array_of_nodes()
+    public function test_it_can_find_a_node_by_its_primary_identifier()
     {
-        $collection = NodeCollection::fromArray([
-            new DefaultNode(['id' => 1]),
-            new DefaultNode(['id' => 2]),
-        ]);
+        $tree = $this->getTree();
+        $node = $tree->find('id', 5);
 
-        $this->assertCount(2, $collection->all());
+        $this->assertSame($node, $tree[0]->getChildNodes()[1]->getChildNodes()[0]);
     }
 
-    /** @test */
-    public function it_accepts_a_custom_source()
+    public function test_it_can_find_a_node_by_its_node_id()
     {
-        $collection = NodeCollection::fromSource(new ArraySource([
-            new DefaultNode(['id' => 1]),
-            new DefaultNode(['id' => 2]),
-        ]));
+        $tree = $this->getTree();
+        $node = $tree->findById(5);
 
-        $this->assertCount(2, $collection->all());
+        $this->assertSame($node, $tree[0]->getChildNodes()[1]->getChildNodes()[0]);
     }
 
-    /** @test */
-    public function it_can_add_array_of_nodes()
+    public function test_it_can_get_total_of_nodes()
+    {
+        $this->assertEquals(5, $this->getTree()->total());
+    }
+
+    public function test_it_can_add_array_of_nodes()
     {
         $collection = new NodeCollection([
             new DefaultNode(['id' => 1]),
@@ -66,14 +60,13 @@ class NodeCollectionTest extends TestCase
         $this->assertCount(3, $collection->all());
     }
 
-    /** @test */
-    public function it_can_get_total_count_of_all_nodes_and_children()
+    public function test_it_can_get_total_count_of_all_nodes_and_children()
     {
         $collection = new NodeCollection([
             (new DefaultNode(['id' => 1]))
                 ->addChildNodes(
                     (new DefaultNode(['id' => 2]))
-                ->addChildNodes(new DefaultNode(['id' => 3]))
+                        ->addChildNodes(new DefaultNode(['id' => 3]))
                 ),
             new DefaultNode(['id' => 4]),
         ]);
@@ -82,8 +75,7 @@ class NodeCollectionTest extends TestCase
         $this->assertEquals(2, $collection->first()->getChildNodes()->total());
     }
 
-    /** @test */
-    public function it_can_change_each_child_node_with_a_callback()
+    public function test_it_can_change_each_child_node_with_a_callback()
     {
         $original = new DefaultNode((object) ['id' => 2]);
         $original->addChildNodes([new DefaultNode(['id' => '23']), new DefaultNode(['id' => '22']), new DefaultNode(['id' => '21'])]);
@@ -101,8 +93,7 @@ class NodeCollectionTest extends TestCase
         $this->assertEquals($expected, $original);
     }
 
-    /** @test */
-    public function it_can_map_all_child_nodes_recursively()
+    public function test_it_can_map_all_child_nodes_recursively()
     {
         $original = new DefaultNode((object) ['id' => 2]);
         $original->addChildNodes([(new DefaultNode(['id' => '23']))->addChildNodes(new DefaultNode(['id' => '24'])), new DefaultNode(['id' => '22']), new DefaultNode(['id' => '21'])]);
@@ -120,8 +111,7 @@ class NodeCollectionTest extends TestCase
         $this->assertEquals($expected, $original);
     }
 
-    /** @test */
-    public function it_can_loop_each_direct_child_node_with_a_callback()
+    public function test_it_can_loop_each_direct_child_node_with_a_callback()
     {
         $original = new DefaultNode((object) ['id' => 2]);
         $original->addChildNodes([new DefaultNode(['id' => '23']), new DefaultNode(['id' => '22']), new DefaultNode(['id' => '21'])]);
@@ -139,8 +129,7 @@ class NodeCollectionTest extends TestCase
         $this->assertEquals($expected, $original);
     }
 
-    /** @test */
-    public function it_can_loop_all_child_nodes_recursively()
+    public function test_it_can_loop_all_child_nodes_recursively()
     {
         $original = new DefaultNode((object) ['id' => 2]);
         $original->addChildNodes([(new DefaultNode(['id' => '23']))->addChildNodes(new DefaultNode(['id' => '24'])), new DefaultNode(['id' => '22']), new DefaultNode(['id' => '21'])]);
@@ -156,5 +145,20 @@ class NodeCollectionTest extends TestCase
         $expected->addChildNodes([(new DefaultNode(['id' => '23', 'title' => 'new']))->addChildNodes(new DefaultNode(['id' => '24', 'title' => 'new'])), new DefaultNode(['id' => '22', 'title' => 'new']), new DefaultNode(['id' => '21', 'title' => 'new'])]);
 
         $this->assertEquals($expected, $original);
+    }
+
+    private function getTree(): NodeCollection
+    {
+        $records = [
+            ['id' => 1, 'name' => 'foobar', 'parent_id' => 0],
+            ['id' => 2, 'name' => 'foobar2', 'parent_id' => 1],
+            ['id' => 3, 'name' => 'foobar3', 'parent_id' => 1],
+            ['id' => 5, 'name' => 'foobar5', 'parent_id' => 3],
+            ['id' => 4, 'name' => 'foobar4', 'parent_id' => 0],
+        ];
+
+        return (new NodeCollectionFactory())->fromIterable($records, function($record) {
+            return new DefaultNode($record);
+        });
     }
 }

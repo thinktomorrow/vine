@@ -5,7 +5,7 @@ namespace Thinktomorrow\Vine\Presenters;
 use Thinktomorrow\Vine\Node;
 use Thinktomorrow\Vine\NodeCollection;
 
-class ArrayPresenter extends BasePresenter implements Presenter
+class ArrayPresenter extends BasePresenter
 {
     /**
      * Render html filter tree.
@@ -33,9 +33,9 @@ class ArrayPresenter extends BasePresenter implements Presenter
         $output = [];
 
         foreach ($nodeCollection as $node) {
-            $output[] = $this->template($node, $level);
+            $output[] = $node->getNodeEntry(2);
 
-            if (! $node->isLeafNode()) {
+            if ($node->hasChildNodes()) {
                 $output[] = $this->renderRecursiveToArray($node->getChildNodes(), $level + 1);
             }
         }
