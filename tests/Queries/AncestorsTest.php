@@ -5,13 +5,11 @@ namespace Thinktomorrow\Vine\Tests\Queries;
 use PHPUnit\Framework\TestCase;
 use Thinktomorrow\Vine\DefaultNode;
 use Thinktomorrow\Vine\NodeCollection;
-use Thinktomorrow\Vine\Source;
 use Thinktomorrow\Vine\Tests\Fixtures\FixtureSource;
 
 class AncestorsTest extends TestCase
 {
-    /** @test */
-    public function it_can_get_ancestors()
+    public function test_it_can_get_ancestors()
     {
         $root = new DefaultNode('foobar');
         $root->addChildNodes([$firstChild = new DefaultNode('first-child')]);
@@ -23,8 +21,7 @@ class AncestorsTest extends TestCase
         $this->assertEquals(new NodeCollection([$root, $firstChild]), $ancestors);
     }
 
-    /** @test */
-    public function it_can_get_ancestors_at_certain_depth()
+    public function test_it_can_get_ancestors_at_certain_depth()
     {
         $root = new DefaultNode('foobar');
         $root->addChildNodes([$firstChild = new DefaultNode('first-child')]);
@@ -36,8 +33,7 @@ class AncestorsTest extends TestCase
         $this->assertEquals(new NodeCollection([$firstChild]), $ancestors);
     }
 
-    /** @test */
-    public function node_can_get_the_ancestor_tree()
+    public function test_node_can_get_the_ancestor_tree()
     {
         $root = new DefaultNode('foobar');
         $root->addChildNodes([$firstChild = new DefaultNode('first-child')]);
@@ -49,8 +45,7 @@ class AncestorsTest extends TestCase
         $this->assertEquals(new NodeCollection([$root, $firstChild]), $ancestors);
     }
 
-    /** @test */
-    public function it_can_get_root_node()
+    public function test_it_can_get_root_node()
     {
         $root = new DefaultNode('foobar');
         $root->addChildNodes([$firstChild = new DefaultNode('first-child')]);
@@ -61,8 +56,8 @@ class AncestorsTest extends TestCase
         $this->assertEquals($root, $root->getRootNode());
     }
 
-    private function getTranslation(): Source
+    private function getTranslation(): NodeCollection
     {
-        return new FixtureSource('default');
+        return (new FixtureSource('default'))->getAsCollection();
     }
 }

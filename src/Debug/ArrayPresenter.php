@@ -1,6 +1,6 @@
 <?php
 
-namespace Thinktomorrow\Vine\Presenters;
+namespace Thinktomorrow\Vine\Debug;
 
 use Thinktomorrow\Vine\Node;
 use Thinktomorrow\Vine\NodeCollection;

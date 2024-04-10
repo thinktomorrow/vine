@@ -4,6 +4,7 @@ namespace Thinktomorrow\Vine\Tests\Fixtures;
 
 use Thinktomorrow\Vine\DefaultNode;
 use Thinktomorrow\Vine\Node;
+use Thinktomorrow\Vine\NodeCollection;
 
 class FixtureSource
 {
@@ -24,6 +25,14 @@ class FixtureSource
     {
         return $this->flatten;
     }
+
+    public function getAsCollection(): NodeCollection
+    {
+        return NodeCollection::fromIterable($this->flatten, function($entry) {
+            return new DefaultNode($entry, '0', '1');
+        });
+    }
+
     //
     //    public function nodeKeyIdentifier(): string
     //    {

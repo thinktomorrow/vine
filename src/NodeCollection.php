@@ -9,6 +9,7 @@ use Thinktomorrow\Vine\Commands\Prune;
 use Thinktomorrow\Vine\Commands\Remove;
 use Thinktomorrow\Vine\Commands\Shake;
 use Thinktomorrow\Vine\Commands\Slice;
+use Thinktomorrow\Vine\Debug\Debugger;
 use Thinktomorrow\Vine\Queries\Count;
 use Thinktomorrow\Vine\Queries\Find;
 use Thinktomorrow\Vine\Queries\FindFirst;
@@ -49,6 +50,12 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
     public function toArray(): array
     {
         return array_map(fn (Node $node) => $node->toArray(), $this->nodes);
+    }
+
+    public function debug(): string|Debugger
+    {
+//        $presenter = isset($options['as']) new ArrayPresenter($this);
+        // Show array list or tree graph
     }
 
     public function all(): array

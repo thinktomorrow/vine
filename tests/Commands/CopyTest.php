@@ -28,7 +28,7 @@ class CopyTest extends TestCase
     /** @test */
     public function it_can_get_new_node_with_specific_depth_of_childnodes()
     {
-        $tree = NodeCollection::fromIterable($this->getTranslation(), fn ($entry) => new DefaultNode($entry, '0', '1'));
+        $tree = $this->getTranslation();
 
         $root = $tree->first()->getChildNodes()->first();
         $result = (new \Thinktomorrow\Vine\Commands\Copy())->__invoke($root, 1);
@@ -82,8 +82,8 @@ class CopyTest extends TestCase
         $this->assertCount(0, $isolatedNode->getChildNodes()->first()->getChildNodes());
     }
 
-    private function getTranslation(): iterable
+    private function getTranslation(): NodeCollection
     {
-        return (new FixtureSource('default'))->get();
+        return (new FixtureSource('default'))->getAsCollection();
     }
 }

@@ -1,11 +1,11 @@
 <?php
 
-namespace Thinktomorrow\Vine\Tests\Presenters;
+namespace Thinktomorrow\Vine\Tests\Debug;
 
 use PHPUnit\Framework\TestCase;
 use Thinktomorrow\Vine\DefaultNode;
 use Thinktomorrow\Vine\NodeCollection;
-use Thinktomorrow\Vine\Presenters\ArrayPresenter;
+use Thinktomorrow\Vine\Debug\ArrayPresenter;
 use Thinktomorrow\Vine\Tests\Fixtures\FixtureSource;
 
 class ArrayPresenterTest extends TestCase
@@ -19,7 +19,7 @@ class ArrayPresenterTest extends TestCase
     }
 
     /** @test */
-    public function it_can_use_tree_as_source()
+    public function it_can_represent_tree_as_array()
     {
         $tree = NodeCollection::fromIterable($this->getTranslation());
 
@@ -30,6 +30,6 @@ class ArrayPresenterTest extends TestCase
 
     private function getTranslation(): iterable
     {
-        return (new FixtureSource('default'))->get();
+        return (new FixtureSource('default'))->getAsCollection();
     }
 }
