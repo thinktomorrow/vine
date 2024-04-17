@@ -2,8 +2,6 @@
 
 namespace Thinktomorrow\Vine\Debug;
 
-use RecursiveArrayIterator;
-use RecursiveTreeIterator;
 use Thinktomorrow\Vine\Node;
 use Thinktomorrow\Vine\NodeCollection;
 

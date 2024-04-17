@@ -3,9 +3,9 @@
 namespace Thinktomorrow\Vine\Tests\Debug;
 
 use PHPUnit\Framework\TestCase;
+use Thinktomorrow\Vine\Debug\ArrayPresenter;
 use Thinktomorrow\Vine\DefaultNode;
 use Thinktomorrow\Vine\NodeCollection;
-use Thinktomorrow\Vine\Debug\ArrayPresenter;
 use Thinktomorrow\Vine\Tests\Fixtures\FixtureSource;
 
 class ArrayPresenterTest extends TestCase
@@ -45,27 +45,27 @@ class ArrayPresenterTest extends TestCase
                                         "id" => "7",
                                         "parent_id" => "3",
                                         "entry" => [7, 3, "child-2-1"],
-                                        "children" => []
+                                        "children" => [],
                                     ],
                                     [
                                         "id" => "8",
                                         "parent_id" => "3",
                                         "entry" => [8, 3, "child-2-2"],
-                                        "children" => []
+                                        "children" => [],
                                     ],
                                     [
                                         "id" => "9",
                                         "parent_id" => "3",
                                         "entry" => [9, 3, "child-2-3"],
-                                        "children" => []
-                                    ]
-                                ]
+                                        "children" => [],
+                                    ],
+                                ],
                             ],
                             [
                                 "id" => "4",
                                 "parent_id" => "2",
                                 "entry" => [4, 2, "child-1-2"],
-                                "children" => []
+                                "children" => [],
                             ],
                             [
                                 "id" => "5",
@@ -76,7 +76,7 @@ class ArrayPresenterTest extends TestCase
                                         "id" => "10",
                                         "parent_id" => "5",
                                         "entry" => [10, 5, "child-2-4"],
-                                        "children" => []
+                                        "children" => [],
                                     ],
                                     [
                                         "id" => "11",
@@ -92,29 +92,29 @@ class ArrayPresenterTest extends TestCase
                                                         "id" => "14",
                                                         "parent_id" => "12",
                                                         "entry" => [14, 12, "child-4-1"],
-                                                        "children" => []
-                                                    ]
-                                                ]
+                                                        "children" => [],
+                                                    ],
+                                                ],
                                             ],
                                             [
                                                 "id" => "13",
                                                 "parent_id" => "11",
                                                 "entry" => [13, 11, "child-3-2"],
-                                                "children" => []
-                                            ]
-                                        ]
-                                    ]
-                                ]
+                                                "children" => [],
+                                            ],
+                                        ],
+                                    ],
+                                ],
                             ],
                             [
                                 "id" => "6",
                                 "parent_id" => "2",
                                 "entry" => [6, 2, "child-1-4"],
-                                "children" => []
-                            ]
-                        ]
-                    ]
-                ]
+                                "children" => [],
+                            ],
+                        ],
+                    ],
+                ],
             ],
             [
                 "id" => "15",
@@ -125,12 +125,11 @@ class ArrayPresenterTest extends TestCase
                         "id" => "16",
                         "parent_id" => "15",
                         "entry" => [16, 15, "child-1-5"],
-                        "children" => []
-                    ]
-                ]
-            ]
-        ]
-        , $result);
+                        "children" => [],
+                    ],
+                ],
+            ],
+        ], $result);
     }
 
     private function getTranslation(): iterable

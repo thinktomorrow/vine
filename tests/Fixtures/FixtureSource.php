@@ -28,7 +28,7 @@ class FixtureSource
 
     public function getAsCollection(): NodeCollection
     {
-        return NodeCollection::fromIterable($this->flatten, function($entry) {
+        return NodeCollection::fromIterable($this->flatten, function ($entry) {
             return new DefaultNode($entry, '0', '1');
         });
     }

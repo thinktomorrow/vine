@@ -3,8 +3,8 @@
 namespace Thinktomorrow\Vine\Tests\Debug;
 
 use PHPUnit\Framework\TestCase;
-use Thinktomorrow\Vine\NodeCollection;
 use Thinktomorrow\Vine\Debug\AsciiPresenter;
+use Thinktomorrow\Vine\NodeCollection;
 use Thinktomorrow\Vine\Tests\Fixtures\FixtureSource;
 
 class AsciiPresenterTest extends TestCase
@@ -16,7 +16,7 @@ class AsciiPresenterTest extends TestCase
 
         $output = (new AsciiPresenter())->render($tree);
 
-$expectedOutput = "-root-1
+        $expectedOutput = "-root-1
 -root-2
  \
  |-child-1
