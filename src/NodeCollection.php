@@ -49,8 +49,7 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
 
     public function debug(): string|Debugger
     {
-        // $presenter = isset($options['as']) new ArrayPresenter($this);
-        // Show array list or tree graph
+        return (new Debugger())->collection($this);
     }
 
     public function all(): array

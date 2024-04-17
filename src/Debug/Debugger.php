@@ -6,12 +6,8 @@ use Thinktomorrow\Vine\NodeCollection;
 
 class Debugger
 {
-    private NodeCollection $collection;
-
-    public function __construct()
-    {
-
-    }
+    private ?NodeCollection $collection = null;
+    private string $type = 'array';
 
     public function collection(NodeCollection $collection)
     {
@@ -20,8 +16,31 @@ class Debugger
         return $this;
     }
 
+    public function asAscii(): static
+    {
+        $this->type = 'ascii';
+
+        return $this;
+    }
+
+    public function asArray(): static
+    {
+        $this->type = 'array';
+
+        return $this;
+    }
+
     public function render()
     {
-        $presenter = new AsciiPresenter();
+        if($this->type == 'ascii') {
+            return (new AsciiPresenter())->render($this->collection);
+        }
+
+        return (new ArrayPresenter())->render($this->collection);
+    }
+
+    public function __toString()
+    {
+        return $this->asAscii()->render();
     }
 }
