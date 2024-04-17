@@ -42,11 +42,6 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
         return static::fromIterable($entries, $createNode);
     }
 
-    public static function fromSource(Source $source): static
-    {
-        throw new \Exception('NodeCollection::fromSource is removed. Use NodeCollection::fromIterable instead.');
-    }
-
     public function toArray(): array
     {
         return array_map(fn (Node $node) => $node->toArray(), $this->nodes);
@@ -54,7 +49,7 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
 
     public function debug(): string|Debugger
     {
-        //        $presenter = isset($options['as']) new ArrayPresenter($this);
+        // $presenter = isset($options['as']) new ArrayPresenter($this);
         // Show array list or tree graph
     }
 
