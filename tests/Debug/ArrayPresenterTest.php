@@ -13,7 +13,7 @@ class ArrayPresenterTest extends TestCase
     /** @test */
     public function it_can_represent_a_collection_as_array()
     {
-        $result = (new ArrayPresenter())->collection(new NodeCollection([new DefaultNode(['id' => 1])]))->render();
+        $result = (new ArrayPresenter())->render(new NodeCollection([new DefaultNode(['id' => 1])]));
 
         $this->assertIsArray($result);
     }
@@ -23,7 +23,7 @@ class ArrayPresenterTest extends TestCase
     {
         $tree = NodeCollection::fromIterable($this->getTranslation());
 
-        $result = (new ArrayPresenter())->collection($tree)->render();
+        $result = (new ArrayPresenter())->render($tree);
 
         $this->assertEquals([
             [
