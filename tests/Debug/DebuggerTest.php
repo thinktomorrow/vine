@@ -3,7 +3,6 @@
 namespace Thinktomorrow\Vine\Tests\Debug;
 
 use PHPUnit\Framework\TestCase;
-use Thinktomorrow\Vine\Debug\AsciiPresenter;
 use Thinktomorrow\Vine\Debug\Debugger;
 use Thinktomorrow\Vine\NodeCollection;
 use Thinktomorrow\Vine\Tests\Fixtures\FixtureSource;
