@@ -65,11 +65,27 @@ class ArrayableNodeCollectionTest extends TestCase
     {
         $collection = $this->getCollection();
 
-        $array = $collection->toArray();
-
-        $this->assertIsArray($array);
-
-        // TODO: test to array of node as well
+        $this->assertEquals([
+            [
+                'id' => '1',
+                'parent_id' => null,
+                'entry' => ['id' => 1],
+                'children' => [],
+            ],
+            [
+                'id' => '2',
+                'parent_id' => null,
+                'entry' => ['id' => 2],
+                'children' => [
+                    [
+                        'id' => '3',
+                        'parent_id' => '2',
+                        'entry' => ['id' => 3, 'parent_id' => 2],
+                        'children' => [],
+                    ],
+                ],
+            ],
+        ], $collection->toArray());
     }
 
     /**

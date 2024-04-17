@@ -14,7 +14,7 @@ class ArrayPresenter extends BasePresenter
      */
     public function render()
     {
-        return $this->renderRecursiveToArray($this->collection);
+        return $this->collection->toArray();
     }
 
     /**
@@ -41,10 +41,5 @@ class ArrayPresenter extends BasePresenter
         }
 
         return $output;
-    }
-
-    protected function template(Node $node, $level = 0)
-    {
-        return $node->getNodeEntry(2);
     }
 }

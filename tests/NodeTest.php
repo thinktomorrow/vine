@@ -244,4 +244,26 @@ class NodeTest extends TestCase
         $this->assertNull($root->getLeftSiblingNode());
         $this->assertNull($root->getRightSiblingNode());
     }
+
+    public function test_it_can_transform_to_array()
+    {
+        $node = new DefaultNode((object)['id' => 2, 'parent_id' => 5, 'foo' => 'bar']);
+        $this->assertEquals([
+            'id' => '2',
+            'parent_id' => '5',
+            'entry' => (object)['id' => 2, 'parent_id' => 5, 'foo' => 'bar'],
+            'children' => [],
+        ], $node->toArray());
+    }
+
+    public function test_it_can_transform_incomplete_entry_to_array()
+    {
+        $node = new DefaultNode(2);
+        $this->assertEquals([
+            'id' => '',
+            'parent_id' => null,
+            'entry' => 2,
+            'children' => [],
+        ], $node->toArray());
+    }
 }

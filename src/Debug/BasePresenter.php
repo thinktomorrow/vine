@@ -2,7 +2,6 @@
 
 namespace Thinktomorrow\Vine\Debug;
 
-use Thinktomorrow\Vine\Node;
 use Thinktomorrow\Vine\NodeCollection;
 
 abstract class BasePresenter
@@ -27,37 +26,4 @@ abstract class BasePresenter
      * @return string
      */
     abstract public function render();
-
-    /**
-     * Render each branch and its children recursively.
-     *
-     * @param NodeCollection $nodeCollection
-     * @param int            $level
-     *
-     * @return string
-     */
-    protected function renderRecursiveToString(NodeCollection $nodeCollection, $level = 0): string
-    {
-        $output = '';
-
-        foreach ($nodeCollection as $node) {
-            $output .= $this->template($node, $level);
-
-            if (! $node->isLeafNode()) {
-                $output .= $this->renderRecursiveToString($node->getChildNodes(), $level + 1);
-            }
-        }
-
-        return $output;
-    }
-
-    /**
-     * Template for a single node entry.
-     *
-     * @param Node $node
-     * @param int  $level
-     *
-     * @return string
-     */
-    abstract protected function template(Node $node, $level = 0);
 }

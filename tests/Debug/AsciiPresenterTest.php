@@ -16,8 +16,36 @@ class AsciiPresenterTest extends TestCase
 
         $output = (new AsciiPresenter())->render($tree);
 
-        $this->assertIsString($output);
-        $this->assertStringStartsWith('-root-1', trim($output, PHP_EOL));
+$expectedOutput = "-root-1
+-root-2
+ \
+ |-child-1
+  \
+  |-child-1-1
+  |-child-1-2
+  |-child-1-3
+  |-child-1-4
+   \
+   |-child-2-1
+   |-child-2-2
+   |-child-2-3
+   |-child-2-4
+   |-child-2-5
+    \
+    |-child-3-1
+    |-child-3-2
+     \
+     |-child-4-1
+ \
+ |-child-1-5";
+
+        $this->assertEquals($this->normalizeString($expectedOutput), $this->normalizeString($output));
+    }
+
+    private function normalizeString($string)
+    {
+        // Strip out all extra whitespace and newlines
+        return preg_replace('/\s+/', '', $string);
     }
 
     private function getCollection(): NodeCollection
