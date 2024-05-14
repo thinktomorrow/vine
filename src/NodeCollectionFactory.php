@@ -4,11 +4,9 @@ namespace Thinktomorrow\Vine;
 
 class NodeCollectionFactory
 {
-    public function fromIterable(iterable $items, callable $createNode)
+    public function fromIterable(NodeCollection $collection, iterable $items, callable $createNode)
     {
         $nodes = $this->mapIterable($items, $createNode);
-
-        $nodeCollection = new NodeCollection();
 
         /** @var Node $node */
         foreach($nodes as $node) {
@@ -17,11 +15,11 @@ class NodeCollectionFactory
                     $this->findById($nodes, $node->getParentNodeId())
                 );
             } else {
-                $nodeCollection->add($node);
+                $collection->add($node);
             }
         }
 
-        return $nodeCollection;
+        return $collection;
     }
 
     private function findById($nodes, $id): ?Node

@@ -156,7 +156,7 @@ class NodeCollectionTest extends TestCase
             ['id' => 4, 'name' => 'foobar4', 'parent_id' => 0],
         ];
 
-        return (new NodeCollectionFactory())->fromIterable($records, function ($record) {
+        return (new NodeCollectionFactory())->fromIterable(new NodeCollection(), $records, function ($record) {
             return new DefaultNode($record);
         });
     }
