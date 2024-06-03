@@ -3,7 +3,6 @@
 namespace Thinktomorrow\Vine\Tests\Fixtures;
 
 use Thinktomorrow\Vine\DefaultNode;
-use Thinktomorrow\Vine\Node;
 use Thinktomorrow\Vine\NodeCollection;
 
 class FixtureSource
