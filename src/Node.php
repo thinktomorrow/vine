@@ -155,6 +155,4 @@ interface Node
      * @return Node
      */
     public function pruneChildNodes(callable $callback): Node;
-
-    public function toArray(): array;
 }

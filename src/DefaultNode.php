@@ -3,13 +3,9 @@ declare(strict_types=1);
 
 namespace Thinktomorrow\Vine;
 
-use Thinktomorrow\Vine\Commands\Copy;
-use Thinktomorrow\Vine\Commands\Move;
-use Thinktomorrow\Vine\Queries\Ancestors;
-use Thinktomorrow\Vine\Queries\Count;
-use Thinktomorrow\Vine\Queries\Pluck;
+use Thinktomorrow\Vine\Debug\Arrayable;
 
-class DefaultNode implements Node, WithNodeEntry
+class DefaultNode implements Node, WithNodeEntry, Arrayable
 {
     use NodeDefaults;
 

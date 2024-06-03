@@ -347,7 +347,9 @@ trait NodeDefaults
     public function copyIsolatedNode(): Node
     {
         $copy = clone $this;
-        $copy->children = new NodeCollection();
+
+        $className = get_class($this->getChildNodes());
+        $copy->children = new $className();
         $copy->parentNode = null;
 
         return $copy;
