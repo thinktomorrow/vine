@@ -94,9 +94,9 @@ class ArrayableNodeCollectionTest extends TestCase
     private function getCollection(): NodeCollection
     {
         return NodeCollection::fromArray([
-            new DefaultNode(['id' => 1]),
-            new DefaultNode(['id' => 2]),
-            new DefaultNode(['id' => 3, 'parent_id' => 2]),
+            new DefaultNode(['id' => 1], new NodeCollection()),
+            new DefaultNode(['id' => 2], new NodeCollection()),
+            new DefaultNode(['id' => 3, 'parent_id' => 2], new NodeCollection()),
         ]);
     }
 }

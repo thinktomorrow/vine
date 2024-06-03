@@ -5,6 +5,7 @@ namespace Thinktomorrow\Vine\Tests;
 use PHPUnit\Framework\TestCase;
 use Thinktomorrow\Vine\DefaultNode;
 use Thinktomorrow\Vine\NodeCollection;
+use Thinktomorrow\Vine\Tests\Fixtures\CustomNodeCollection;
 
 class NodeCollectionCreateTest extends TestCase
 {
@@ -60,7 +61,7 @@ class NodeCollectionCreateTest extends TestCase
             ['key' => 'foobar', 'parent_key' => null],
             ['key' => 'foobar-2', 'parent_key' => 'foobar'],
         ], function ($entry) {
-            return new DefaultNode($entry, 'key', 'parent_key');
+            return new DefaultNode($entry, new NodeCollection(), 'key', 'parent_key');
         });
 
         $this->assertEquals(2, $collection->total());
@@ -73,11 +74,26 @@ class NodeCollectionCreateTest extends TestCase
             ['foobar', null],
             ['foobar-2', 'foobar'],
         ], function ($entry) {
-            return new DefaultNode($entry, '0', '1');
+            return new DefaultNode($entry, new NodeCollection(), '0', '1');
         });
 
         $this->assertEquals(2, $collection->total());
         $this->assertCount(1, $collection->all());
+    }
+
+    public function test_it_can_use_custom_node_collection()
+    {
+        $collection = CustomNodeCollection::fromIterable([
+            ['key' => 'foobar', 'parent_key' => null],
+            ['key' => 'foobar-2', 'parent_key' => 'foobar'],
+            ['key' => 'foobar-3', 'parent_key' => 'foobar-2'],
+        ], function ($entry) {
+            return new DefaultNode($entry, new CustomNodeCollection(), 'key', 'parent_key');
+        });
+
+        $this->assertInstanceOf(CustomNodeCollection::class, $collection);
+        $this->assertInstanceOf(CustomNodeCollection::class, $collection->first()->getChildNodes());
+        $this->assertInstanceOf(CustomNodeCollection::class, $collection->first()->getChildNodes()->first()->getChildNodes());
     }
 
     public function test_it_must_create_node()

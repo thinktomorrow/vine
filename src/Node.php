@@ -71,12 +71,6 @@ interface Node
     public function getLeftSiblingNode(): ?Node;
     public function getRightSiblingNode(): ?Node;
 
-    public function getNodeEntry($key = null, $default = null);
-
-    public function replaceNodeEntry($entry): void;
-
-    public function hasNodeEntryValue($key, $value): bool;
-
     /**
      * Removes a child node.
      * It deletes that child node from any depth in the graph.

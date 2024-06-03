@@ -6,6 +6,8 @@ principles.
 **Warning: this release contains breaking changes. Please read the following upgrade guide before updating.**
 - Removed: `NodeCollection::fromSource` method. Use `NodeCollection::fromArray` or `NodeCollection::fromIterable` instead.
 - Removed: `Source` interface and `NodeSource` in line with Source removal. 
+- Added: option to use model as a Node. Before a model was always an entry property on the Node object. Now you can use your models as Nodes. Make sure they implement the Node interface.
+- Changed: DefaultNode has an extra parameter. Second argument to the constructor should be the (empty) nodeCollection for the children collection. This ensures that a custom NodeCollection is used throughout the tree.
 - Added: `NodeCollection::fromIterable()` method. This allows to easily use the NodeCollection in different places in your project. Also the creation of a Node is done via a callable as optional second parameter. This way you can customize the creation of the Node.
 ```
 public static function filterTree(): NodeCollection {
@@ -22,6 +24,9 @@ return NodeCollection::fromArray(self::all()->toArray());
 - e.g. 
 
 ## TODO:
+- nodeDefaults trait to use model as node itself
+- trait for nodeEntry stuff on when to use entry as property in defaultNode instead of node itself
+- test: childcollection should be same as custom nodecollection
 - resolve all todo's in files
   - factory: structure collection can be replaced by just calls in the own method
   - toArray() tests

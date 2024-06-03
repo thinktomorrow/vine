@@ -12,10 +12,10 @@ class CopyTest extends TestCase
     /** @test */
     public function it_can_deep_copy_a_node()
     {
-        $node = new DefaultNode(['id' => 1, 'name' => 'foobar']);
-        $node->addChildNodes([$child = new DefaultNode(['id' => 2, 'name' => 'first-child'])]);
-        $child->addChildNodes([$child2 = new DefaultNode(['id' => 3, 'name' => 'second-child'])]);
-        $child->addChildNodes([$child3 = new DefaultNode(['id' => 4, 'name' => 'third-child'])]);
+        $node = new DefaultNode(['id' => 1, 'name' => 'foobar'], new NodeCollection());
+        $node->addChildNodes([$child = new DefaultNode(['id' => 2, 'name' => 'first-child'], new NodeCollection())]);
+        $child->addChildNodes([$child2 = new DefaultNode(['id' => 3, 'name' => 'second-child'], new NodeCollection())]);
+        $child->addChildNodes([$child3 = new DefaultNode(['id' => 4, 'name' => 'third-child'], new NodeCollection())]);
 
         $cloned = $node->copyNode();
 

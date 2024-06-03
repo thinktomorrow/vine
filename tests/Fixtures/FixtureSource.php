@@ -29,23 +29,7 @@ class FixtureSource
     public function getAsCollection(): NodeCollection
     {
         return NodeCollection::fromIterable($this->flatten, function ($entry) {
-            return new DefaultNode($entry, '0', '1');
+            return new DefaultNode($entry, new NodeCollection(), '0', '1');
         });
     }
-
-    //
-    //    public function nodeKeyIdentifier(): string
-    //    {
-    //        return 0;
-    //    }
-    //
-    //    public function nodeParentKeyIdentifier(): string
-    //    {
-    //        return 1;
-    //    }
-    //
-    //    public function createNode($entry): Node
-    //    {
-    //        return new DefaultNode($entry);
-    //    }
 }
