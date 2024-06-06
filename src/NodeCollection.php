@@ -140,7 +140,7 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
         return $this;
     }
 
-    public function sort($key)
+    public function sort($key): static
     {
         $nodes = $this->nodes;
 
@@ -237,10 +237,8 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
 
     /**
      * Inflate a flattened collection back to its original structure.
-     *
-     * @return NodeCollection
      */
-    public function inflate()
+    public function inflate(): static
     {
         return (new Inflate())($this);
     }
@@ -248,11 +246,9 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
     /**
      * Slice one or more nodes out of the collection.
      *
-     * @param Node[] ...$nodes
-     *
-     * @return mixed
+     * @param Node ...$nodes
      */
-    public function slice(Node ...$nodes)
+    public function slice(Node ...$nodes): static
     {
         return (new Slice())($this, ...$nodes);
     }
