@@ -22,7 +22,7 @@ trait NodeDefaults
 
     public function getParentNodeId(): ?string
     {
-        if($this->parentNode) {
+        if ($this->parentNode) {
             return $this->parentNode->getNodeId();
         }
 

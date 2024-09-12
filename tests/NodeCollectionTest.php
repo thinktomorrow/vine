@@ -83,6 +83,7 @@ class NodeCollectionTest extends TestCase
 
         $original->getChildNodes()->map(function (Node $node) {
             $node->changeValue('title', 'new');
+
             return $node;
         });
 
@@ -99,6 +100,7 @@ class NodeCollectionTest extends TestCase
 
         $original->getChildNodes()->mapRecursive(function ($node) {
             $node->changeValue('title', 'new');
+
             return $node;
         });
 
@@ -115,11 +117,12 @@ class NodeCollectionTest extends TestCase
 
         $original->getChildNodes()->each(function (CustomModelNode $node) {
             $node->changeValue('title', 'new');
+
             return $node;
         });
 
         $expected = new CustomModelNode(2);
-        $expected->addChildNodes([new CustomModelNode(23, null,['title' => 'new']), new CustomModelNode(22,null,['title' => 'new']), new CustomModelNode(21,null, ['title' => 'new'])]);
+        $expected->addChildNodes([new CustomModelNode(23, null, ['title' => 'new']), new CustomModelNode(22, null, ['title' => 'new']), new CustomModelNode(21, null, ['title' => 'new'])]);
 
         $this->assertEquals($expected, $original);
     }
@@ -131,11 +134,12 @@ class NodeCollectionTest extends TestCase
 
         $original->getChildNodes()->eachRecursive(function ($node) {
             $node->changeValue('title', 'new');
+
             return $node;
         });
 
         $expected = new CustomModelNode(2);
-        $expected->addChildNodes([(new CustomModelNode(23, null,['title' => 'new']))->addChildNodes(new CustomModelNode(24, null, ['title' => 'new'])), new CustomModelNode(22, null, ['title' => 'new']), new CustomModelNode(21, null, ['title' => 'new'])]);
+        $expected->addChildNodes([(new CustomModelNode(23, null, ['title' => 'new']))->addChildNodes(new CustomModelNode(24, null, ['title' => 'new'])), new CustomModelNode(22, null, ['title' => 'new']), new CustomModelNode(21, null, ['title' => 'new'])]);
 
         $this->assertEquals($expected, $original);
     }
