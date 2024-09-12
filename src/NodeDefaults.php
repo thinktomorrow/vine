@@ -66,6 +66,11 @@ trait NodeDefaults
         return $this;
     }
 
+    public function getSortValue($key)
+    {
+        return $this->{$key};
+    }
+
     public function getParentNode(): ?Node
     {
         return $this->parentNode;

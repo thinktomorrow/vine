@@ -66,6 +66,11 @@ class DefaultNode implements Node, WithNodeEntry, Arrayable
         return in_array($this->getNodeEntry($key), (array) $value);
     }
 
+    public function getSortValue($key)
+    {
+        return $this->getNodeEntry($key);
+    }
+
     public function toArray(): array
     {
         return [

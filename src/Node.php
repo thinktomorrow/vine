@@ -155,4 +155,12 @@ interface Node
      * @return Node
      */
     public function pruneChildNodes(callable $callback): Node;
+
+    /**
+     * Used by the Collection sort method to retrieve the value to sort on.
+     *
+     * @param $key
+     * @return mixed
+     */
+    public function getSortValue($key);
 }

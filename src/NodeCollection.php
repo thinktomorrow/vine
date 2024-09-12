@@ -145,11 +145,11 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
         $nodes = $this->nodes;
 
         uasort($nodes, function (Node $a, Node $b) use ($key) {
-            if ($a->getNodeEntry($key) == $b->getNodeEntry($key)) {
+            if ($a->getSortValue($key) == $b->getSortValue($key)) {
                 return 0;
             }
 
-            return ($a->getNodeEntry($key) < $b->getNodeEntry($key)) ? -1 : 1;
+            return ($a->getSortValue($key) < $b->getSortValue($key)) ? -1 : 1;
         });
 
         // Now delegate the sorting to the children
