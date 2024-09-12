@@ -22,6 +22,10 @@ trait NodeDefaults
 
     public function getParentNodeId(): ?string
     {
+        if($this->parentNode) {
+            return $this->parentNode->getNodeId();
+        }
+
         if ($parentId = $this->{$this->parentKey}) {
             return (string) $parentId;
         }
@@ -64,6 +68,16 @@ trait NodeDefaults
         }
 
         return $this;
+    }
+
+    public function hasNodeValue($key, $value): bool
+    {
+        return in_array($this->getNodeValue($key), (array) $value);
+    }
+
+    public function getNodeValue($key, $default = null): mixed
+    {
+        return $this->{$key} ?? $default;
     }
 
     public function getSortValue($key)

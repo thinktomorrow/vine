@@ -157,6 +157,14 @@ interface Node
     public function pruneChildNodes(callable $callback): Node;
 
     /**
+     * Does the node has this given value. Used by the
+     * find logic to filter nodes based on their value.
+     */
+    public function hasNodeValue($key, $value): bool;
+
+    public function getNodeValue($key, $default = null): mixed;
+
+    /**
      * Used by the Collection sort method to retrieve the value to sort on.
      *
      * @param $key

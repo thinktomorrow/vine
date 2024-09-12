@@ -22,7 +22,7 @@ class FindFirst
                 if (true === call_user_func($key, $node)) {
                     return $node;
                 }
-            } elseif (! is_null($values) && $node->hasNodeEntryValue($key, $values)) {
+            } elseif (! is_null($values) && $node->hasNodeValue($key, $values)) {
                 return $node;
             }
 

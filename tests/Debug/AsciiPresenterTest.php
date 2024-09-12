@@ -16,28 +16,7 @@ class AsciiPresenterTest extends TestCase
 
         $output = (new AsciiPresenter())->render($tree);
 
-        $expectedOutput = "-root-1
--root-2
- \
- |-child-1
-  \
-  |-child-1-1
-  |-child-1-2
-  |-child-1-3
-  |-child-1-4
-   \
-   |-child-2-1
-   |-child-2-2
-   |-child-2-3
-   |-child-2-4
-   |-child-2-5
-    \
-    |-child-3-1
-    |-child-3-2
-     \
-     |-child-4-1
- \
- |-child-1-5";
+        $expectedOutput = "-1-15\|-2\|-3|-4|-5|-6\|-7|-8|-9|-10|-11\|-12|-13\|-14\|-16";
 
         $this->assertEquals($this->normalizeString($expectedOutput), $this->normalizeString($output));
     }

@@ -19,7 +19,7 @@ class AsciiPresenter
                 $output .= str_repeat(' ', $level).'\\'.PHP_EOL;
             }
 
-            $output .= str_repeat(' ', $level). ($level > 0 ? '|-' : '-').$node->getNodeEntry(2).PHP_EOL;
+            $output .= str_repeat(' ', $level). ($level > 0 ? '|-' : '-').$node->getNodeId().PHP_EOL;
             $previousLevel = $level;
         });
 

@@ -5,7 +5,7 @@ namespace Thinktomorrow\Vine;
 
 use Thinktomorrow\Vine\Debug\Arrayable;
 
-class DefaultNode implements Node, WithNodeEntry, Arrayable
+class DefaultNode implements Node, Arrayable
 {
     use NodeDefaults;
 
@@ -24,51 +24,57 @@ class DefaultNode implements Node, WithNodeEntry, Arrayable
 
     public function getNodeId(): string
     {
-        return (string) $this->getNodeEntry($this->idKey);
+        return (string) $this->getNodeValue($this->idKey);
     }
 
     public function getParentNodeId(): ?string
     {
-        if ($parentId = $this->getNodeEntry($this->parentKey)) {
+        if ($parentId = $this->getNodeValue($this->parentKey)) {
             return (string) $parentId;
         }
 
         return null;
     }
 
+
+
     /**
      * DefaultNode has its model entry as a property
      *
-     * @param $key
-     * @param $default
      * @return mixed|null
      */
-    public function getNodeEntry($key = null, $default = null)
+    public function getNodeEntry()
     {
-        if (! ($key === null)) {
-            if (is_array($this->entry)) {
-                return isset($this->entry[$key]) ? $this->entry[$key] : $default;
-            }
-
-            return isset($this->entry->{$key}) ? $this->entry->{$key} : $default;
-        }
-
         return $this->entry;
     }
 
+    /**
+     * Specific to DefaultNode where the entry is a property
+     * @param $entry
+     * @return void
+     */
     public function replaceNodeEntry($entry): void
     {
         $this->entry = $entry;
     }
 
-    public function hasNodeEntryValue($key, $value): bool
+    public function hasNodeValue($key, $value): bool
     {
-        return in_array($this->getNodeEntry($key), (array) $value);
+        return in_array($this->getNodeValue($key), (array) $value);
+    }
+
+    public function getNodeValue($key, $default = null): mixed
+    {
+        if (is_array($this->entry)) {
+            return isset($this->entry[$key]) ? $this->entry[$key] : $default;
+        }
+
+        return isset($this->entry->{$key}) ? $this->entry->{$key} : $default;
     }
 
     public function getSortValue($key)
     {
-        return $this->getNodeEntry($key);
+        return $this->getNodeValue($key);
     }
 
     public function toArray(): array

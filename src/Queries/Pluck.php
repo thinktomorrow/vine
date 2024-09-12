@@ -47,6 +47,6 @@ class Pluck
             return call_user_func($key, $node);
         }
 
-        return method_exists($node, $key) ? $node->{$key}() : $node->getNodeEntry($key);
+        return method_exists($node, $key) ? $node->{$key}() : $node->getNodeValue($key);
     }
 }

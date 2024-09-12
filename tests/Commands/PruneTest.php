@@ -46,7 +46,7 @@ class PruneTest extends TestCase
         $node = $this->getNode();
 
         $prunedNode = $node->pruneChildNodes(function (Node $node) {
-            return $node->getNodeEntry('id') == 3;
+            return $node->getNodeValue('id') == 3;
         });
 
         $this->assertEquals(
@@ -61,7 +61,7 @@ class PruneTest extends TestCase
         $node = $this->getNode();
 
         $prunedNode = $node->pruneChildNodes(function (Node $node) {
-            return $node->getNodeEntry('id') == 3;
+            return $node->getNodeValue('id') == 3;
         });
 
         $this->assertEquals(
@@ -76,7 +76,7 @@ class PruneTest extends TestCase
         $nodeCollection = $this->getNode()->getChildNodes();
 
         $prunedNodeCollection = $nodeCollection->prune(function (Node $node) {
-            return $node->getNodeEntry('id') == 3;
+            return $node->getNodeValue('id') == 3;
         });
 
         $this->assertEquals(

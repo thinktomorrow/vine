@@ -13,7 +13,7 @@ class CustomModelNode implements Node
     protected string $id;
     protected ?string $parentId;
 
-    public function __construct(string $id, ?string $parentId, array $values)
+    public function __construct(string $id, ?string $parentId = null, array $values = [])
     {
         $this->id = $id;
         $this->parentId = $parentId;
@@ -32,5 +32,20 @@ class CustomModelNode implements Node
             'values' => $this->values,
             'children' => $this->getChildNodes()->toArray(),
         ];
+    }
+
+    public function changeValue(string $key, $value): void
+    {
+        $this->values[$key] = $value;
+    }
+
+    public function getNodeValue($key, $default = null): mixed
+    {
+        return $this->values[$key] ?? $default;
+    }
+
+    public function getValues(): array
+    {
+        return $this->values;
     }
 }

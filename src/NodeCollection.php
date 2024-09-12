@@ -30,12 +30,12 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
         $this->nodes = $nodes;
     }
 
-    public static function fromIterable(iterable $entries, callable $createNode = null): static
+    public static function fromIterable(iterable $items, callable $createNode = null): static
     {
         return (new NodeCollectionFactory())->fromIterable(
             new static(),
-            $entries,
-            $createNode ?? fn ($entry) => $entry instanceof Node ? $entry : new DefaultNode($entry, new static())
+            $items,
+            $createNode ?? fn ($item) => $item instanceof Node ? $item : new DefaultNode($item, new static())
         );
     }
 

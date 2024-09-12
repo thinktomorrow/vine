@@ -25,7 +25,7 @@ class Find
                 if (true === call_user_func($key, $node)) {
                     $nodes->add($node);
                 }
-            } elseif (! is_null($values) && $node->hasNodeEntryValue($key, $values)) {
+            } elseif (! is_null($values) && $node->hasNodeValue($key, $values)) {
                 $nodes->add($node);
             }
 

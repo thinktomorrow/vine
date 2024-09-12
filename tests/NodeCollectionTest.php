@@ -3,9 +3,10 @@
 namespace Thinktomorrow\Vine\Tests;
 
 use PHPUnit\Framework\TestCase;
-use Thinktomorrow\Vine\DefaultNode;
+use Thinktomorrow\Vine\Node;
 use Thinktomorrow\Vine\NodeCollection;
-use Thinktomorrow\Vine\NodeCollectionFactory;
+use Thinktomorrow\Vine\Tests\Fixtures\CustomModelNode;
+use Thinktomorrow\Vine\Tests\Fixtures\CustomNodeCollection;
 
 class NodeCollectionTest extends TestCase
 {
@@ -22,6 +23,7 @@ class NodeCollectionTest extends TestCase
         $nodes = $this->getTree()->findMany('id', [5, 2]);
 
         $this->assertInstanceOf(NodeCollection::class, $nodes);
+        $this->assertInstanceOf(CustomNodeCollection::class, $nodes);
     }
 
     public function test_it_can_find_a_node_by_its_primary_identifier()
@@ -47,13 +49,13 @@ class NodeCollectionTest extends TestCase
 
     public function test_it_can_add_array_of_nodes()
     {
-        $collection = new NodeCollection([
-            new DefaultNode(['id' => 1]),
+        $collection = new CustomNodeCollection([
+            new CustomModelNode(1),
         ]);
 
         $collection->add(
-            new DefaultNode(['id' => 2]),
-            new DefaultNode(['id' => 3])
+            new CustomModelNode(2),
+            new CustomModelNode(3)
         );
 
         $this->assertCount(3, $collection->all());
@@ -62,12 +64,12 @@ class NodeCollectionTest extends TestCase
     public function test_it_can_get_total_count_of_all_nodes_and_children()
     {
         $collection = new NodeCollection([
-            (new DefaultNode(['id' => 1]))
+            (new CustomModelNode(1))
                 ->addChildNodes(
-                    (new DefaultNode(['id' => 2]))
-                        ->addChildNodes(new DefaultNode(['id' => 3]))
+                    (new CustomModelNode(2))
+                        ->addChildNodes(new CustomModelNode(3))
                 ),
-            new DefaultNode(['id' => 4]),
+            new CustomModelNode(4),
         ]);
 
         $this->assertEquals(4, $collection->total());
@@ -76,77 +78,69 @@ class NodeCollectionTest extends TestCase
 
     public function test_it_can_change_each_child_node_with_a_callback()
     {
-        $original = new DefaultNode((object) ['id' => 2]);
-        $original->addChildNodes([new DefaultNode(['id' => '23']), new DefaultNode(['id' => '22']), new DefaultNode(['id' => '21'])]);
+        $original = new CustomModelNode(2);
+        $original->addChildNodes([new CustomModelNode(23), new CustomModelNode(22), new CustomModelNode(21)]);
 
-        $original->getChildNodes()->map(function ($node) {
-            $entry = $node->getNodeEntry();
-            $entry['title'] = 'new';
-
-            return $node->replaceNodeEntry($entry);
+        $original->getChildNodes()->map(function (Node $node) {
+            $node->changeValue('title', 'new');
+            return $node;
         });
 
-        $expected = new DefaultNode((object) ['id' => 2]);
-        $expected->addChildNodes([new DefaultNode(['id' => '23', 'title' => 'new']), new DefaultNode(['id' => '22', 'title' => 'new']), new DefaultNode(['id' => '21', 'title' => 'new'])]);
+        $expected = new CustomModelNode(2);
+        $expected->addChildNodes([new CustomModelNode(23, null, ['title' => 'new']), new CustomModelNode(22, null, ['title' => 'new']), new CustomModelNode(21, null, ['title' => 'new'])]);
 
         $this->assertEquals($expected, $original);
     }
 
     public function test_it_can_map_all_child_nodes_recursively()
     {
-        $original = new DefaultNode((object) ['id' => 2]);
-        $original->addChildNodes([(new DefaultNode(['id' => '23']))->addChildNodes(new DefaultNode(['id' => '24'])), new DefaultNode(['id' => '22']), new DefaultNode(['id' => '21'])]);
+        $original = new CustomModelNode(2);
+        $original->addChildNodes([(new CustomModelNode(23))->addChildNodes(new CustomModelNode(24)), new CustomModelNode(22), new CustomModelNode(21)]);
 
         $original->getChildNodes()->mapRecursive(function ($node) {
-            $entry = $node->getNodeEntry();
-            $entry['title'] = 'new';
-
-            return $node->replaceNodeEntry($entry);
+            $node->changeValue('title', 'new');
+            return $node;
         });
 
-        $expected = new DefaultNode((object) ['id' => 2]);
-        $expected->addChildNodes([(new DefaultNode(['id' => '23', 'title' => 'new']))->addChildNodes(new DefaultNode(['id' => '24', 'title' => 'new'])), new DefaultNode(['id' => '22', 'title' => 'new']), new DefaultNode(['id' => '21', 'title' => 'new'])]);
+        $expected = new CustomModelNode(2);
+        $expected->addChildNodes([(new CustomModelNode(23, null, ['title' => 'new']))->addChildNodes(new CustomModelNode(24, null, ['title' => 'new'])), new CustomModelNode(22, null, ['title' => 'new']), new CustomModelNode(21, null, ['title' => 'new'])]);
 
         $this->assertEquals($expected, $original);
     }
 
     public function test_it_can_loop_each_direct_child_node_with_a_callback()
     {
-        $original = new DefaultNode((object) ['id' => 2]);
-        $original->addChildNodes([new DefaultNode(['id' => '23']), new DefaultNode(['id' => '22']), new DefaultNode(['id' => '21'])]);
+        $original = new CustomModelNode(2);
+        $original->addChildNodes([new CustomModelNode(23), new CustomModelNode(22), new CustomModelNode(21)]);
 
-        $original->getChildNodes()->each(function ($node) {
-            $entry = $node->getNodeEntry();
-            $entry['title'] = 'new';
-
-            $node->replaceNodeEntry($entry);
+        $original->getChildNodes()->each(function (CustomModelNode $node) {
+            $node->changeValue('title', 'new');
+            return $node;
         });
 
-        $expected = new DefaultNode((object) ['id' => 2]);
-        $expected->addChildNodes([new DefaultNode(['id' => '23', 'title' => 'new']), new DefaultNode(['id' => '22', 'title' => 'new']), new DefaultNode(['id' => '21', 'title' => 'new'])]);
+        $expected = new CustomModelNode(2);
+        $expected->addChildNodes([new CustomModelNode(23, null,['title' => 'new']), new CustomModelNode(22,null,['title' => 'new']), new CustomModelNode(21,null, ['title' => 'new'])]);
 
         $this->assertEquals($expected, $original);
     }
 
     public function test_it_can_loop_all_child_nodes_recursively()
     {
-        $original = new DefaultNode((object) ['id' => 2]);
-        $original->addChildNodes([(new DefaultNode(['id' => '23']))->addChildNodes(new DefaultNode(['id' => '24'])), new DefaultNode(['id' => '22']), new DefaultNode(['id' => '21'])]);
+        $original = new CustomModelNode(2);
+        $original->addChildNodes([(new CustomModelNode(23))->addChildNodes(new CustomModelNode(24)), new CustomModelNode(22), new CustomModelNode(21)]);
 
         $original->getChildNodes()->eachRecursive(function ($node) {
-            $entry = $node->getNodeEntry();
-            $entry['title'] = 'new';
-
-            $node->replaceNodeEntry($entry);
+            $node->changeValue('title', 'new');
+            return $node;
         });
 
-        $expected = new DefaultNode((object) ['id' => 2]);
-        $expected->addChildNodes([(new DefaultNode(['id' => '23', 'title' => 'new']))->addChildNodes(new DefaultNode(['id' => '24', 'title' => 'new'])), new DefaultNode(['id' => '22', 'title' => 'new']), new DefaultNode(['id' => '21', 'title' => 'new'])]);
+        $expected = new CustomModelNode(2);
+        $expected->addChildNodes([(new CustomModelNode(23, null,['title' => 'new']))->addChildNodes(new CustomModelNode(24, null, ['title' => 'new'])), new CustomModelNode(22, null, ['title' => 'new']), new CustomModelNode(21, null, ['title' => 'new'])]);
 
         $this->assertEquals($expected, $original);
     }
 
-    private function getTree(): NodeCollection
+    private function getTree(): CustomNodeCollection
     {
         $records = [
             ['id' => 1, 'name' => 'foobar', 'parent_id' => 0],
@@ -156,8 +150,8 @@ class NodeCollectionTest extends TestCase
             ['id' => 4, 'name' => 'foobar4', 'parent_id' => 0],
         ];
 
-        return (new NodeCollectionFactory())->fromIterable(new NodeCollection(), $records, function ($record) {
-            return new DefaultNode($record);
+        return CustomNodeCollection::fromIterable($records, function ($record) {
+            return new CustomModelNode($record['id'], $record['parent_id'], $record);
         });
     }
 }

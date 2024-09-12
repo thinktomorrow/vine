@@ -47,7 +47,7 @@ class ShakeTest extends TestCase
         $node = $this->getNode();
 
         $shakedNode = $node->shakeChildNodes(function (Node $node) {
-            return $node->getNodeEntry('id') == 3;
+            return $node->getNodeValue('id') == 3;
         });
 
         $this->assertEquals(
@@ -66,7 +66,7 @@ class ShakeTest extends TestCase
         $nodeCollection = $this->getNode()->getChildNodes();
 
         $shakedNodeCollection = $nodeCollection->shake(function (Node $node) {
-            return $node->getNodeEntry('id') == 3;
+            return $node->getNodeValue('id') == 3;
         });
 
         $this->assertEquals(

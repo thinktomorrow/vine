@@ -25,7 +25,7 @@ class NodeCollectionCreateTest extends TestCase
             new DefaultNode(['id' => 1]),
             new DefaultNode(['id' => 2]),
         ], function ($entry) {
-            return new DefaultNode(['id' => $entry->getNodeEntry('id') * 3]);
+            return new DefaultNode(['id' => $entry->getNodeValue('id') * 3]);
         });
 
         $this->assertCount(2, $collection->all());
