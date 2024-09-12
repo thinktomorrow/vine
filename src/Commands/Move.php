@@ -16,6 +16,10 @@ class Move
      */
     public function __invoke(Node $node, Node $parent): Node
     {
+        if($node->equalsNode($parent)) {
+            return $node;
+        }
+
         if (! $node->isRootNode()) {
             $node->getParentNode()->removeNode($node);
         }

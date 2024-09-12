@@ -55,6 +55,29 @@ class NodeCollectionCreateTest extends TestCase
         $this->assertCount(1, $collection->all());
     }
 
+    public function test_it_accepts_an_array_of_nodes_with_invalid_parent_id()
+    {
+        $collection = NodeCollection::fromArray([
+            new DefaultNode(['id' => 1]),
+            new DefaultNode(['id' => 2, 'parent_id' => 3]),
+        ]);
+
+        $this->assertEquals(2, $collection->total());
+        $this->assertCount(2, $collection->all());
+    }
+
+    public function test_it_should_not_reference_itself_as_parent()
+    {
+        $collection = NodeCollection::fromArray([
+            new DefaultNode(['id' => 1]),
+            new DefaultNode(['id' => 2, 'parent_id' => 2]),
+        ]);
+
+        // Is not added because invalid
+        $this->assertEquals(1, $collection->total());
+        $this->assertCount(1, $collection->all());
+    }
+
     public function test_it_can_set_custom_id_or_parent_id_references()
     {
         $collection = NodeCollection::fromIterable([

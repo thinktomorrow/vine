@@ -10,7 +10,7 @@ class NodeCollectionFactory
 
         /** @var Node $node */
         foreach ($nodes as $node) {
-            if ($node->getParentNodeId()) {
+            if ($node->getParentNodeId() && $this->findById($nodes, $node->getParentNodeId())) {
                 $node->moveToParentNode(
                     $this->findById($nodes, $node->getParentNodeId())
                 );
