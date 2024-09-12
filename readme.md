@@ -1,114 +1,126 @@
 
-[![Build Status](https://travis-ci.org/thinktomorrow/vine.svg?branch=master)](https://travis-ci.org/thinktomorrow/vine)
-[![Coverage Status](https://coveralls.io/repos/github/thinktomorrow/vine/badge.svg?branch=master)](https://coveralls.io/github/thinktomorrow/vine?branch=master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/thinktomorrow/vine/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/thinktomorrow/vine/?branch=master)
-[![SensioLabsInsight](https://insight.sensiolabs.com/projects/573b8ce5-0c73-432c-9ddb-57a1c16bff8d/mini.png)](https://insight.sensiolabs.com/projects/573b8ce5-0c73-432c-9ddb-57a1c16bff8d)
-
 # Vine
+`Thinktomorrow\Vine` is a PHP package designed to manage and manipulate **adjacent tree-structured models**. It provides a powerful interface for building and querying collections of hierarchical data, with methods to traverse, sort, and manipulate node collections in a flexible way.
 
-Render an adjacent datamodel to the desired html output.
+It's key features are:
+- **Tree Traversal**: Map and traverse nodes with recursion.
+- **Manipulation**: Add, remove, or merge nodes.
+- **Flattening & Inflating**: Convert hierarchical data to flat lists and vice versa.
+- **Customizable Queries**: Find nodes based on specific attributes.
 
-## Create a single node
-```php
-// Create a node and attach a child node ot it
-$node = new Node('foobar');
-$node->addChildren(new Node('fooberry'));
+**IMPORTANT**
+An adjacent tree structure is assumed, where each node has an `id` and `parent_id` attribute.
+
+## Installation
+Install the package via composer:
+
+```bash
+composer require thinktomorrow/vine
 ```
-This is fine when dealing with small, isolated datasets. When you need to inject a larger amount of records, you'll want 
-to load all that data at once. 
 
-## Using a dataset
-Usually you'll want to use a collection with values coming from a database. Two methods provide this functionality:
-`NodeCollection::fromArray()` and `NodeCollection::fromSource()` allow you to transpose an entire array of records at once to a node collection.
+## Basic Usage
 
-When using `NodeCollection::fromArray()`, it is assumed that each record has the following:
- - a property `id` which provides an unique reference to the entry.
- - a property `parent_id` which is used by a child entry to refer to its parent entry.
+### 1. Creating a Node Collection
+You can create a node collection from an array of nodes. 
 
 ```php
-// flat dataset as pulled from database
-$dataset = [
-    ['id' => 1, 'parent_id' => 0, 'label' => 'foobar'],
-    ['id' => 2, 'parent_id' => 1, 'label' => 'baz'],
-    ['id' => 3, 'parent_id' => 2, 'label' => 'bazbaz'],
+use Thinktomorrow\Vine\NodeCollection;
+use Thinktomorrow\Vine\Node;
+
+// Assuming Node is a model implementing the Node interface
+$nodes = [
+    new Node(['id' => 1, 'name' => 'Parent']),
+    new Node(['id' => 2, 'name' => 'Child', 'parent_id' => 1])
 ];
 
-$collection = NodeCollection::fromArray($dataset);
+$collection = NodeCollection::fromArray($nodes);
 ```
 
-## Using a custom dataset
- You can provide a custom data source. Here's how you use it:
- ```php
- // Using a custom source
- $collection = NodeCollection::fromSource(
-     new ArraySource($dataset)
- );
- ```
- 
- This is useful when your data does not contain the default`id` or `parent_id` properties. 
- With a custom source, you can set which is the `nodeKeyIdentifier` (id) and the `nodeParentKeyIdentifier` (parent id). A custom source should honour the `\Vine\Source` interface:
- ```php 
- interface Source
- {
-    // array of all entries.
-     public function nodeEntries(): array;
+### 2. Traversing Nodes
+The package allows you to iterate over nodes recursively.
 
-     // property to identify the key (default is 'id')
-     public function nodeKeyIdentifier(): string;
+```php
+$collection->eachRecursive(function($node) {
+    echo $node->getName();  // Access node attributes
+});
+```
 
-     // property to identify the parent key (default is 'parent_id')
-     public function nodeParentKeyIdentifier(): string;
- }
- ```
- 
-## NodeCollection Api
-- all(): array - Return all the nodes as array
-- first(): ?Node - Return the first node
-- last(): ?Node - Return the last node
-- isEmpty(): bool - checks if this collection is empty.
-- findMany($key, array $values): NodeCollection - Find nodes by value.
-- find($key, $value): ?Node - Find a node by value.
-- total(): int - total of all nodes, including their children.
-- count(): int - total of all top level nodes.
-- add(Node ...$nodes) - add a new Node to the collection
-- merge(NodeCollection $nodeCollection) - merge another collection into this one.
-- map(callable $callback) - loop over and modify each top level node value 
-- mapRecursive(callable $callback) - loop over and modify each node value 
-- each(callable $callback) - loop over each top level node value 
-- sort($key) - sort all the nodes by given key
-- copy($depth = null): NodeCollection - copy the collection into a new NodeCollection
-- remove(Node $child) - remove a given Node from this collection.
-- flatten(): NodeCollection - Return flattened list of all nodes in this collection.
-- inflate(): NodeCollection - Inflate a flattened collection back to its original structure.
-- pluck($key, $value = null, $down = true): array - Get flat array of plucked values from child nodes.
-- slice(Node ...$nodes): NodeCollection - Slice one or more nodes out of the collection.
-- shake(callable $callback): NodeCollection - Filter collection to those nodes that pass the callback (Shaking a collection will keep the ancestor structure).   
-- prune(callable $callback): NodeCollection - Same as shake() except that it will not keep the ancestor structure.   
+### 3. Flattening a Tree
+To get a flat array of all nodes:
 
-## Node Api
-- equals(Node $other) - check if the given node is the same object as this one
-- addChildren($children) - add Nodes as children of this node.
-- children(): NodeCollection - get the direct children of this node.
-- hasChildren(): bool - check if this node has any children. 
-- sort($key) - sort the children by given sort key. 
-- entry($key = null, $default = null) - Return the data entry or a given property of the entry. 
-- replaceEntry($entry) - Replace the entry data with the given parameter. 
-- parent(Node $parent = null) - Return the parent or, if argument is passed, set the parent for this Node. 
-- remove(Node $node = null) - Remove this node or detaches a child node.
-- move(Node $parent) - Move a child node to a different parent.
-- moveToRoot() - Move the node to the top level.
-- depth(): int - At which depth does this node resides inside the entire tree.
-- count(): int - Return the count of all direct child nodes.
-- total(): int - Return the total count of all child nodes.    
-- isLeaf(): bool - Is this Node a leaf node? Meaning it has no child nodes.
-- isRoot(): bool - Is this Node a root node? Meaning it has no parent. 
-- has($key, $value): bool - Does the Node has given value in its data entry?
-- findMany($key, array $values): NodeCollection - Find child nodes by given value. 
-- find($key, $value): ?Node - Find child node by given value. 
-- ancestors($depth = null): NodeCollection - Return all ancestor nodes of this node. 
-- pluck($key, $value = null, $down = true): array - Get flat array of plucked values from child nodes.
-- pluckAncestors($key, $value = null, $down = true): array - Get flat array of plucked values from parent nodes.
-- copy($depth = null): Node - Creates and returns a copy of this node. 
-- isolatedCopy(): Node - Creates and returns a copy of this node without parent or child relationships. 
-- shake(callable $callback): Node - Filter collection to the nodes that pass the callback (Shaking a collection will keep the ancestor structure).
-- prune(callable $callback): Node - Same as shake() except that it will not keep the ancestor structure.
+```php
+$flatNodes = $collection->flatten()->toArray();
+```
+
+### 4. Inflating a Flattened Collection
+You can restore a flattened collection back to its tree structure:
+
+```php
+$inflatedCollection = $collection->inflate();
+```
+
+### 5. Finding Nodes
+To find nodes by specific attributes:
+
+```php
+$node = $collection->find('id', 1); // Find a node with id = 1
+```
+
+Or find multiple nodes by a set of values:
+
+```php
+$nodes = $collection->findMany('id', [1, 2, 3]); // Find nodes with ids 1, 2, and 3
+```
+
+### 6. Adding and Merging Nodes
+You can add or merge nodes into the collection:
+
+```php
+$newNode = new Node(['id' => 3, 'name' => 'New Child']);
+$collection->add($newNode); // Add a new node
+
+$otherCollection = NodeCollection::fromArray([...]); // Another node collection
+$collection->merge($otherCollection); // Merge collections
+```
+
+### 7. Sorting Nodes
+Nodes can be sorted by any attribute:
+
+```php
+$sortedCollection = $collection->sort('name'); // Sort by 'name' attribute
+```
+
+### 8. Removing Nodes
+To remove nodes by attribute or condition:
+
+```php
+$collection = $collection->remove(function($node) {
+    return $node->getId() == 2; // Remove node with id 2
+});
+```
+
+## Example: Full Usage
+
+```php
+use Thinktomorrow\Vine\NodeCollection;
+use Thinktomorrow\Vine\Node;
+
+$nodes = [
+    new Node(['id' => 1, 'name' => 'Root']),
+    new Node(['id' => 2, 'name' => 'Child 1', 'parent_id' => 1]),
+    new Node(['id' => 3, 'name' => 'Child 2', 'parent_id' => 1])
+];
+
+$collection = NodeCollection::fromArray($nodes);
+
+// Add a node
+$collection->add(new Node(['id' => 4, 'name' => 'New Child', 'parent_id' => 2]));
+
+// Flatten, sort, and remove
+$flatNodes = $collection->flatten()->sort('name')->remove(function($node) {
+    return $node->getName() === 'Child 2';
+});
+
+// Output as array
+print_r($flatNodes->toArray());
+```
