@@ -32,7 +32,7 @@ class Debugger
 
     public function render()
     {
-        if($this->type == 'ascii') {
+        if ($this->type == 'ascii') {
             return (new AsciiPresenter())->render($this->collection);
         }
 

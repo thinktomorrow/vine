@@ -15,7 +15,7 @@ class AsciiPresenter
         $collection->eachRecursive(function (Node $node) use (&$output, &$previousLevel) {
             $level = $node->getNodeDepth();
 
-            if($level != $previousLevel && $level > 0) {
+            if ($level != $previousLevel && $level > 0) {
                 $output .= str_repeat(' ', $level).'\\'.PHP_EOL;
             }
 

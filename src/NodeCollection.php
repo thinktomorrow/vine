@@ -295,12 +295,12 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
     {
         foreach ($this->nodes as $node) {
 
-            if($node->getNodeId() == $value) {
+            if ($node->getNodeId() == $value) {
                 return $node;
             }
 
             if ($node->hasChildNodes()) {
-                if($result = $node->getChildNodes()->findById($value)) {
+                if ($result = $node->getChildNodes()->findById($value)) {
                     return $result;
                 }
             }

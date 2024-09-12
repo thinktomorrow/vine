@@ -9,8 +9,8 @@ class NodeCollectionFactory
         $nodes = $this->mapIterable($items, $createNode);
 
         /** @var Node $node */
-        foreach($nodes as $node) {
-            if($node->getParentNodeId()) {
+        foreach ($nodes as $node) {
+            if ($node->getParentNodeId()) {
                 $node->moveToParentNode(
                     $this->findById($nodes, $node->getParentNodeId())
                 );
@@ -24,8 +24,8 @@ class NodeCollectionFactory
 
     private function findById($nodes, $id): ?Node
     {
-        foreach($nodes as $node) {
-            if($node->getNodeId() == $id) {
+        foreach ($nodes as $node) {
+            if ($node->getNodeId() == $id) {
                 return $node;
             }
         }
