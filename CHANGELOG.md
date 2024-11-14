@@ -3,7 +3,17 @@ All Notable changes to the `vine` package will be documented in this file. Updat
 principles.
 
 ## unreleased
+
+## TODO:
+- better debugging experience with the array / cli helper: visualize the tree.
+- Documentation
+
+## 0.5.0 - 2024-11-14
+
 **Warning: this release contains breaking changes. Please read the following upgrade guide before updating.**
+
+You can now use your own model as the tree node. The NodeDefaults trait can be added to the itself.
+
 - Removed: `NodeCollection::fromSource` method. Use `NodeCollection::fromArray` or `NodeCollection::fromIterable` instead.
 - Removed: `Source` interface and `NodeSource` in line with Source removal. 
 - Added: option to use model as a Node. Before a model was always an entry property on the Node object. Now you can use your models as Nodes. Make sure they implement the Node interface.
@@ -21,17 +31,7 @@ return NodeCollection::fromArray(self::all()->toArray());
 }
 ```
 - Changed: It is no longer advised to directly use the `NodeCollectionFactory` class for composing a tree. This is an internals class. Instead, use the `NodeCollection::fromArray` or `NodeCollection::fromIterable` methods.
-- e.g. 
-
-## TODO:
-- nodeDefaults trait to use model as node itself
-- trait for nodeEntry stuff on when to use entry as property in defaultNode instead of node itself
-- test: childcollection should be same as custom nodecollection
-- resolve all todo's in files
-  - factory: structure collection can be replaced by just calls in the own method
-  - toArray() tests
-  - better debugging experience with the array / cli helper: visualize the tree. 
-  - documentation.
+- e.g.
 
 ## 0.4.10 - 2023-02-03
 - Fixed: when parent id was null, an empty string was returned by getParentNodeId() instead of expected null.
