@@ -8,8 +8,7 @@ use Thinktomorrow\Vine\NodeCollection;
 
 class SortNodeCollectionTest extends TestCase
 {
-    /** @test */
-    public function it_can_sort_collection_of_array_entries()
+    public function test_it_can_sort_collection_of_array_entries()
     {
         $collection = new NodeCollection([
             new DefaultNode(['id' => 2]),
@@ -24,8 +23,7 @@ class SortNodeCollectionTest extends TestCase
         ]), $collection->sort('id'));
     }
 
-    /** @test */
-    public function it_can_sort_collection_of_object_entries()
+    public function test_it_can_sort_collection_of_object_entries()
     {
         $collection = new NodeCollection([
             new DefaultNode((object) ['id' => 2]),
@@ -40,8 +38,7 @@ class SortNodeCollectionTest extends TestCase
         ]), $collection->sort('id'));
     }
 
-    /** @test */
-    public function it_can_call_sort_on_a_node()
+    public function test_it_can_call_sort_on_a_node()
     {
         $original = new DefaultNode((object) ['id' => 2]);
         $original->addChildNodes([new DefaultNode(['id' => '23']), new DefaultNode(['id' => '22']), new DefaultNode(['id' => '21'])]);
@@ -52,8 +49,7 @@ class SortNodeCollectionTest extends TestCase
         $this->assertEquals($expected, $original->sortChildNodes('id'));
     }
 
-    /** @test */
-    public function it_can_sort_nested_collection()
+    public function test_it_can_sort_nested_collection()
     {
         $collection = new NodeCollection([
             $parent = new DefaultNode((object) ['id' => 2]),
@@ -73,8 +69,7 @@ class SortNodeCollectionTest extends TestCase
         ]), $collection->sort('id'));
     }
 
-    /** @test */
-    public function if_sorting_key_does_not_exist_unsorted_entries_are_expected()
+    public function test_if_sorting_key_does_not_exist_unsorted_entries_are_expected()
     {
         $original = new DefaultNode((object) ['id' => 2]);
         $original->addChildNodes([new DefaultNode(['id' => '23']), new DefaultNode(['id' => '22']), new DefaultNode(['id' => '21'])]);

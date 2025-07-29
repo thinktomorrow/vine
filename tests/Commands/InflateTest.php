@@ -7,8 +7,7 @@ use Thinktomorrow\Vine\DefaultNode;
 
 class InflateTest extends TestCase
 {
-    /** @test */
-    public function it_can_inflate_a_flattened_node_collection_back_to_its_original_structure()
+    public function test_it_can_inflate_a_flattened_node_collection_back_to_its_original_structure()
     {
         $node = new DefaultNode(['id' => 1, 'name' => 'foobar']);
         $node->addChildNodes([$child = new DefaultNode(['id' => 2, 'name' => 'first-child'])]);
@@ -23,8 +22,7 @@ class InflateTest extends TestCase
         $this->assertSame($node, $inflatedNodes->first());
     }
 
-    /** @test */
-    public function inflating_a_non_flattened_collection_remains_the_same()
+    public function test_inflating_a_non_flattened_collection_remains_the_same()
     {
         $node = new DefaultNode(['id' => 1, 'name' => 'foobar']);
         $node->addChildNodes([$child = new DefaultNode(['id' => 2, 'name' => 'first-child'])]);

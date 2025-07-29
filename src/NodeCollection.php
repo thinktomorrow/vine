@@ -30,7 +30,7 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
         $this->nodes = $nodes;
     }
 
-    public static function fromIterable(iterable $items, callable $createNode = null): static
+    public static function fromIterable(iterable $items, ?callable $createNode = null): static
     {
         return (new NodeCollectionFactory())->fromIterable(
             new static(),
@@ -39,7 +39,7 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
         );
     }
 
-    public static function fromArray(array $entries, callable $createNode = null): static
+    public static function fromArray(array $entries, ?callable $createNode = null): static
     {
         return static::fromIterable($entries, $createNode);
     }
@@ -214,14 +214,8 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
 
     /**
      * Get flat array of plucked values from child nodes.
-     *
-     * @param string|int|Closure      $key
-     * @param string|int|Closure|null $value
-     * @param bool            $down
-     *
-     * @return array
      */
-    public function pluck($key, $value = null, $down = true): array
+    public function pluck(string|int|Closure $key, null|string|int|Closure $value = null, bool $down = true): array
     {
         $plucks = [];
 
@@ -280,13 +274,8 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
 
     /**
      * Find specific node by attribute value.
-     *
-     * @param string|Closure $key
-     * @param mixed|null $value
-     *
-     * @return Node|null
      */
-    public function find($key, $value = null): ?Node
+    public function find(string|Closure $key, mixed $value = null): ?Node
     {
         return (new FindFirst())($this, $key, $value ? [$value] : null);
     }

@@ -8,8 +8,7 @@ use Thinktomorrow\Vine\NodeCollection;
 
 class FindTest extends TestCase
 {
-    /** @test */
-    public function it_can_find_many_nodes_by_their_primary_identifiers()
+    public function test_it_can_find_many_nodes_by_their_primary_identifiers()
     {
         $node = new DefaultNode(['id' => 1]);
         $node->addChildNodes([$child = new DefaultNode(['id' => 2])]);
@@ -30,8 +29,7 @@ class FindTest extends TestCase
         $this->assertEquals($nodes, $node->findChildNodes('id', [2, 3]));
     }
 
-    /** @test */
-    public function it_can_find_many_nodes_by_callback()
+    public function test_it_can_find_many_nodes_by_callback()
     {
         $node = new DefaultNode(['id' => 1]);
         $node->addChildNodes([$child = new DefaultNode(['id' => 2])]);
@@ -63,8 +61,7 @@ class FindTest extends TestCase
         $this->assertEquals($child1, $cleanCollection->first());
     }
 
-    /** @test */
-    public function it_can_find_a_node_by_its_primary_identifier()
+    public function test_it_can_find_a_node_by_its_primary_identifier()
     {
         $node = new DefaultNode(['id' => 1]);
         $node->addChildNodes([$child = new DefaultNode(['id' => 2])]);

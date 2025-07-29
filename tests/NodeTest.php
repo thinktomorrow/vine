@@ -9,8 +9,7 @@ use Thinktomorrow\Vine\Tests\Fixtures\CustomNodeCollection;
 
 class NodeTest extends TestCase
 {
-    /** @test */
-    public function it_can_add_an_entry_value_to_a_node()
+    public function test_it_can_add_an_entry_value_to_a_node()
     {
         $node = new CustomModelNode(1, null, ['foobar' => 'baz']);
         $this->assertEquals('baz', $node->getNodeValue('foobar'));
@@ -19,8 +18,7 @@ class NodeTest extends TestCase
         $this->assertSame($entry, $node->getValues());
     }
 
-    /** @test */
-    public function it_can_add_children_to_a_node()
+    public function test_it_can_add_children_to_a_node()
     {
         $node = new CustomModelNode(1);
         $this->assertEmpty($node->getChildNodes());
@@ -31,8 +29,7 @@ class NodeTest extends TestCase
         ])->getChildNodes());
     }
 
-    /** @test */
-    public function it_can_get_parent_id()
+    public function test_it_can_get_parent_id()
     {
         $node = new CustomModelNode(1);
 
@@ -45,8 +42,7 @@ class NodeTest extends TestCase
         $this->assertEquals($node->getNodeId(), $child->getParentNodeId());
     }
 
-    /** @test */
-    public function an_added_child_must_be_node_or_collection()
+    public function test_an_added_child_must_be_node_or_collection()
     {
         $this->expectException(\InvalidArgumentException::class);
 
@@ -54,8 +50,7 @@ class NodeTest extends TestCase
         $node->addChildNodes('string is not allowed');
     }
 
-    /** @test */
-    public function it_can_add_children_to_a_node_consecutively()
+    public function test_it_can_add_children_to_a_node_consecutively()
     {
         $node = new CustomModelNode(1);
         $this->assertEmpty($node->getChildNodes());
@@ -67,8 +62,7 @@ class NodeTest extends TestCase
         ])->getChildNodes());
     }
 
-    /** @test */
-    public function by_setting_children_the_parent_is_set_for_each_one()
+    public function test_by_setting_children_the_parent_is_set_for_each_one()
     {
         $node = new CustomModelNode(1);
         $node->addChildNodes([$child = new CustomModelNode(2)]);
@@ -76,8 +70,7 @@ class NodeTest extends TestCase
         $this->assertSame($node, $child->getParentNode());
     }
 
-    /** @test */
-    public function it_can_verify_a_node_is_equal()
+    public function test_it_can_verify_a_node_is_equal()
     {
         $first = new CustomModelNode(1);
         $second = $first;
@@ -85,8 +78,7 @@ class NodeTest extends TestCase
         $this->assertTrue($first->equalsNode($second));
     }
 
-    /** @test */
-    public function a_node_is_a_leaf_if_it_has_no_children()
+    public function test_a_node_is_a_leaf_if_it_has_no_children()
     {
         $node = new CustomModelNode(1);
         $node->addChildNodes([$child = new CustomModelNode(2)]);
@@ -95,8 +87,7 @@ class NodeTest extends TestCase
         $this->assertTrue($child->isLeafNode());
     }
 
-    /** @test */
-    public function a_node_is_a_root_if_it_has_no_parent()
+    public function test_a_node_is_a_root_if_it_has_no_parent()
     {
         $node = new CustomModelNode(1);
         $node->addChildNodes([$child = new CustomModelNode(2)]);
@@ -105,8 +96,7 @@ class NodeTest extends TestCase
         $this->assertFalse($child->isRootNode());
     }
 
-    /** @test */
-    public function it_can_get_depth()
+    public function test_it_can_get_depth()
     {
         $node = new CustomModelNode(1);
         $node->addChildNodes([$child = new CustomModelNode(2)]);
@@ -117,8 +107,7 @@ class NodeTest extends TestCase
         $this->assertEquals(0, $node->getNodeDepth());
     }
 
-    /** @test */
-    public function it_can_get_total_count_of_all_children()
+    public function test_it_can_get_total_count_of_all_children()
     {
         $node = new CustomModelNode(1);
         $node->addChildNodes([$child = new CustomModelNode(2)]);
@@ -129,8 +118,7 @@ class NodeTest extends TestCase
         $this->assertEquals(2, $node->getTotalChildNodesCount());
     }
 
-    /** @test */
-    public function it_can_remove_self_from_parent()
+    public function test_it_can_remove_self_from_parent()
     {
         $node = new CustomModelNode(1);
         $node->addChildNodes([$child = new CustomModelNode(2)]);
@@ -146,8 +134,7 @@ class NodeTest extends TestCase
         $this->assertInstanceOf(CustomModelNode::class, $node);
     }
 
-    /** @test */
-    public function it_can_fetch_entry_values_via_node()
+    public function test_it_can_fetch_entry_values_via_node()
     {
         $node = new CustomModelNode(1, null, ['id' => 1, 'label' => 'foobar']);
 
@@ -155,8 +142,7 @@ class NodeTest extends TestCase
         $this->assertEquals('foobar', $node->getNodeValue('label'));
     }
 
-    /** @test */
-    public function it_can_fetch_children_as_property_call()
+    public function test_it_can_fetch_children_as_property_call()
     {
         $node = new CustomModelNode(1);
         $node->addChildNodes([$child = new CustomModelNode(2)]);
@@ -165,8 +151,7 @@ class NodeTest extends TestCase
         $this->assertSame($child, $node->getChildNodes()->first());
     }
 
-    /** @test */
-    public function it_can_check_if_it_has_children()
+    public function test_it_can_check_if_it_has_children()
     {
         $node = new CustomModelNode(1);
         $node->addChildNodes([$child = new CustomModelNode(2)]);
@@ -201,8 +186,7 @@ class NodeTest extends TestCase
         $this->assertCount(0, $root2->getSiblingNodes());
     }
 
-    /** @test */
-    public function it_can_check_if_it_has_siblings()
+    public function test_it_can_check_if_it_has_siblings()
     {
         $node = new CustomModelNode(1);
         $node->addChildNodes([$child = new CustomModelNode(2)]);
@@ -259,8 +243,7 @@ class NodeTest extends TestCase
         ], $node->toArray());
     }
 
-    /** @test */
-    public function model_can_be_node()
+    public function test_model_can_be_node()
     {
         $collection = CustomNodeCollection::fromIterable([
             $model1 = new CustomModelNode('1', null, ['name' => 'foobar']),
@@ -279,8 +262,7 @@ class NodeTest extends TestCase
         $this->assertEquals($model3, $model2->getChildNodes()->first());
     }
 
-    /** @test */
-    public function model_can_be_referenced_via_object_memory()
+    public function test_model_can_be_referenced_via_object_memory()
     {
         $collection = CustomNodeCollection::fromIterable([
             $model1 = new CustomModelNode('1', null, ['name' => 'foobar']),

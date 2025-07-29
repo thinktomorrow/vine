@@ -6,8 +6,7 @@ use Thinktomorrow\Vine\DefaultNode;
 
 class MoveTest extends \PHPUnit\Framework\TestCase
 {
-    /** @test */
-    public function a_node_can_be_moved_to_different_parent()
+    public function test_a_node_can_be_moved_to_different_parent()
     {
         $node = new DefaultNode(['id' => 1, 'name' => 'root-1']);
         $node2 = new DefaultNode(['id' => 2, 'name' => 'root-2']);
@@ -26,8 +25,7 @@ class MoveTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($node2, $child->getParentNode());
     }
 
-    /** @test */
-    public function a_node_is_moved_along_with_its_children()
+    public function test_a_node_is_moved_along_with_its_children()
     {
         $root = new DefaultNode(['id' => 1, 'name' => 'root-1']);
         $root->addChildNodes([$main1 = new DefaultNode(['id' => 2, 'name' => 'child-1'])]);
@@ -48,8 +46,7 @@ class MoveTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($child4, $child3->getChildNodes()->first());
     }
 
-    /** @test */
-    public function a_node_can_be_moved_to_root()
+    public function test_a_node_can_be_moved_to_root()
     {
         $root = new DefaultNode(['id' => 1, 'name' => 'root-1']);
         $root->addChildNodes([$main1 = new DefaultNode(['id' => 2, 'name' => 'child-1'])]);

@@ -10,16 +10,14 @@ use Thinktomorrow\Vine\Tests\Fixtures\FixtureSource;
 
 class ArrayPresenterTest extends TestCase
 {
-    /** @test */
-    public function it_can_represent_a_collection_as_array()
+    public function test_it_can_represent_a_collection_as_array()
     {
         $result = (new ArrayPresenter())->render(new NodeCollection([new DefaultNode(['id' => 1])]));
 
         $this->assertIsArray($result);
     }
 
-    /** @test */
-    public function it_can_represent_tree_as_array()
+    public function test_it_can_represent_tree_as_array()
     {
         $tree = NodeCollection::fromIterable($this->getTranslation());
 

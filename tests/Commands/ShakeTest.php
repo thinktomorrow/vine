@@ -9,8 +9,7 @@ use Thinktomorrow\Vine\NodeCollection;
 
 class ShakeTest extends TestCase
 {
-    /** @test */
-    public function a_node_collection_that_does_not_need_shaking_is_copied_but_has_exact_same_structure()
+    public function test_a_node_collection_that_does_not_need_shaking_is_copied_but_has_exact_same_structure()
     {
         $node = $this->getNode();
 
@@ -29,8 +28,7 @@ class ShakeTest extends TestCase
         $this->assertEquals(1, $shakedNode->getChildNodesCount());
     }
 
-    /** @test */
-    public function if_all_is_shaken_only_the_root_remains()
+    public function test_if_all_is_shaken_only_the_root_remains()
     {
         $node = $this->getNode();
 
@@ -41,8 +39,7 @@ class ShakeTest extends TestCase
         $this->assertEquals($node->copyIsolatedNode(), $shakedNode);
     }
 
-    /** @test */
-    public function shake_maintains_the_ancestors_for_each_kept_node()
+    public function test_shake_maintains_the_ancestors_for_each_kept_node()
     {
         $node = $this->getNode();
 
@@ -60,8 +57,7 @@ class ShakeTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_can_shake_a_node_collection()
+    public function test_it_can_shake_a_node_collection()
     {
         $nodeCollection = $this->getNode()->getChildNodes();
 

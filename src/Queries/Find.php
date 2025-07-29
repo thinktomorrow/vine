@@ -8,13 +8,7 @@ use Thinktomorrow\Vine\NodeCollection;
 
 class Find
 {
-    /**
-     * @param NodeCollection $nodeCollection
-     * @param string|Closure $key
-     * @param array $values
-     * @return NodeCollection
-     */
-    public function __invoke(NodeCollection $nodeCollection, $key, array $values = null): NodeCollection
+    public function __invoke(NodeCollection $nodeCollection, string|Closure $key, ?array $values = null): NodeCollection
     {
         $className = get_class($nodeCollection);
         $nodes = new $className();

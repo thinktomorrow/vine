@@ -8,8 +8,7 @@ use Thinktomorrow\Vine\Node;
 
 class PruneTest extends TestCase
 {
-    /** @test */
-    public function a_node_collection_that_does_not_need_pruning_is_copied_but_has_exact_same_structure()
+    public function test_a_node_collection_that_does_not_need_pruning_is_copied_but_has_exact_same_structure()
     {
         $node = $this->getNode();
 
@@ -28,8 +27,7 @@ class PruneTest extends TestCase
         $this->assertEquals(1, $prunedNode->getChildNodesCount());
     }
 
-    /** @test */
-    public function if_all_is_pruned_only_the_root_remains()
+    public function test_if_all_is_pruned_only_the_root_remains()
     {
         $node = $this->getNode();
 
@@ -40,8 +38,7 @@ class PruneTest extends TestCase
         $this->assertEquals($node->copyIsolatedNode(), $prunedNode);
     }
 
-    /** @test */
-    public function it_can_prune_by_specific_closure()
+    public function test_it_can_prune_by_specific_closure()
     {
         $node = $this->getNode();
 
@@ -55,8 +52,7 @@ class PruneTest extends TestCase
         );
     }
 
-    /** @test */
-    public function prune_maintains_the_ancestors_for_each_kept_node()
+    public function test_prune_maintains_the_ancestors_for_each_kept_node()
     {
         $node = $this->getNode();
 
@@ -70,8 +66,7 @@ class PruneTest extends TestCase
         );
     }
 
-    /** @test */
-    public function it_can_prune_a_node_collection()
+    public function test_it_can_prune_a_node_collection()
     {
         $nodeCollection = $this->getNode()->getChildNodes();
 

@@ -9,8 +9,7 @@ use Thinktomorrow\Vine\Tests\Fixtures\FixtureSource;
 
 class AsciiPresenterTest extends TestCase
 {
-    /** @test */
-    public function it_can_represent_tree_as_ascii()
+    public function test_it_can_represent_tree_as_ascii()
     {
         $tree = $this->getCollection();
 

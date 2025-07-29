@@ -7,8 +7,7 @@ use Thinktomorrow\Vine\DefaultNode;
 
 class FlattenTest extends TestCase
 {
-    /** @test */
-    public function it_can_flatten_a_node_collection()
+    public function test_it_can_flatten_a_node_collection()
     {
         $node = new DefaultNode(['id' => 1, 'name' => 'foobar']);
         $node->addChildNodes([$child = new DefaultNode(['id' => 2, 'name' => 'first-child'])]);

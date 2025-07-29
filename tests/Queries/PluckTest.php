@@ -8,8 +8,7 @@ use Thinktomorrow\Vine\NodeCollection;
 
 class PluckTest extends TestCase
 {
-    /** @test */
-    public function it_can_pluck_specific_values_of_all_children()
+    public function test_it_can_pluck_specific_values_of_all_children()
     {
         $node = new DefaultNode(['id' => 1, 'name' => 'foobar']);
         $node->addChildNodes([$child = new DefaultNode(['id' => 2, 'name' => 'first-child'])]);
@@ -24,8 +23,7 @@ class PluckTest extends TestCase
         ], $node->pluckChildNodes('id', null, true));
     }
 
-    /** @test */
-    public function it_can_pluck_key_value_pairs_of_all_children()
+    public function test_it_can_pluck_key_value_pairs_of_all_children()
     {
         $node = new DefaultNode(['id' => 'one', 'name' => 'foobar']);
         $node->addChildNodes([$child = new DefaultNode(['id' => 'two', 'name' => 'first-child'])]);
@@ -43,8 +41,7 @@ class PluckTest extends TestCase
         ], $node->pluckChildNodes('id', 'name', true));
     }
 
-    /** @test */
-    public function it_can_pluck_key_value_pairs_of_all_children_with_numeric_keys()
+    public function test_it_can_pluck_key_value_pairs_of_all_children_with_numeric_keys()
     {
         $node = new DefaultNode(['id' => 1, 'name' => 'foobar']);
         $node->addChildNodes([$child = new DefaultNode(['id' => 2, 'name' => 'first-child'])]);
@@ -62,8 +59,7 @@ class PluckTest extends TestCase
         ], $node->pluckChildNodes('id', 'name', true));
     }
 
-    /** @test */
-    public function it_can_pluck_from_ancestors()
+    public function test_it_can_pluck_from_ancestors()
     {
         $node = new DefaultNode(['id' => 1, 'name' => 'foobar']);
         $node->addChildNodes([$child = new DefaultNode(['id' => 2, 'name' => 'first-child'])]);
@@ -78,8 +74,7 @@ class PluckTest extends TestCase
         ], $child2->pluckAncestorNodes('id', null, true));
     }
 
-    /** @test */
-    public function it_can_pluck_specific_values_of_collection()
+    public function test_it_can_pluck_specific_values_of_collection()
     {
         $collection = new NodeCollection([
             new DefaultNode(['id' => 1]),
@@ -92,8 +87,7 @@ class PluckTest extends TestCase
         ], $collection->pluck('id'));
     }
 
-    /** @test */
-    public function it_can_pluck_key_value_pairs_of_collection()
+    public function test_it_can_pluck_key_value_pairs_of_collection()
     {
         $collection = new NodeCollection([
             new DefaultNode(['id' => 1, 'label' => 'foobar-1']),
@@ -108,8 +102,7 @@ class PluckTest extends TestCase
         ], $collection->pluck('id', 'label'));
     }
 
-    /** @test */
-    public function it_can_pluck_methods()
+    public function test_it_can_pluck_methods()
     {
         $collection = new NodeCollection([
             new DefaultNode(['id' => 1]),
@@ -122,8 +115,7 @@ class PluckTest extends TestCase
         ], $collection->pluck('getNodeId'));
     }
 
-    /** @test */
-    public function it_can_pluck_with_closure()
+    public function test_it_can_pluck_with_closure()
     {
         $collection = new NodeCollection([
             new DefaultNode(['id' => 1]),

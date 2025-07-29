@@ -8,8 +8,7 @@ use Thinktomorrow\Vine\NodeCollection;
 
 class RemoveTest extends \PHPUnit\Framework\TestCase
 {
-    /** @test */
-    public function it_can_remove_self_from_parent()
+    public function test_it_can_remove_self_from_parent()
     {
         $node = new DefaultNode(null);
         $node->addChildNodes([$child = new DefaultNode(null)]);
@@ -25,8 +24,7 @@ class RemoveTest extends \PHPUnit\Framework\TestCase
         $this->assertInstanceOf(Node::class, $node);
     }
 
-    /** @test */
-    public function it_can_remove_nodes()
+    public function test_it_can_remove_nodes()
     {
         $collection = new \Thinktomorrow\Vine\NodeCollection([
             $child = new DefaultNode(['id' => 1, 'name' => 'foobar']),
@@ -42,8 +40,7 @@ class RemoveTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($collection->find('id', 1));
     }
 
-    /** @test */
-    public function it_can_remove_nested_nodes()
+    public function test_it_can_remove_nested_nodes()
     {
         $root = new DefaultNode(['id' => 1, 'name' => 'foobar']);
         $root->addChildNodes($child2 = new DefaultNode(['id' => 2, 'name' => 'foobar-2']));
@@ -61,8 +58,7 @@ class RemoveTest extends \PHPUnit\Framework\TestCase
         $this->assertNull($root->getChildNodes()->find('id', 5));
     }
 
-    /** @test */
-    public function when_node_is_removed_all_children_are_removed_as_well()
+    public function test_when_node_is_removed_all_children_are_removed_as_well()
     {
         $root = new DefaultNode(['id' => 1, 'name' => 'foobar']);
         $root->addChildNodes($child1 = new DefaultNode(['id' => 2, 'name' => 'foobar-2']));
@@ -76,8 +72,7 @@ class RemoveTest extends \PHPUnit\Framework\TestCase
         $this->assertCount(0, $root->getChildNodes());
     }
 
-    /** @test */
-    public function when_a_node_is_removed_via_callback_all_children_are_removed_as_well()
+    public function test_when_a_node_is_removed_via_callback_all_children_are_removed_as_well()
     {
         $root = new DefaultNode(['id' => 1, 'name' => 'foobar']);
         $root->addChildNodes($child1 = new DefaultNode(['id' => 2, 'name' => 'foobar-2']));
@@ -95,8 +90,7 @@ class RemoveTest extends \PHPUnit\Framework\TestCase
         $this->assertCount(0, $cleanCollection->first()->getChildNodes());
     }
 
-    /** @test */
-    public function node_can_be_removed_from_collection()
+    public function test_node_can_be_removed_from_collection()
     {
         $node = new DefaultNode(1);
         $node2 = new DefaultNode(2);
@@ -115,8 +109,7 @@ class RemoveTest extends \PHPUnit\Framework\TestCase
         $this->assertNotNull($child3->getParentNode());
     }
 
-    /** @test */
-    public function individual_node_removal_is_not_immutable()
+    public function test_individual_node_removal_is_not_immutable()
     {
         $node = new DefaultNode(1);
         $node->addChildNodes([$child = new DefaultNode(3)]);

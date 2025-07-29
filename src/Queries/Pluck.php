@@ -7,14 +7,9 @@ use Thinktomorrow\Vine\Node;
 class Pluck
 {
     /**
-     * @param Node $node
-     * @param string $key
-     * @param null $value
      * @param bool $down  | down: pluck from children, up: pluck from ancestors
-     *
-     * @return array
      */
-    public function __invoke(Node $node, string|int|\Closure $key, $value = null, $down = true): array
+    public function __invoke(Node $node, string|int|\Closure $key, mixed $value = null, bool $down = true): array
     {
         $keyResult = $this->retrieveValueFromNode($node, $key);
 

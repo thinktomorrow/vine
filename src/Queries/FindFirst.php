@@ -8,13 +8,7 @@ use Thinktomorrow\Vine\NodeCollection;
 
 class FindFirst
 {
-    /**
-     * @param NodeCollection $nodeCollection
-     * @param string|Closure $key
-     * @param array|null $values
-     * @return Node|null
-     */
-    public function __invoke(NodeCollection $nodeCollection, $key, array $values = null): ?Node
+    public function __invoke(NodeCollection $nodeCollection, string|Closure $key, ?array $values = null): ?Node
     {
         /** @var Node $node */
         foreach ($nodeCollection as $node) {

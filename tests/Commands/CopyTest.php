@@ -9,8 +9,7 @@ use Thinktomorrow\Vine\Tests\Fixtures\FixtureSource;
 
 class CopyTest extends TestCase
 {
-    /** @test */
-    public function it_can_deep_copy_a_node()
+    public function test_it_can_deep_copy_a_node()
     {
         $node = new DefaultNode(['id' => 1, 'name' => 'foobar'], new NodeCollection());
         $node->addChildNodes([$child = new DefaultNode(['id' => 2, 'name' => 'first-child'], new NodeCollection())]);
@@ -25,8 +24,7 @@ class CopyTest extends TestCase
         $this->assertNotSame($node->getChildNodes()->first()->getChildNodes()[1], $cloned->getChildNodes()->first()->getChildNodes()[1]);
     }
 
-    /** @test */
-    public function it_can_get_new_node_with_specific_depth_of_childnodes()
+    public function test_it_can_get_new_node_with_specific_depth_of_childnodes()
     {
         $tree = $this->getTranslation();
 
@@ -40,8 +38,7 @@ class CopyTest extends TestCase
         }
     }
 
-    /** @test */
-    public function node_can_be_isolated()
+    public function test_node_can_be_isolated()
     {
         $root = new DefaultNode('foobar');
         $root->addChildNodes([$firstChild = new DefaultNode('first-child')]);
@@ -53,8 +50,7 @@ class CopyTest extends TestCase
         $this->assertTrue($isolatedNode->isLeafNode());
     }
 
-    /** @test */
-    public function collection_can_be_copied()
+    public function test_collection_can_be_copied()
     {
         $root = new DefaultNode('foobar');
         $root2 = new DefaultNode('first-child');
@@ -68,8 +64,7 @@ class CopyTest extends TestCase
         $this->assertNotSame($collection, $copy);
     }
 
-    /** @test */
-    public function node_can_be_isolated_at_specified_depth()
+    public function test_node_can_be_isolated_at_specified_depth()
     {
         $root = new DefaultNode('foobar');
         $root->addChildNodes([$firstChild = new DefaultNode('first-child')]);

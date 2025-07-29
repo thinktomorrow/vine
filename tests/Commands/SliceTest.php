@@ -7,8 +7,7 @@ use Thinktomorrow\Vine\NodeCollection;
 
 class SliceTest extends \PHPUnit\Framework\TestCase
 {
-    /** @test */
-    public function when_removing_node_from_flat_collection_node_is_removed_and_children_are_added_to_ancestor()
+    public function test_when_removing_node_from_flat_collection_node_is_removed_and_children_are_added_to_ancestor()
     {
         $node = new DefaultNode(['id' => 1, 'name' => 'foobar']);
         $node->addChildNodes([$child = new DefaultNode(['id' => 2, 'name' => 'first-child'])]);

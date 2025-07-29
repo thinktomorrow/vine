@@ -9,8 +9,7 @@ use Thinktomorrow\Vine\Tests\Fixtures\FixtureSource;
 
 class DebuggerTest extends TestCase
 {
-    /** @test */
-    public function it_can_debug_collection()
+    public function test_it_can_debug_collection()
     {
         $tree = $this->getCollection();
 
