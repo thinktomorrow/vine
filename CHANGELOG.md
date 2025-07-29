@@ -8,6 +8,11 @@ principles.
 - better debugging experience with the array / cli helper: visualize the tree.
 - Documentation
 
+## 0.5.1 - 2025-07-29
+- Dropped php 8.1 support. The package now requires PHP 8.2 or higher.
+- Fixed: issue where custom 'id' model key cannot be set per model
+- Added: `Node::getNodeIdKey()` and `Node::getNodeParentIdKey()` methods to retrieve the keys used for node and parent node ids. This allows you to use custom keys for your models.
+
 ## 0.5.0 - 2024-11-14
 
 **Warning: this release contains breaking changes. Please read the following upgrade guide before updating.**
