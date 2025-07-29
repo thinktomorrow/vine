@@ -18,7 +18,7 @@ trait NodeDefaults
         return 'id';
     }
 
-    protected function getNodeParentIdKey(): string
+    protected function getParentNodeIdKey(): string
     {
         return 'parent_id';
     }

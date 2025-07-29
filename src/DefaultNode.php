@@ -28,7 +28,7 @@ class DefaultNode implements Node, Arrayable
         return $this->idKey;
     }
 
-    protected function getNodeParentIdKey(): string
+    protected function getParentNodeIdKey(): string
     {
         return $this->parentKey;
     }
@@ -40,7 +40,7 @@ class DefaultNode implements Node, Arrayable
 
     public function getParentNodeId(): ?string
     {
-        if ($parentId = $this->getNodeValue($this->getNodeParentIdKey())) {
+        if ($parentId = $this->getNodeValue($this->getParentNodeIdKey())) {
             return (string) $parentId;
         }
 
