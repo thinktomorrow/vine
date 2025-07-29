@@ -19,9 +19,16 @@ class CustomModelNode implements Node
         $this->parentId = $parentId;
         $this->values = $values;
         $this->children = new CustomNodeCollection();
+    }
 
-        $this->idKey = 'id';
-        $this->parentKey = 'parentId';
+    protected function getNodeIdKey(): string
+    {
+        return 'id';
+    }
+
+    protected function getParentNodeIdKey(): string
+    {
+        return 'parentId';
     }
 
     public function toArray(): array

@@ -12,11 +12,11 @@ class Copy
      * So here the Node::copy() must never be passed a param to avoid infinite call loop.
      *
      * @param Node $node
-     * @param null $depth (null is infinite)
+     * @param null|int $depth (null is infinite)
      *
      * @return Node
      */
-    public function __invoke(Node $node, $depth = null): Node
+    public function __invoke(Node $node, ?int $depth = null): Node
     {
         $copy = $node->copyIsolatedNode();
 
@@ -30,7 +30,7 @@ class Copy
      *
      * @return NodeCollection
      */
-    private function recursiveDepth(NodeCollection $nodeCollection, $depth = null, $currentDepth = 0)
+    private function recursiveDepth(NodeCollection $nodeCollection, ?int $depth = null, int $currentDepth = 0)
     {
         $className = get_class($nodeCollection);
 

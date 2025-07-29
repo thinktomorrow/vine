@@ -12,12 +12,20 @@ trait NodeDefaults
 {
     protected ?Node $parentNode = null;
     protected NodeCollection $children;
-    protected string $idKey = 'id';
-    protected string $parentKey = 'parent_id';
+
+    protected function getNodeIdKey(): string
+    {
+        return 'id';
+    }
+
+    protected function getNodeParentIdKey(): string
+    {
+        return 'parent_id';
+    }
 
     public function getNodeId(): string
     {
-        return (string) $this->{$this->idKey};
+        return (string) $this->{$this->getNodeIdKey()};
     }
 
     public function getParentNodeId(): ?string
@@ -26,7 +34,7 @@ trait NodeDefaults
             return $this->parentNode->getNodeId();
         }
 
-        if ($parentId = $this->{$this->parentKey}) {
+        if ($parentId = $this->{$this->getParentNodeIdKey()}) {
             return (string) $parentId;
         }
 

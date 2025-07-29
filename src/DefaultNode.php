@@ -10,6 +10,8 @@ class DefaultNode implements Node, Arrayable
     use NodeDefaults;
 
     protected $entry;
+    protected string $idKey;
+    protected string $parentKey;
 
     public function __construct($entry, ?NodeCollection $children = null, string $idKey = 'id', string $parentKey = 'parent_id')
     {
@@ -21,15 +23,24 @@ class DefaultNode implements Node, Arrayable
         $this->children = $children ?: new NodeCollection();
     }
 
+    protected function getNodeIdKey(): string
+    {
+        return $this->idKey;
+    }
+
+    protected function getNodeParentIdKey(): string
+    {
+        return $this->parentKey;
+    }
 
     public function getNodeId(): string
     {
-        return (string) $this->getNodeValue($this->idKey);
+        return (string) $this->getNodeValue($this->getNodeIdKey());
     }
 
     public function getParentNodeId(): ?string
     {
-        if ($parentId = $this->getNodeValue($this->parentKey)) {
+        if ($parentId = $this->getNodeValue($this->getNodeParentIdKey())) {
             return (string) $parentId;
         }
 
