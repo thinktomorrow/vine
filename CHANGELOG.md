@@ -8,6 +8,9 @@ principles.
 - better debugging experience with the array / cli helper: visualize the tree.
 - Documentation
 
+## 0.5.2 - 2025-10-21
+- Fixed: reindex childnodes after shake
+
 ## 0.5.1 - 2025-07-29
 - Dropped php 8.1 support. The package now requires PHP 8.2 or higher.
 - Fixed: issue where custom 'id' model key cannot be set per model

@@ -310,6 +310,27 @@ class NodeCollection implements \ArrayAccess, \Countable, \IteratorAggregate
         }, $this->count());
     }
 
+    public function reindex(): static
+    {
+        $this->nodes = array_values($this->nodes);
+
+        return $this;
+    }
+
+    public function reindexRecursive(): static
+    {
+        $this->reindex();
+
+        /** @var Node $node */
+        foreach ($this->nodes as $node) {
+            if ($node->hasChildNodes()) {
+                $node->getChildNodes()->reindexRecursive();
+            }
+        }
+
+        return $this;
+    }
+
     public function offsetExists($offset): bool
     {
         if (! is_string($offset) && ! is_int($offset)) {

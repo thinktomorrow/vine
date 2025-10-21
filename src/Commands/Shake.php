@@ -22,7 +22,9 @@ class Shake
     {
         $copiedNodeCollection = $nodeCollection->copy();
 
-        return (new Slice())($copiedNodeCollection, ...$this->getBlacklistedNodes($copiedNodeCollection, $callback));
+        $shaken = (new Slice())($copiedNodeCollection, ...$this->getBlacklistedNodes($copiedNodeCollection, $callback));
+
+        return $shaken->reindexRecursive();
     }
 
     /**

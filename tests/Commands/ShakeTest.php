@@ -74,6 +74,19 @@ class ShakeTest extends TestCase
         );
     }
 
+    public function test_shake_reindexes_child_nodes()
+    {
+        $node = $this->getNode();
+
+        $shakedNode = $node->shakeChildNodes(function (Node $node) {
+            return $node->getNodeValue('id') == 4;
+        });
+
+        $firstChild = $shakedNode->getChildNodes()->first();
+
+        $this->assertEquals([0], array_keys($firstChild->getChildNodes()->all()));
+    }
+
     /**
      * @return DefaultNode
      */
